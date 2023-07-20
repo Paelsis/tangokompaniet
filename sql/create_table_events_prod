@@ -1,0 +1,23 @@
+drop table IF EXISTS tangoma_TEST_NYASIDANEVENTS;
+create table tangoma_TEST_NYASIDANEVENTS 
+    (id INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id), 
+    eventName VARCHAR(20) NOT NULL, 
+    start DATETIME, 
+    end DATETIME, 
+    location VARCHAR(80), 
+    price VARCHAR(80), 
+    description TEXT);
+
+drop table IF EXISTS tangoma_TEST_NYASIDANEVENT_ACTIVITIES;
+create table tangoma_TEST_NYASIDANEVENT_ACTIVITIES 
+    (id INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id),
+    eventName VARCHAR(20) NOT NULL,
+    activityName VARCHAR(20) NOT NULL,
+    start DATETIME, 
+    end DATETIME, 
+    location VARCHAR(80), 
+    price VARCHAR(80), 
+    description TEXT);
+COMMIT;

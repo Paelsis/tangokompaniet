@@ -1,0 +1,2 @@
+create or replace view v_anmalningar as select A.*, IFNULL(K.titel, A.kursID) titel from `tangokompaniet_com_db7`.`tbl_anmalningar` A
+left outer join `tangokompaniet_com_db7`.`tbl_kurser` K  on A.kursID=K.ID where reg_datum > NOW() - INTERVAL 182 DAY order by reg_datum desc

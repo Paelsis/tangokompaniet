@@ -1,0 +1,1 @@
+select p.priceGroup, p.price as priceFrom, round(p.price/(c.factor*10), 0)*10 as priceTo, c.currencyTo from price_group p, currency c order by p.priceGroup, c.currencyTo

@@ -1,0 +1,2 @@
+update tbl_course_template A set A.teacher1 = IFNULL((SELECT IFNULL(shortName, 'XX') FROM tbl_teacher B where A.teacher1 = CONCAT(B.firstName, ' ', B.lastName)), 'XX')
+pdate tbl_course_template A set A.siteName = IFNULL((SELECT IFNULL(siteId, 'XX') FROM tbl_site B where A.siteName = B.siteName), 'XX')

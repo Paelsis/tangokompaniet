@@ -1,0 +1,2 @@
+insert into tbl_waitlist (firstName, lastName, email, phone, leader) select distinct fornamn, efternamn, email, telefon, forare from t_anmalningar;
+insert into tbl_partner_search (firstName, lastName, email, phone, leader) select distinct fornamn, efternamn, email, telefon, forare from t_anmalningar;
