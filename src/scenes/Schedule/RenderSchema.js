@@ -85,7 +85,7 @@ export default ({courses, courseId, withBorder, language, color, setTextId}) => 
             </div>
             <div style={withBorder?styles.schedule:styles.scheduleNoBorder}> 
                 {courseIds.map(key =>
-                    <RenderCourses courses={courseIdMap.get(key)} language={language} setTextId={setTextId} />
+                   <RenderCourses courses={courseIdMap.get(key)} language={language} setTextId={setTextId} />
                 )}
             </div>
             </>
