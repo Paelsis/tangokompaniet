@@ -203,8 +203,12 @@ const EVENT_STATUS_STYLES=(isLightColor, eventFinished)=>({
   },
   AV:{    
     paddingLeft:2, paddingRight:2,
+    //textAlign:'center',
+    margin:'auto',
     color:tkColors.background,
-    background:isLightColor?'#5D8170':'#365A49',
+    background:isLightColor?
+      "linear-gradient(to bottom right, #5D8170,  #365A49)":"linear-gradient(to bottom right, #365A49, #173525)",
+    //background:isLightColor?'#5D8170':'#365A49',
     opacity:eventFinished?0.5:1.0,
   },
 })
@@ -219,7 +223,6 @@ const EVENT_STYLE_CLASSES = (isLightColor, eventFinished) =>({
 export function eventStyle(event, isSelected, calendarType) {
   let newStyle=undefined
   const eventFinished = moment(event.end) < moment()
-
 
   if (calendarType === CALENDAR_TYPE.SOCIAL) {
       return(EVENT_STATUS_STYLES(event.isLightColor, eventFinished)[event.avaStatus]);

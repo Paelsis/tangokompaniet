@@ -25,7 +25,7 @@ const GROUP_BY_DEF_ARR=[
     },    
     {
         groupByField:'email', 
-        headerFields:['firstName', 'lastName', , 'role', 'email', 'phone', 'packageName', 'priceSEK', 'priceEUR'],
+        headerFields:['firstName', 'lastName', 'role', 'email', 'phone', 'packageName', 'priceSEK', 'priceEUR'],
 
         headerProps:{
             open:{

@@ -10,7 +10,7 @@ import {getEvents} from './getEvents'
 import {PRODUCT_TYPE, AVA_STATUS} from 'Settings/Const'
 import fetchList from 'functions/fetchList';
 import config from 'Settings/config';
-import SmallCalendarView from './SmallCalendarView'
+import SmallCalendarView from './CalendarSmall'
 import DialogSlide from './DialogSlide'
 
 

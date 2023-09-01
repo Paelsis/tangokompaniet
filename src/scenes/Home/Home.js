@@ -16,6 +16,9 @@ import { lookupTextBody } from '../../Components/Text/TextShow';
 const urlImageDefault=require(process.env.REACT_APP_DEFAULT_HOME_IMAGE);
 
 const styles = {
+  section:{
+    backgroundColor:tkColors.background,
+  },
   container:height=>({
     position: 'relative',
     display:'block',
@@ -44,9 +47,22 @@ const styles = {
     willChange: 'opacity',
   }),
   text: {
-    paddingLeft:'5%', paddingRight:'5%',
+    margin:0,
+    display:'flex', 
     textAlign:'left',
     clear:'both',
+    justifyContent:'center', 
+    alignItems:'center'
+  },
+  textDesktop: {
+    margin:0,
+    padding:10,
+    display:'flex', 
+    textAlign:'left',
+    clear:'both',
+    justifyContent:'center', 
+    alignItems:'center',
+    backgroundColor:tkColors.background,
   },
   version:{
     opacity:0.3,
@@ -104,8 +120,8 @@ class _Home extends React.Component {
     const height = '100vh'
     const wide = false;
     return(
-      <section>
-        <TextShow style={styles.text} url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} /> 
+      <section style={styles.section}>
+        <TextShow style={styles.textDesktop} url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} /> 
         <div style={{...styles.container(height), top:0, transition:this.state.hover?'2.0s ease':null}} 
             onMouseOver={this.handleMouseOver} 
             onMouseLeave={this.handleMouseLeave}
@@ -137,7 +153,6 @@ class _Home extends React.Component {
     const wide = true;
     return(
         <div style={styles.container(height)} onMouseOver={this.handleMouseOver} onMouseLeave={this.handleMouseLeave}>     
-
           <ColoredImage
             src={this.state.urlImage} 
             style={styles.overlayImage(wide)}
@@ -158,11 +173,11 @@ class _Home extends React.Component {
 
   renderMobile() {
     return(
-      <div style={styles.text} onMouseOver={this.handleMouseOver} onMouseLeave={this.handleMouseLeave}>
+      <div onMouseOver={this.handleMouseOver} onMouseLeave={this.handleMouseLeave}>
         <TextShow url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} /> 
-        <div style={{display:'flex', justifyContent:'center', alignItems:'center', alignSelf:'center'}} >
-            <div style={{flex:1}}>
-                <CalendarToday style={styles.text} />
+        <div style={styles.text} >
+            <div>
+                <CalendarToday />
             </div>
         </div>
       </div> 

@@ -10,33 +10,36 @@ const ZOOM_URL = 'https://zoom.us/join'
 
 let styles = {
     tr: {
-        padding: 2,
         fontSize: 14,
         verticalAlign:'middle',
         borderBottom:'1px solid',
         borderColor:tkColors.border,
+        padding:2,
     },
     tdName: {
         verticalAlign:'middle',
-        padding: 2,
         width:300,
         textAlign:'left',
+        padding:2,
     },
     td: {
         verticalAlign:'middle',
-        padding: 2,
         textAlign:'centerleft',
+        padding:2,
     },
     tdPointer: {
         verticalAlign:'middle',
         minWidth:65,
         cursor:'pointer',
+        padding:2, 
 
     },
     tdAnchor:{
         verticalAlign:'middle',
         textDecoration: 'underline', 
         cursor:'pointer',
+        padding: 2,
+
     },
     tdDiamond: {
         verticalAlign:'middle',

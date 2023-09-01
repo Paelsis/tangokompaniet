@@ -27,10 +27,10 @@ const GROUP_BY_DEF_ARR=[
     },    
 ];
 
-const VIEW_FIELDS=['orderId', 'firstName', 'lastName', 'havePaid']
-const VIEW_FIELDS_EXPAND=['orderId', 'havePaid', 'firstName', 'lastName', 'email', 'phone', 'role', 'status', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'danceSite', 'productType', 'productId', 'status', 'regDate', 'newsletter'];
-const UPDATE_FIELDS = ['havePaid', 'firstName', 'lastName', 'email', 'phone', 'leader', 'status', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'productId', 'newsletter']        
-const UPDATE_VIEW = ['havePaid', 'firstName', 'lastName', 'email', 'phone', 'leader', 'status', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'productId']
+const VIEW_FIELDS=['orderId', 'firstName', 'lastName', 'havePaid', 'leader', 'role']
+const VIEW_FIELDS_EXPAND=['orderId', 'havePaid', 'firstName', 'lastName', 'leader', 'role', 'email', 'phone', 'status', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'danceSite', 'productType', 'productId', 'status', 'regDate', 'newsletter'];
+const UPDATE_FIELDS = ['havePaid', 'firstName', 'lastName', 'leader', 'email', 'phone', 'status', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'productId', 'newsletter']        
+const UPDATE_VIEW = ['havePaid', 'firstName', 'lastName', 'leader', 'email', 'phone', 'status', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'productId']
 
 const mapStateToProps = (state) => {
     return {

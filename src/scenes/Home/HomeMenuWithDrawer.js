@@ -15,9 +15,9 @@ const styles = {
     home: isHome => ({
         position:'relative',  
         top:50,  
-        paddingLeft:isHome?0:'10%', 
-        paddingRight:isHome?0:'10%',
-        width:isHome?'100%':'80%',
+        paddingLeft:isHome?0:'5%', 
+        paddingRight:isHome?0:'5%',
+        width:isHome?'100%':'100%',
     }),
     containerStyle: (top) => ({
         top,   
@@ -259,7 +259,7 @@ const HomeMenuWithDrawer = props => {
     const isHome = location.pathname === '/home' || location.pathname === '/'
     const gtMobile = breakpoints[currentBreakpoint] > breakpoints.mobile;
     const background=style.background;
-    const height = isHome?90:18
+    const height = isHome?90:22
     const menuPosition = gtMobile?50:0
     const navigate = useNavigate()
 

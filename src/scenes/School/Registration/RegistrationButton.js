@@ -50,8 +50,8 @@ const TEXTS = {
         EN:'Unknown date',
     },  
     ONGOING:{
-        SV:'Har startat',
-        ES:'Ongoing',
+        SV:'Anmälan',
+        ES:'Inscriptión',
         EN:'Registration',
     },
     REGISTER:{
@@ -71,7 +71,7 @@ const singleReg = (reg, manualDisabled, language, addReg, style) => {
 
     const disabled = completelyClosed || finished || manualDisabled
     const borderColor = style?style.color?style.color:tkColors.background:tkColors.background
-    const adjStyle = {borderWidth:'1px', color:tkColors.background, borderColor, ...style}
+    const adjStyle = {borderWidth:'1px', borderStyle:reg.started?'dashed':'solid', color:tkColors.background, borderColor, ...style}
 
     return(
         !reg?<h4>WARNING: No reg object passed to component RegistrationButton</h4>

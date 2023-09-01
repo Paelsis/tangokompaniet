@@ -154,49 +154,55 @@ class Calendar extends Component {
         let weekdayEnd = mend.format('dddd')
         weekday = weekday.toUpperCase().charAt(0) + weekday.slice(1,3)
         weekdayEnd = weekdayEnd.toUpperCase().charAt(0) + weekdayEnd.slice(1,3)
-        const dateRange =event.sameDate?
-            null
-        :
-            weekday + ' ' + mstart.format('D/M') + (mstart.format('D/M') !== mend.format('D/M')?(' - ' +  weekdayEnd + ' ' + mend.format('D/M')):'')
+        const dt =event.sameDate?null:(weekday + ' ' + mstart.format('D/M'))  
         const style = eventStyle(event, false, calendarType)
         const styleDate = {...style, ...styles.tdDate(event.avaStatus)}
-        const timeRange = event.start.length > 10?(mstart.format('LT') + '-' + mend.format('LT')):TEXTS.WHOLE_DAY[this.props.language]
-        const timeEnd = mend.format('LT')
+        
         const useRegistrationButton = event.useRegistrationButton
         return(
                 moment() <= mend?
-                    <tr key={'Row' + event.productId} style={styles.tr(event.isToday)} > 
+                    <tr key={'Row' + event.productId} style={styles.tr(event.isToday)}> 
+                    {event.endsOtherDay && !event.forceSmallFonts ?
+                        <td colSpan={3} style={{...style, textAlign:'center', fontWeight:800, fontSize:18, color:'gold'}} onClick={()=>this.props.handleEvent(event)}>  
+                            {event.title}<br/>{event.dateTimeRange}
+                        </td>
+                    :
+                        <>
                         <td style={styleDate} onClick={()=>this.props.handleEvent(event)} >  
                             <small>
-                                {dateRange}
+                                {dt}
                             </small>
                         </td>
                         <td style={style} onClick={()=>this.props.handleEvent(event)} >  
                             <small>
-                                {timeRange}    
+                                {event.timeRange}    
                             </small>
                         </td>
                         <td colspan={useRegistrationButton?1:2}style={style} onClick={()=>handleEvent(event)} >  
                             <small>{event.title}</small>
                         </td>
-                        {useRegistrationButton?
-                            <td style={style} onClick={e=>this.handleRegistration(e, event)}>  
-                                {event.avaStatus=== AVA_STATUS.CC?
-                                   this.props.language===LANGUAGE_SV?'Fullbokad':'Fully Booked'
-                                :
-                                   <button key={event.productId} className="button" style={{...style, padding:1, fontSize:'small'}}>
-                                       {this.props.language===LANGUAGE_SV?'Anmälan':'Registration'}
-                                   </button>
-                                }
-                            </td>
-                        :null}    
+                        </>
+                    }    
+                    {useRegistrationButton?
+                        <td style={style} onClick={e=>this.handleRegistration(e, event)}>  
+                            {event.avaStatus=== AVA_STATUS.CC?
+                                this.props.language===LANGUAGE_SV?'Fullbokad':'Fully Booked'
+                            :
+                                <button key={event.productId} className="button" style={{...style, padding:1, fontSize:'small'}}>
+                                    {this.props.language===LANGUAGE_SV?'Anmälan':'Registration'}
+                                </button>
+                            }
+                        </td>
+                    :
+                        null
+                    }    
                     </tr>
                
                 :    
 
                     <tr key={'Row' + event.productId} style={styles.tr(event.isToday)}> 
                         <td style={{...styleDate, opacity:0.3}} >  
-                            {dateRange}
+                            {dt}
                         </td>
                         <td style={{...style, opacity:0.3}}>  
                             <small>{TEXTS.ENDED[this.props.language] + ' ' + mend.format('LT')}</small>

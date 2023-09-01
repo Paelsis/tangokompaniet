@@ -103,6 +103,7 @@ const AlertDialogSlide = props =>  {
   const swishAmount = event.swishAmount?event.swishAmount:undefined
   const bookable = (event.avaPar?event.avaPar > 0:false) || (event.avaInd?event.avaInd > 0:false) || (event.avaPar===undefined && event.avaInd === undefined)
   const title=event.timeRangeWithDay
+  const location = event.location
 
   const handleClose = () => {
     setOpen(false);
@@ -113,13 +114,11 @@ const AlertDialogSlide = props =>  {
   }    
   
   const renderBody = () =>  {
-    const location = event.location
     const desc = event.description?event.description:'' //.split('MAX_PAR')[0]
     const color = event.avaStatus === AVA_STATUS.AV?'green':event.avaStatus === AVA_STATUS.CC?'red':'deepOrange'
     const dev = process.env.NODE_ENV==='development'
     return(
       <div>
-      <h3>{location}</h3>
         {useRegistrationButton?
           (event.avaPar || event.avaInd)?
                 <div style={{color}}>
@@ -145,6 +144,7 @@ const AlertDialogSlide = props =>  {
                 </div>      
           :null
         }
+        {/*JSON.stringify(event)*/}
         <div style={{color:tkColors.black, maxHeight:'calc(100vw - 210px)', overflowX:'hidden', overflowY:'auto'}} dangerouslySetInnerHTML={{__html: desc}} />
         {swishAmount?
           <div style={{textAlign:'center'}}>
@@ -166,7 +166,11 @@ const AlertDialogSlide = props =>  {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">
+          {title}
+          <p/>
+          <small>{location}</small>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
               {renderBody()}

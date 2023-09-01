@@ -47,6 +47,11 @@ const TEXTS = {
         ES:'Next event',
         EN:'Next event',
     },
+    ONGOING_EVENT:{
+        SV:'Pågåemde dans',
+        ES:'Ongoing dance',
+        EN:'Ongoing dance',
+    },
     THIS_WEEKS_EVENTS:{
         SV:'Kommande veckas dans',
         ES:'Sesiones de baile en una semana ...',
@@ -73,14 +78,10 @@ let styles = {
         opacity:active?1:0,
         transition: '1500ms all ease',
     }),
-    ongoing: {
-        padding:1, margin:1,
-        color:tkColors.Purple.Dark, 
-    },
-    upcoming: {
-        padding:0, margin:0,
+    upcoming: fontSize=>({
+        fontSize,
         opacity:0.7,
-    },
+    }),
     button: {
         border: "1px solid grey", 
         padding:2, 
@@ -111,13 +112,13 @@ class Calendar extends Component {
         super(props);
 
         this.state = {
-            fontSize:'small',
+            fontSize:13,
             events:[],
             active:false,
             clicked:false,
             preRegister:false,
         };
-        this.renderEvents = this.renderEvents.bind(this);
+        /* this.renderEvents = this.renderEvents.bind(this); */
     }
 
     loadEvents(cal, ndays, language) {
@@ -191,32 +192,31 @@ class Calendar extends Component {
 
     renderSingleEvent (event) {
         return(
-            <div style={{margin:7}}>
-                {
-                    moment() < event.mstart ? // Has not started yet
-                        <div>
-                            <p style={{...styles.upcoming, fontSize:this.state.fontSize}}>{event.calendar + ' - ' + event.calendarEndTime + ' ' + event.location}</p>
-                            <p style={{...styles.upcoming, fontSize:this.state.fontSize}}>{event.title}</p>
-                        </div>    
-                    :moment() <= moment(event.mend) ? // Has started, but not ended yet
-                        <Marquee>
-                            <p style={styles.ongoing}>{event.timeRangeWithDay + ' ' + event.location}</p>
-                            <p style={styles.ongoing}>{event.title}</p>
-                        </Marquee>
-                    :null  // Has ended    
-                }
-            </div>
+            moment() < event.mstart ? // Has not started yet
+                <>
+                    <h3 style={{marginBottom:8}}>{TEXTS.NEXT_EVENT[this.props.language]}</h3>
+                    <p style={styles.upcoming(this.state.fontSize)}>{event.calendar + ' - ' + event.calendarEndTime + ' ' + event.location}</p>
+                    <p style={styles.upcoming(this.state.fontSize)}>{event.title}</p>
+                </>    
+            :moment() <= moment(event.mend) ? // Has started, but not ended yet
+                <>
+                    <h3>{TEXTS.ONGOING_EVENT[this.props.language]}</h3>
+                    <br/>
+                    <Marquee>
+                    <p>{event.calendar + ' - ' + event.calendarEndTime + ' ' + event.location}</p>
+                    <p>{event.title}</p>
+                    </Marquee>
+                </>
+            :null // Has ended    
         )
     }
-
+    /*
     renderEvents () {
         return(
-            <div>
+            <p>
                 {this.state.events.length >0?
                     this.state.events.map((event, index) =>
-                        <div key={index} style={{margin:7}}>
                             {this.renderSingleEvent(event)}
-                        </div>
                     )
                 :        
                     <p>
@@ -226,19 +226,18 @@ class Calendar extends Component {
 
                 {this.renderUpcomingWeek()}
 
-            </div>
+            </p>
         )
     }    
-
+    */
     renderNextEvent () {
         const nextEvent = this.state.events.length >0?this.state.events.find(it => moment() < it.mend):undefined
         return(
             <div>
                 {nextEvent?
-                    <p>
-                        <h1 style={{opacity:0.7}}>{TEXTS.NEXT_EVENT[this.props.language]}</h1>
+                    <>
                         {this.renderSingleEvent(nextEvent)}
-                    </p>
+                    </>
                 :        
                     null
                 }

@@ -16,8 +16,6 @@ export const wait = (ms, callback) => {
     sleep(ms).then(callback);
 } 
 
-
-
 export const isMobileDevice = () => {
     return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
 };

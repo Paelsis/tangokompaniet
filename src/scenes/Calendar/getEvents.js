@@ -29,6 +29,25 @@ const findNumberInText = (s, val) => {
   }  
 }  
 
+function _forceSmallFonts(event) {
+  if ( (typeof _forceSmallFonts.mstartPreviousBigEvent == 'undefined')|| (event === undefined)) {
+    // It has not... perform the initialization
+    _forceSmallFonts.mstartPreviousBigEvent = moment('2000-01-01T00:00')
+    return event
+  } else if (event.durationHours > 24) {
+      const daysBetweenEvents = moment.duration(event.mstart.diff(_forceSmallFonts.mstartPreviousBigEvent)).asDays()
+      _forceSmallFonts.mstartPreviousBigEvent = event.mstart
+      if (daysBetweenEvents < 6) {
+        return {...event, forceSmallFonts:true};
+      } else {
+        return event
+      }
+  } else {  
+      return event
+  }  
+}  
+
+
 
 // export means that this function will be available to any module that imports this module
 export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, language) {
@@ -47,6 +66,8 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
                :undefined:undefined          
     }    
   }    
+
+  
   request
     .get(url)
     .end((err, resp) => {
@@ -66,6 +87,12 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
           const end = it.end.dateTime?it.end.dateTime:it.end.date
           const mstart = moment(start)
           const mend = moment(end)
+          const timeStart = mstart.format('LT')
+          const timeEnd = mend.format('LT')
+          const dateShift = mend.dayOfYear() - mstart.dayOfYear()  
+          const fullDay = start.length <= 10 || (timeStart==="00:00" && timeEnd ==="00:00") && dateShift <= 1 || (timeStart==="00:00" && timeEnd ==="23:59")
+          const durationHours = moment.duration(mend.diff(mstart)).asHours()
+          const endsOtherDay=(mstart.calendar('l') !== mend.calendar('l')) && (mend.diff(mstart, 'hours') > 11) && !fullDay
           const description = (it.description?it.description:'')
           const maxPar = findNumberInText(description, 'MAX_PAR')
           const maxInd = findNumberInText(description, 'MAX_IND')
@@ -76,20 +103,19 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
           const isToday = moment().isSame(mstart, 'day')?true:false
           const isWeekend = mstart.isoWeekday() >=6;
           const calendar = mstart.calendar()
-          const calendarStartTime = mstart.format('LT')
-          const calendarEndTime = mend.format('LT')
-          const dateShift =  mstart.dayOfYear() - mend.dayOfYear() !== 0
-          const timeRange = start.length > 10?(mstart.format('LT') + '-' + mend.format('LT')):'Whole day'
+          const dateTimeRange = mstart.format('ddd D MMM H:mm') + ' - ' +  mend.format('ddd D MMM H:mm')
+          const timeRange= fullDay?'Full day':(mstart.format('LT') + '-' + mend.format('LT'))
           const timeRangeWithDay = dateShift?(mstart.format('dddd LT') + '-' + mend.format('dddd LT')):(mstart.format('dddd LT') + '-' + mend.format('LT'))
           const title = it.summary?it.summary:'No Title'
           const city = cityForEvent(title, location)
           const weekNumber = mstart.isoWeek()
           const maxRegistrants = Number(maxInd?maxInd:maxPar?(maxPar*2):500)
           const useRegistrationButton =description?(description.indexOf('MAX_IND')!==-1 || description.indexOf('MAX_PAR')!==-1):false
-          
 
           isLightColor = weekNumber===previousWeekNumber?isLightColor:!isLightColor
           previousWeekNumber = weekNumber
+
+          _forceSmallFonts(undefined)
 
           let event = {
             start,
@@ -106,9 +132,10 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
             weekNumber,
             timeRange,
             timeRangeWithDay,
+            durationHours,
             calendar,
-              calendarStartTime,
-            calendarEndTime,
+            dateTimeRange,
+            endsOtherDay, 
             city,
             maxInd,
             maxPar,
@@ -117,6 +144,9 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
             maxRegistrants,
             useRegistrationButton,
           }  
+
+          event = _forceSmallFonts(event) 
+                    
           events.push(event)
           previousEndDate=end
          

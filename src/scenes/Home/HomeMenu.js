@@ -34,7 +34,7 @@ const IMAGES=[
     {img:imgs.dance, 
       active:true, 
       open:false, // Left menu open when hover
-      backgroundColor:'#fa333b', 
+      backgroundColor:'#8a973b', 
       opacity:0.6, 
       link:'/scheduleBeginner', 
       title:{EN:'BEGINNERS', SV:'GRUNDKURS', ES:'BEGINNERS'},
@@ -215,10 +215,10 @@ const _imageStyleNew = (width, height, img, opacity, hover, backgroundColor) => 
   text:{
     position:'absolute',
     top: '50%',
-    left: width==='100%'?'75%':'50%',
+    left: width==='100%'?'100%':'50%',
     transform: 'translate(-50%, -50%)',
     color:'white',
-    fontSize:width==='100%'?18:14,
+    fontSize:width==='100%'?18:12,
     fontWeight:400,
     fontStyle:'italic',
     cursor:'pointer',
@@ -237,6 +237,10 @@ const _imageStyleNew = (width, height, img, opacity, hover, backgroundColor) => 
   },
 })
 
+const styles = {
+  root:{backgroundColor:tkColors.background}
+}
+
 
 const _imageStyle = (width, height, img, opacity, hover, backgroundColor) => ({
   container:{
@@ -247,6 +251,7 @@ const _imageStyle = (width, height, img, opacity, hover, backgroundColor) => ({
     cursor:'pointer',
     overflow:'hide',
     zIndex:20,
+    backgroundColor:tkColors.background,
   },
   image:{
     position:'relative',
@@ -278,7 +283,7 @@ const _imageStyle = (width, height, img, opacity, hover, backgroundColor) => ({
     top: '50%',
     left: hover?'50%':width==='100%'?'75%':'50%',
     transform: 'translate(-50%, -50%)',
-    color:width==='100%'?'white':tkColors.background,
+    color:width==='100%'?'white':backgroundColor,
     fontSize:width==='100%'?22:16,
     fontWeight:width==='100%'?300:300,
     fontStyle:'italic',
@@ -374,7 +379,7 @@ const HomeMenu = (props) => {
     setImages(images)
   }, [props.list])  
   return(      
-    <div style={{clear:'both'}} >
+    <div style={styles.root}>
       {images.map((image, index) =>
         <div
           // data-tip={im.helpText[language]}

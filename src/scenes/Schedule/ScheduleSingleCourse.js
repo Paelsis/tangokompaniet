@@ -2,15 +2,10 @@ import React, {Component} from 'react';
 import { withBreakpoints } from 'react-breakpoints'
 import { connect } from 'react-redux'
 import { setScheduleList } from 'redux/actions/actionsSchedule'
-import tkColors, {boxShadow} from 'Settings/tkColors';
-import ExpandTextDialog from 'Components/ExpandTextDialog';
+import tkColors from 'Settings/tkColors';
 import TextShow from 'Components/Text/TextShow';
-import ShoppingCartButton from 'scenes/Shop/ShoppingCartButton';
 import withListFromStore from 'Components/Table/withListFromStore';
 import groupBy from 'functions/groupBy';
-import RegistrationButton from '../School/Registration/RegistrationButton'
-import {COURSE_REJECT, COURSE_ACCEPT, COURSE_LEADER_SURPLUS, COURSE_FOLLOWER_SURPLUS, COURSE_FULL} from 'Settings/Const';
-import {USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 import {renderRegistrationHeader} from './RenderCoRegHeader'
 import {renderRegLine} from './RenderCoRegLine'
 
