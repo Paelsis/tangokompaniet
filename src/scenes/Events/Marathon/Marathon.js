@@ -7,7 +7,6 @@ import ScheduleMarathon from 'scenes/Schedule/ScheduleMarathon'
 
 const banner=require('images/banner/maraton_banner.jpg');
 const photographer='Tangokompaniet'
-const background = linearGradient(tkColors.Marathon.Light, tkColors.Marathon.Dark)
 const eventType=EVENT_TYPE.MARATHON
 const style = {
         // backgroundImage:`url(${img3})`,
@@ -16,18 +15,7 @@ const style = {
         color:tkColors.Marathon.Light, 
         background: linearGradient(tkColors.Marathon.Light, tkColors.Marathon.Dark),
         height:40,
-    }
-
-const text= 
-"Ett tangomaraton är en förlängd weekend med dygnet-runt-dans för tangonördar. \
-Man avsätter helt enkelt en helg åt non-stop tangodans. Tangomaraton skiljer sig från festivaler genom \
-att de inte har live music utan dansar endast till DJ. På ett maraton pågår nästan hela dygnet under 3-5 dagar med uppehåll förknippning \
-sömn mellan 6-12 varje dag. På ett tangomaraton finns inga kurser och det är avset för den \
-erfarne dansaren. Det krävs ofta ett par års danserfarenhet för att bli medtagen på \
-ett tangomaraton. Det är ofta lättare för förare än följare att komma in på ett maraton. I \
-Europa finns idag ofta minst ett maraton per vecka att åka till. Normalpris i västeruopa är 100-200 EUR \
-beroende av om där serveras mat eller ej. I östeuropa är maratonen ofta billigare, menllan 40-80 EUR. \
-Tangokompaniet har ett normalt ett eller två maraton om året."
+}
 
 const today = new Date();
 const yyyy = today.getFullYear();

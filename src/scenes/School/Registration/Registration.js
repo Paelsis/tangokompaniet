@@ -29,21 +29,21 @@ const TEXTS={
     REGISTRATION_READY: (reg) => {
         if (reg.firstNamePartner?reg.firstNamePartner.length > 0:false) {
             return({
-                SV:'Du är nu anmäld till '
+                SV:'Tack för att du anmält dig till kursen '
                     + (reg.nameSV?reg.nameSV:reg.title) + ' i ' + reg.city  + ' som startar ' + reg.startDate + ' klockan ' + reg.startTime
                     + '. Din partner måste göra en egen anmälan.',
-                EN:'You are now registered on '  
+                EN:'Thank you for registering for the course  '  
                     + (reg.nameEN?reg.nameEN:reg.title) + ' in ' + reg.city + ' starting ' + reg.startDate + ' at ' + reg.startTime
                     + '. Your partner must do a separate registration.',
-                ES:'Ahora está registrado en '  
+                ES:'Gracias por registrarte en el curso '  
                     + (reg.nameEN?reg.nameEN:reg.title) + ' in ' + reg.city + ' starting ' + reg.startDate + ' at ' + reg.startTime
                     + '. Su pareha debe hacer un registro por separadodo.'
             })
         } else {   
             return({
-                SV:'Du är nu anmäld till ' + (reg.nameSV?reg.nameSV:reg.title) + ' i ' + reg.city + ' som startar ' + reg.startDate + ' klockan ' + reg.startTime,
-                EN:'You are now registered on '  + (reg.nameEN?reg.nameEN:reg.title) + ' in ' + reg.city + ' starting ' + reg.startDate + ' at ' + reg.startTime,
-                ES:'Ahora estás registrado para el '  + (reg.nameES?reg.nameES:reg.title) + ' en ' + reg.city + ' eso comienza ' + reg.startDate + ' a las ' + reg.startTime,
+                SV:'Tack för att du anmält dig till ' + (reg.nameSV?reg.nameSV:reg.title) + ' i ' + reg.city + ' som startar ' + reg.startDate + ' klockan ' + reg.startTime,
+                EN:'Thank you for registering for the course '  + (reg.nameEN?reg.nameEN:reg.title) + ' in ' + reg.city + ' starting ' + reg.startDate + ' at ' + reg.startTime,
+                ES:'Gracias por registrarte en el curso '  + (reg.nameES?reg.nameES:reg.title) + ' en ' + reg.city + ' eso comienza ' + reg.startDate + ' a las ' + reg.startTime,
             })
         }    
     },
@@ -60,6 +60,11 @@ const TEXTS={
         ES:`Please check your mailbox (and span mailbox) to confirm that you registration is confirmed.
         If you got no mail check your spam mailboxn la compañía de tango por correo o teléfono.`
     },
+    THANKS: {
+        SV:`Tack för att du anmält dig på kurs hos Tangokompaniet`, 
+        EN:`Thank you for signing up for a course at Tangokompaniet`,
+        ES:`Su Gracias por inscribirte a un curso en Tangokompaniet`,
+    }, 
     ORDER_ID: (orderId) => ({
         SV:`Din registrering har ordernummer:` + orderId, 
         EN:`Your registration has order number:` + orderId,
@@ -269,7 +274,7 @@ class Registration extends React.Component {
                 <div style={styles.root}>
                     {reg?
                         this.state.serverReady===true?
-                            <div style = {{color:tkColors.Purple.Light, textAlign:'center', verticalAlign:'middle'}}>
+                            <div id='success' style = {{color:tkCb .gitolors.Purple.Light, verticalAlign:'middle'}}>
                                 <h3>
                                     {this.state.textOK}
                                 </h3>

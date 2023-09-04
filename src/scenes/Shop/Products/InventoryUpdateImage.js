@@ -74,7 +74,6 @@ class InventoryUpdateImage extends Component {
     }
 
     render = () => {
-        const edit=this.props.edit;
         return(
             <form onSubmit={this.handleSubmit}>
                 <InventoryImage edit={this.state.edit} product={this.state.product} handleChange={this.handleChangeProduct} />

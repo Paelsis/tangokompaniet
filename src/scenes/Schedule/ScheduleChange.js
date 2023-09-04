@@ -4,7 +4,6 @@ import postPayload from 'functions/postPayload'
 import config from 'Settings/config'
 import withRecords from 'Components/Table/withRecords'
 import CircularProgress from 'Components/CircularProgress'
-import {USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 
 const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/scheduleChange'
 

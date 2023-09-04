@@ -4,12 +4,6 @@ import tkColors, {linearGradient} from 'Settings/tkColors'
 import { EVENT_TYPE } from 'Settings/Const';
 import ScheduleEvent from 'scenes/Schedule/ScheduleEvent'
 
-const text="Welcome to a week full of, first of all tango, good classes, live music, performances, lots of dancing, playful exploration and cosy and beautiful surroundings!\
-Take inspiring workshops in tango with Anna Sol, Martin Nymann, Daniel Carlsson & Eva Lehrmann. You can come as a beginner or experienced dancer; there is something for everyone! We offer different packages or you pick the modules that fit you.\
-The milongas in the evenings will have great tango music for you to dance to and there will be performances of the teachers and also from the choreography group of the festival. Also we have a live set being played by Bandonegro Tango Orquesta during the festival!\
-And last but not least we hopefully end the week with a beautiful sunset and outdoor milonga! Come and enjoy tango; 100%!"
-
-const background = linearGradient(tkColors.Summer.Light, tkColors.Summer.Dark)
 const eventType=EVENT_TYPE.SUMMER
 const banner=require('images/banner/summer_banner.jpg');
 const photographer='Tangokompaniet'

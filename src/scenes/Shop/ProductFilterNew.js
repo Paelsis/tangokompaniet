@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {tkColors} from 'Settings/tkColors'
 import groupBy from 'functions/groupBy'
 import {addFilterKey} from 'redux/actions/actionsFilterKeys.js'
-import {LANGUAGE_SV, LANGUAGE_EN, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
+import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 
 export const RemoveDuplicates = (myArr, prop) => {
   return myArr.filter((obj, pos, arr) => {
@@ -56,8 +56,8 @@ const Filter = ({label, name, list, filterKeys, addFilterKey, language}) => {
   let value=filterKeys[name]?filterKeys[name]:'undefined';
   return(
       <select style={value==='undefined'?styles.disabled:styles.enabled} name={name} value={value} onChange={(e)=>addFilterKey(e)}> 
-        <option style={styles.disabled} value={'undefined'} disabled={true}>{label}</option>)}
-        <option style={styles.disabled} value={'undefined'} >{language===LANGUAGE_SV?'Inget filter':language===LANGUAGE_ES?'Sin filtro':'No filter'}</option>)}
+        <option style={styles.disabled} value={'undefined'} disabled={true}>{label}</option>
+        <option style={styles.disabled} value={'undefined'} >{language===LANGUAGE_SV?'Inget filter':language===LANGUAGE_ES?'Sin filtro':'No filter'}</option>
         {keys.map((it, index) => <option style={styles.enabled} value={it}>{it}</option>)}
       </select>        
   )

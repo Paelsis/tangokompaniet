@@ -7,7 +7,6 @@ import FormTemplate from 'Components/formTemplate'
 import {LANGUAGE_EN} from 'redux/actions/actionsLanguage'
 import config from 'Settings/config';
 import {EVENT_TYPE} from 'Settings/Const'
-import tkColors from 'Settings/tkColors';
 import QrCode from 'Components/QrCode'
 
 
@@ -92,11 +91,8 @@ const ScheduleMarathon = ({language, globalStyle}) => {
     const [data, setData] = useState(STEPS.INITIAL)
     const [schedule, setSchedule] = useState(SCHEDULE_UNDEFINED)
     const [formFields, setFormFields] = useState([])
-    const [marathonCount, setMarathonCount] = useState([])
     const eventType=EVENT_TYPE.MARATHON
     const handleReply = data => {setStep(data.status==='OK'?STEPS.SUCCESS:STEPS.FAILED); setData(data)}
-
-    const closed = formFields
 
     useEffect(()=>{
         fetchList('', '', SCHEDULE_EVENT_MARATHON_URL + "?eventType=" + eventType, 

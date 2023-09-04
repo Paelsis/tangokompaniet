@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import Dialog from 'material-ui/Dialog';
 import Button from '@material-ui/core/Button';
 import tkColors from 'Settings/tkColors'
-import grey from '@material-ui/core/colors/grey'
-import {LANGUAGE_EN, LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
+import {LANGUAGE_EN, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 
 const styles = {
     anchor:{

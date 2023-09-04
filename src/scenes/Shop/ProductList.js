@@ -72,7 +72,7 @@ const Product = ({width, height, product}) => {
 
     return(
       <div style={localStyles.container}>
-        <img style={{width:'80%', margin:'10%'}} src={imageUrl + product.images[0]} alt={'loading image ...'} />
+        <img style={{width:'80%', margin:'10%'}} src={product.productId} alt={'loading ...'} />
         <div style={styles.containerTitle}>  
           <div style={styles.title} >{product.productId}</div>
         </div>  

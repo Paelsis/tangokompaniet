@@ -4,8 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
-import statusMessage, {STATUS_OK, STATUS_WARNING, STATUS_ERROR} from 'functions/statusMessage'
-import PhotoList from './PhotoList'
+import statusMessage, {STATUS_ERROR} from 'functions/statusMessage'
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
 

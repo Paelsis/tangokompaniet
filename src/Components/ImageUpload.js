@@ -3,8 +3,7 @@ import axios from 'axios'
 import withRecords from 'Components/Table/withRecords'
 import config from 'Settings/config' 
 import ImageList from './ImageList'
-import StatusLine from 'Components/StatusLine'
-import statusMessage, {statusMessageStatic, STATUS_OK, STATUS_WARNING, STATUS_ERROR} from 'functions/statusMessage'
+import statusMessage, {STATUS_OK, STATUS_ERROR} from 'functions/statusMessage'
 import axiosGet from 'functions/axiosGet'
 import AddAPhoto from 'material-ui/svg-icons/image/add-a-photo';
 const addAPhoto = <AddAPhoto color={'green'} style={{width:35, height:35, padding:0, border:0}}/>;

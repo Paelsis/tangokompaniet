@@ -64,12 +64,12 @@ const TEXTS = {
 const singleReg = (reg, manualDisabled, language, addReg, style) => {
     const completelyClosed = reg.avaStatus === AVA_STATUS.COMPLETELY_CLOSED
     const closedByRequest = reg.avaStatus === AVA_STATUS.CLOSED_BY_REQUEST
-    const finished = reg.daysUntilStart <= -140?true:undefined
+    const ended = reg.ended
 
     const label=reg.avaStatus === AVA_STATUS.COMPLETELY_CLOSED?TEXTS.COMPLETELY_CLOSED[language]
         :reg.started?TEXTS.ONGOING[language]:TEXTS.REGISTER[language]
 
-    const disabled = completelyClosed || finished || manualDisabled
+    const disabled = completelyClosed || manualDisabled
     const borderColor = style?style.color?style.color:tkColors.background:tkColors.background
     const adjStyle = {borderWidth:'1px', borderStyle:reg.started?'dashed':'solid', color:tkColors.background, borderColor, ...style}
 
@@ -77,7 +77,7 @@ const singleReg = (reg, manualDisabled, language, addReg, style) => {
         !reg?<h4>WARNING: No reg object passed to component RegistrationButton</h4>
         :!reg.startDate?<h3>{TEXTS.UNKNOWN_DATE[language]}</h3>
         :manualDisabled?<h3>{TEXTS.COURSE_REMOVED[language]}</h3>
-        :finished?<h3>{TEXTS.COURSE_FINISHED[language]}</h3>
+        :ended?null
         :closedByRequest?<h3>{TEXTS.CLOSED_BY_REQUEST[language]}</h3>
         :completelyClosed?<h3>{TEXTS.COMPLETELY_CLOSED[language]}</h3>
         :

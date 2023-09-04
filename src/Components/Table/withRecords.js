@@ -83,10 +83,6 @@ const withRecords = (WrappedComponent) => {
         }
 
     
-        handleReply (statusFlag, data) {
-            console.log('withRecords.handleReply: statusFlag:' + statusFlag + 'data:' + data);
-        }    
-    
         handleReplyAll(statusFlag, data) {
             console.log('withRecords.handleReplyAll: statusFlag:' + statusFlag + 'data:' + data);
         }    

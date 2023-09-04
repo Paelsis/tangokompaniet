@@ -3,7 +3,6 @@ import moment from 'moment-with-locales-es6'
 import indigo from '@material-ui/core/colors/indigo'
 import teal from '@material-ui/core/colors/teal'
 import red from '@material-ui/core/colors/red'
-import lime from '@material-ui/core/colors/lime'
 import lightGreen from '@material-ui/core/colors/lightGreen'
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import brown from '@material-ui/core/colors/brown';

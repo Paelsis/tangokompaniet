@@ -4,9 +4,6 @@ import withRecords from 'Components/Table/withRecords';
 import GetRegistrationMapMap from './GetRegistrationMapMap'
 import green from '@material-ui/core/colors/green';
 import blue from '@material-ui/core/colors/blue';
-import deepOrange from '@material-ui/core/colors/deepOrange';
-import lightGreen from '@material-ui/core/colors/lightGreen';
-import {USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 import { View1 } from 'Settings/UtilsMap';
 
 

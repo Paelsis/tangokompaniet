@@ -4,8 +4,6 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {viewList, tableList} from './AdminConfig'
-
 const SimpleMenu = ({title, menuList, language, handleClick}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 

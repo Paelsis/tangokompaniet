@@ -2,11 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ShoppingCartItem from './ShoppingCartItem'
 import ShoppingCartReset from './ShoppingCartReset'
-
 import {toggleItem} from 'redux/actions/actionsShop'
-import {summationPrice, discount} from 'scenes/Shop/summationPrice'
 import config from 'Settings/config';
-import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 
 const TEXTS = {CONTAINS:{SV:'Kundvagnen innehåller',
                          ES:'Shoppingcart contains',
@@ -39,13 +36,6 @@ const styles = {
     }
   };
   
-
-const redirectResponse = (response) =>
-{
-    // Use redicrct link to paypal
-    console.log('response:', response);
-    alert('Later here will be redirect to paypal with TOKEN')
-}
 
 // The original _ShoppingCart
 var ShoppingCartList = ({list, numberOfItems, privileges, language, currency, handleClick}) => {

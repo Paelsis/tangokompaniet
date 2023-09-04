@@ -6,11 +6,9 @@ import TextShow from 'Components/Text/TextShow'
 import withListFromStore from 'Components/Table/withListFromStore'
 import {setGlobalStyle} from 'redux/actions/actionsStyle'
 import tkColors from 'Settings/tkColors'
-import {LANGUAGE_EN, LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 import Tooltip from '@material-ui/core/Tooltip';
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
-import {USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 import config, {TEACHER_IMAGE_DIR} from 'Settings/config';
 
 

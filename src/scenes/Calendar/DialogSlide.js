@@ -97,7 +97,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const AlertDialogSlide = props =>  {
-  const {open, setOpen, event, language, addRegistration} = props  
+  const {open, setOpen, event, language} = props  
   const navigate = useNavigate()
   const useRegistrationButton = event.useRegistrationButton
   const swishAmount = event.swishAmount?event.swishAmount:undefined

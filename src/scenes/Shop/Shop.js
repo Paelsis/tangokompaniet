@@ -68,8 +68,7 @@ const mapDispatchToProps = (dispatch) => {
     }        
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
-  (withListFromStore(_Shop, true))
+export default connect(mapStateToProps, mapDispatchToProps)(withListFromStore(_Shop, true))
 
 
 

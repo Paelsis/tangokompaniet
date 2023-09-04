@@ -77,7 +77,7 @@ class ImageUploadMultiple extends Component {
               </form>
             </div>
             {imagePreviewUrls?imagePreviewUrls.map(it=>
-                <img className="column" src={it} style={{padding:0, border:'1px dotted yellow'}}/>
+                <img className="column" src={it} alt={'url=' + it} style={{padding:0, border:'1px dotted yellow'}}/>
             ):null}
           </div>
       )

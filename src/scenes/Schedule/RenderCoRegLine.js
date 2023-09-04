@@ -2,6 +2,7 @@ import React from 'react';
 import Weekdays from 'Settings/Weekdays';
 import RegistrationButton from '../School/Registration/RegistrationButton'
 import ExpandTextDialog from 'Components/ExpandTextDialog';
+import {LANGUAGE_SV, LANGUAGE_ES, LANGUAGE_EN} from 'redux/actions/actionsLanguage'
 
 const ZOOM_URL = 'https://zoom.us/join'
 
@@ -55,6 +56,22 @@ const renderExpandedAddress = course => (
         <h4>Course not defined</h4>    
 )    
 
+const DateTd = ({course, language}) => {
+    const started = course.started?language==='SV'?'har startat':'has started':undefined
+    const ended = course.ended?language==='SV'?'avslutad':'ended':undefined
+    const style = {...styles.td, color:ended?'red':course.started?'orange':undefined}
+    const dt = course.dayOfWeek?course.startDate:'' 
+    return(
+        <td style={style}>
+            {
+                ended?<small>{dt}<br/>{ended}</small>
+                :started?<small>{dt}<br/>{started}</small>
+                :dt
+            }
+        </td>
+    )    
+}
+
 export const renderRegLine = (course, color, language) => {
     const range = course.startTime + ' - ' + course.endTime 
     const weekend = course.courseType === 'HK'
@@ -63,9 +80,8 @@ export const renderRegLine = (course, color, language) => {
       tr:{...styles.tr, color:adjColor},
       anchor:{...styles.tdAnchor, color:adjColor},
       button:{...styles.td, color:adjColor, borderColor:adjColor},
-      date: {...styles.td, color:course.daysUntilStart <= -140?'red':course.started?'yellow':undefined}
-
     }  
+
     return(
     <tr style={style.tr}>
         {weekend?null:
@@ -79,8 +95,7 @@ export const renderRegLine = (course, color, language) => {
             &nbsp;
             {course.online==="1"?<a href={ZOOM_URL} style={styles.tdDiamond}>&#9830;</a>:null}
         </td>
-        <td style={style.date}>
-            {course.dayOfWeek?course.startDate:''}</td>
+        <DateTd  course={course} language={language} />
         <td>
             <ExpandTextDialog
                     shortText={course.teachersShort}

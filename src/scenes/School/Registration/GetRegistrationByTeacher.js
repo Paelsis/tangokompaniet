@@ -78,7 +78,7 @@ const GROUP_BY_DEF_ARR = [
 ];
 
 const VIEW_FIELDS=['orderId', 'firstName', 'lastName', 'havePaid', 'leader', 'role']
-const VIEW_FIELDS_EXPAND=['orderId', ,'havePaid', 'firstName', 'lastName', 'leader', 'role', 'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'danceSite', 'productType', 'productId', 'status', 'regDate', 'newsletter'];
+const VIEW_FIELDS_EXPAND=['orderId', 'havePaid', 'firstName', 'lastName', 'leader', 'role', 'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'danceSite', 'productType', 'productId', 'status', 'regDate', 'newsletter'];
 const UPDATE_FIELDS = ['havePaid', 'firstName', 'lastName', 'leader', 'email', 'phone', 'status', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'danceSite', 'productId', 'newsletter']        
 const UPDATE_VIEW = ['havePaid', 'firstName', 'lastName', 'leader', 'email', 'phone', 'status', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'danceSite', 'productId']
 
@@ -88,7 +88,7 @@ const mapStateToProps = (state) => {
         username: state.user.username,
         password: state.user.password,
         language: state.language,
-        url:'/admin/getRegistration?productType=course'  + '&language=' + state.language,
+        url:'/admin/getRegistration?productType=course&language=' + state.language,
         groupByDefArr:GROUP_BY_DEF_ARR,
         viewComponent:View1,
         viewFieldsExpand:VIEW_FIELDS_EXPAND,

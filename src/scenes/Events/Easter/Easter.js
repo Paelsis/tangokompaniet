@@ -4,9 +4,6 @@ import tkColors, {linearGradient} from 'Settings/tkColors'
 import { EVENT_TYPE } from 'Settings/Const';
 import ScheduleEvent from 'scenes/Schedule/ScheduleEvent'
 
-const text="Påskfestivalen är en lite större festival med dans och undervisning"
-
-const background = linearGradient(tkColors.Easter.Light, tkColors.Easter.Dark)
 const eventType=EVENT_TYPE.EASTER
 const banner=require('images/banner/easter_banner.jpg');
 const photographer='Tangokompaniet'
@@ -18,6 +15,7 @@ const style = {
         height:50,
 }
 
+/*
 const formFields = [
         {
                 type:'radio',
@@ -75,7 +73,6 @@ const formFields = [
                 label:'Food allergies',
                 name:'allergies',
         },
-        */
         {
                 type:'checkbox',
                 label:'Have Dance Partner',
@@ -123,6 +120,7 @@ const formFields = [
                 required:true,
         },
 ]
+*/
 
 export const menuList = [
         {
