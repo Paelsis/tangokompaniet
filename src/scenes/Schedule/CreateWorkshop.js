@@ -11,6 +11,12 @@ const PRODUCTION_TABLE='tbl_workshop'
 const RELEASE_LINK='/copyWorkshopTemplate'
 const PRODUCT_TYPE='festival'
 
+const TEXTS = {
+    TITLE:{SV:'Workshops', EN:'Workshops'}
+}
+
+
+
 const COLUMNS=[
 //    {label:'Schedule', name:'scheduleId',  type:'select', tableName:'tbl_schedule_def', selectKey:'scheduleId', selectValue:'scheduleId', hidden:true},    
 //    {label:'Workshop def', name:'workshopId',  type:'select', placeholer:'tbl_workshop_def', selectKey:'workshopId', selectValue:'workshopId'},    
@@ -32,6 +38,7 @@ const COLUMNS=[
 const CreateWorkshop = (props) => (
     <ScheduleCreate
         {...props} 
+        title={TEXTS.TITLE[props.language]}
         tableName={TABLE_NAME} 
         sekectionMenuType={SELECTION_MENU_TYPE.FESTIVAL}
         columns={COLUMNS} 

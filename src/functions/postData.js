@@ -1,10 +1,8 @@
 import axios from 'axios'
 import statusMessage, {STATUS_OK, STATUS_WARNING, STATUS_ERROR} from 'functions/statusMessage'
 
-
 const postData = (url, username, password, data, handleReply) => {
     console.log('--- postData --- url:', url, ' data:', data);
-
     axios.post(url, data, {auth: {username, password}})
     .then(response => {
         const status = response.status?response.status:'No status'

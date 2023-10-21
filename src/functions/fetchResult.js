@@ -1,5 +1,7 @@
 import axios from 'axios'
-const fetchResult = (username, password, url, handleResult) => {
+
+// fetchResult
+export const fetchResult = (username, password, url, handleResult) => {
     // console.log('fetchList: url:' + url);
     // console.log('fetchList: url:' + url + ' username:' + username + ' password:' + password);
     axios({	
@@ -21,4 +23,4 @@ const fetchResult = (username, password, url, handleResult) => {
     });
 }
 
-export default fetchResult;
+//export default fetchResult

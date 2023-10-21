@@ -1,12 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import RenderCoHeader from './RenderCoHeader'
 import RenderCoRegHeader from './RenderCoRegHeader'
-import TextShow from 'Components/Text/TextShow';
-import Button from 'Components/Button';
-import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
-
+import RenderCoRegLine from './RenderCoRegLine'
 import tkColors from 'Settings/tkColors';
-import {renderRegLine} from './RenderCoRegLine'
 
 const background = courseType => {
         switch (courseType) {
@@ -34,7 +30,7 @@ const styles = {
         course: (courseType) =>({
             maxWidth:550,
             height:'min-content',
-            margin:8,
+            margin:4,
             background: background(courseType),
             color:'#f6d8e6',
             //border:'0.001px solid',
@@ -44,8 +40,12 @@ const styles = {
             borderColor:tkColors.Purple.Light,
             borderRadius:12,
         }),
-        regHeader:{
-            color:'white'
+        th:{
+                textAlign:'center',
+                verticalAlign:'middle',
+                padding:2,
+                fontSize:12,
+                color:'white',
         }
 };
     
@@ -57,9 +57,9 @@ export default ({courses, language, setTextId}) => {
         return (
                 <table className="table-schema" key={courses[0].courseId} style={styles.course(courses[0].courseType)}>
                         <RenderCoHeader course = {courses[0]} language={language} handleClick={()=>setTextId(courses[0].textId)}/>    
-                        <RenderCoRegHeader style={styles.regHeader} language = {language} weekend={courses[0].courseType === 'HK'?true:undefined}/>
+                        <RenderCoRegHeader style={styles.th} language = {language} weekend={courses[0].courseType === 'HK'?true:undefined}/>
                         <tbody>
-                                {list.map(course => renderRegLine(course, 'white', language))}  
+                                {list.map(course => <RenderCoRegLine course={course} color='white' language={language} />)}  
                         </tbody>
                 </table>   
         ) 

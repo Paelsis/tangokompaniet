@@ -29,7 +29,7 @@ const LANGUAGE = {
 
 const LanguageButton = ({language, setLanguage, globalStyle}) => {
   const myStyle = it => language===it?styles.contained(globalStyle.color):styles.outlined(globalStyle.color)
-  const languages = [LANGUAGE_SV, LANGUAGE_EN, LANGUAGE_ES]
+  const languages = [LANGUAGE_SV, LANGUAGE_EN]
   return (
     <div>
         {languages.map((it) =>

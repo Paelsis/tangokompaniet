@@ -6,8 +6,8 @@ import tkColors from 'Settings/tkColors';
 import TextShow from 'Components/Text/TextShow';
 import withListFromStore from 'Components/Table/withListFromStore';
 import groupBy from 'functions/groupBy';
-import {renderRegistrationHeader} from './RenderCoRegHeader'
-import {renderRegLine} from './RenderCoRegLine'
+import RenderCoRegHeader from './RenderCoRegHeader'
+import RenderCoRegLine from './RenderCoRegLine'
 
 
 const TEXTS = {
@@ -26,79 +26,30 @@ const TEXTS = {
 let styles = {
     root:{
         position:'relative',
-        margin:0,
         marginRight:'auto',
         marginLeft:'auto',
-        maxWidth:600,
+        maxWidth:700,
     },
-    flatButton:{
-        labelSize:8
-
-    },
-
-    divCourse: {
+    table: {
         marginBottom:25,
+        padding:8,
         marginLeft:'auto',
         marginRight:'auto',
-        background: 'linear-gradient(45deg, #81185B 0%,  #610a41 100%)',
         color:tkColors.Text.Light,
-        border:'0.001px solid',
-        boxShadow:'0 3px 5px 2px ' + '#81185B',
+        background: 'linear-gradient(to bottom right, #81185B, #610a41)',
+        boxShadow:'0 13px 27px -5px ' + tkColors.Purple.Light,
         borderColor:tkColors.Purple.Light,
-    },
-    tbody: {
-     //   border:2, 
-     //   cellpadding:20,
-    },
-    trhead: {
-        height:10,
-        verticalAlign:'top',
-        padding: 5,
-        fontSize: 14,
-    },
-    tr: {
-        padding: 5,
-        fontSize: 12,
-        height:15,
-        verticalAlign:'top',
-    },
-    tdTitle: {
-        verticalAlign:'top',
-        fontSize:14,
-        fontWeight: 'bold',
-    },
-    tdBlank: {
-        verticalAlign:'top',
+        borderRadius:8,
     },
     sid:{
         textAlign:'center',
     },
     th: {
-        verticalAlign:'bottom',
-        paddingLeft: 5,
-        paddingRight: 5,
-        height:12,
-        minWidth:28,
-        fontSize:12,
-        fontWeight: 'lighter',
-    },
-    td: {
-        verticalAlign:'top',
-        padding: 5,
-        minWidth:15,
-    },
-    explanation: {
-        fontSize:15,
-    },
-    tdExplanation: {
-        verticalAlign:'top',
-        padding: 8,
-        color:'gray',
-    },
-    cirklarProgress: {
-        paddingTop:'50%',
+        padding:2,
         textAlign:'center',
-        paddingTop:'50vh',
+        color:'white',
+        verticalAlign:'bottom',
+        fontSize:12,
     },
 };
 
@@ -128,16 +79,18 @@ class ScheduleSingleCourse extends Component {
         return (
                 <>
                    {courses?
-                        <table style={{...styles.divCourse, color:'white'}} >
+                        <table style={styles.table} >
                             <thead>
-                                {renderRegistrationHeader(this.props.language, weekend)}
+                                <RenderCoRegHeader language = {this.props.language} weekend={weekend} style={styles.th} />
                             </thead> 
                             <tbody>
-                                {courses.filter(it => it.active).sort((a,b)=>a.id - b.id).map((co, index) => (renderRegLine(co, tkColors.background, this.props.language)))}
+                                {courses.filter(it => it.active).sort((a,b)=>a.id - b.id).map((co, index) => 
+                                    <RenderCoRegLine course={co} color={tkColors.background} language={this.props.language} />)
+                                }
                             </tbody>
                         </table>
                     :  
-                        <table style={{...styles.divCourse, color:'white'}} >
+                        <table style={{...styles.table}} >
                             <h4 style={{textAlign:'center'}}>Please contact Tangokompaniet for info about schedule</h4>
                         </table>    
                     }

@@ -89,18 +89,19 @@ const descButton = (course, language, handleClick) =>
 const _renderHeaderSmall = (course, handleClick, language) => 
 <tbody>
     <tr style={styles.trTitle}>
-        <td colSpan={5} style={styles.tdTitle}>
+        <td colSpan={4} style={styles.tdTitle}>
             {course['name' + language]} 
         </td>
         {descButton(course, language, handleClick) }
     </tr>    
     <tr style={styles.trTitleSubtext}>
-        <td colSpan={3} style={styles.tdTitle}>
+        <td colSpan={2} style={styles.tdTitle}>
             {TEXTS.price[language]}&nbsp;{course.price}&nbsp;{'SEK'} 
         </td>
-        <td colSpan={3} style={styles.tdTitle}>
+        <td colSpan={2} style={styles.tdTitle}>
             {TEXTS.length[language]}:{course['courseLength' + language]?course['courseLength' + language]:null}
         </td>
+        <td/>
     </tr>    
 </tbody>
 

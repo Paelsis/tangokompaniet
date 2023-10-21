@@ -1,7 +1,7 @@
 import React from 'react';
 import Inventory from 'scenes/Shop/Products/Inventory'
 import GetOrder from 'scenes/School/Registration/GetOrder'
-import Camera from 'Components/Camera'
+import Camera from 'camera/Camera'
 import GetRegistrationBySchedule from 'scenes/School/Registration/GetRegistrationBySchedule'
 import GetRegistrationByCourse from 'scenes/School/Registration/GetRegistrationByCourse'
 import GetRegistrationByTeacher from 'scenes/School/Registration/GetRegistrationByTeacher'
@@ -121,26 +121,26 @@ export const regList = [
 
 export const scheduleList = [   
     { 
-        titleSV:'Skapa kursschema', 
-        titleEN:'Create course schedule', 
+        titleSV:'Kurser', 
+        titleEN:'Courses', 
         titleES:'Horario de curso', 
         component:React.cloneElement(<CreateCourse />),
     },
     { 
-        titleSV:'Skapa workshops', 
-        titleEN:'Create workshop schedule', 
+        titleSV:'Workshops', 
+        titleEN:'Workshops', 
         titleES:'Horario de taller', 
         component:React.cloneElement(<CreateWorkshop />),
     },
     { 
-        titleSV:'Skapa Festivalpaket', 
-        titleEN:'Create package events', 
+        titleSV:'Festivalpaket', 
+        titleEN:'Festival packages', 
         titleES:'Package for event', 
         component:React.cloneElement(<CreatePackage />),
     },
     { 
-        titleSV:'Omläggning av schema', 
-        titleEN:'Reschedule schema', 
+        titleSV:'Omläggning av existierande schema', 
+        titleEN:'Reschedule existing schema', 
         titleES:'Cambio de horario', 
         component:React.cloneElement(<ScheduleChange />),  
     },
@@ -151,7 +151,7 @@ export const cameraList = [
         titleSV:'Generellt (root)', 
         titleEN:'General (root)', 
         titleES:'General (root)', 
-        component:React.cloneElement(<Camera />),
+        component:React.cloneElement(<Camera rootdir=''/>),
     },
     { 
         titleSV:'Lärare', 

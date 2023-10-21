@@ -22,9 +22,15 @@ const COLUMNS=[
     {label:'Sekvens nummer', name:'sequenceNumber',  type:'number', placeholder:'1,2,...N'},    
 ]
 
+const TEXTS = {
+    TITLE:{SV:'Festivalpaket', EN:'Festival packages'}
+}
+
+
 const CreatePackage = (props) => (
     <ScheduleCreate
         {...props} 
+        title={TEXTS.TITLE[props.language]}
         tableName={TABLE_NAME} 
         columns={COLUMNS} 
         selectionMenuType={SELECTION_MENU_TYPE.FESTIVAL}

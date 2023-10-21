@@ -1,12 +1,7 @@
 import React, {useState} from 'react';
-import RenderCoHeader from './RenderCoHeader'
-import RenderCoRegHeader from './RenderCoRegHeader'
 import TextShow from 'Components/Text/TextShow';
 import Button from 'Components/Button';
 import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
-
-import tkColors from 'Settings/tkColors';
-import {renderRegLine} from './RenderCoRegLine'
 
 const background = courseType => {
         switch (courseType) {

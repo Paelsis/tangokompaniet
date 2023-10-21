@@ -1,15 +1,14 @@
 
 // Create REDUX store
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect } from 'react-redux'
+import 'bulma/css/bulma.min.css';
+
 import { Navigate } from 'react-router-dom'
 import {
   BrowserRouter,
   Routes,
   Route,
-  Link,
-  useRouteMatch,
-  useLocation, 
 } from "react-router-dom";
 import {MuiThemeProvider as V0MuiThemeProvider} from 'material-ui/styles';  // Mui theme from material-ui
 import {MuiThemeProvider, createTheme} from '@material-ui/core/styles'
@@ -20,7 +19,6 @@ import LoadRecords from 'Components/Table/loadRecords'
 import MyForm from 'Components/myForm'
 import withListFromStore from 'Components/Table/withListFromStore'
 import trackPathForAnalytics from './functions/trackPathForAnalytics';
-import 'bulma/css/bulma.min.css';
 
 // Login
 import FirebaseSignin from 'login/FirebaseSignin'
@@ -68,6 +66,7 @@ import Studio from 'scenes/Studio/Studio'
 import Course from 'scenes/School/Registration/Course';
 import Vocabulary from 'scenes/School/Vocabulary';
 import CancelRegistration from 'scenes/School/Registration/CancelRegistration';
+import GalleryShoes from 'scenes/Shop/GalleryShoes'
 
 // Schedule
 import ScheduleChange from 'scenes/Schedule/ScheduleChange';
@@ -367,6 +366,7 @@ const App = props => {
                           <Route exact path="/admin" element={<Admin/>} />
                           <Route exact path='/errorPaypal' element={<ErrorPayPal/>} />
                           <Route exact path='/okPaypal' element={<OkPayPal/>} />
+                          <Route exact path="/shoes" element={<GalleryShoes />} />
                           <Route exact path='/paymentAccept/:orderId/:amount/:currency/:language' element={<PaymentAccept/>} />
                           <Route exact path='/paymentCancel/:orderId/:language' element={<PaymentCancel/>} />
                           <Route exact path='/registration/:productType/:productId/:avaStatus' element={<Registration/>} />

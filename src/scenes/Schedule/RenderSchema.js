@@ -2,8 +2,6 @@ import React from 'react';
 import RenderCourses from './RenderCourses'
 import tkColors from 'Settings/tkColors';
 import groupBy from 'functions/groupBy';
-import ShoppingCartButton from 'scenes/Shop/ShoppingCartButton';
-
 
 const background = courseType => {
         switch (courseType) {
@@ -40,6 +38,14 @@ const styles = {
             // fontStyle:'oblique', 
             fontWeight:500, 
         }),
+        th:{        
+            textAlign:'center',
+            color:'white',
+            verticalAlign:'bottom',
+            padding:2,
+            minWidth:28,
+            fontSize:12,
+        },
         scheduleNoBorder:{
             display:'flex',
             flexDirection:'row',
@@ -85,7 +91,7 @@ export default ({courses, courseId, withBorder, language, color, setTextId}) => 
             </div>
             <div style={withBorder?styles.schedule:styles.scheduleNoBorder}> 
                 {courseIds.map(key =>
-                   <RenderCourses courses={courseIdMap.get(key)} language={language} setTextId={setTextId} />
+                   <RenderCourses courses={courseIdMap.get(key)} language={language} setTextId={setTextId} style={styles.th} />
                 )}
             </div>
             </>

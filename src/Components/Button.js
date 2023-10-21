@@ -9,6 +9,7 @@ const _Button = (props) => {
     delete restProps.globalStyle
     return(
         <Button style={buttonStyle} {...restProps}>
+            
             {props.children}
         </Button> 
     )

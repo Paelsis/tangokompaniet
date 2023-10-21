@@ -1,11 +1,14 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'
 import { withBreakpoints } from 'react-breakpoints'
 import {Link} from 'react-router-dom'
 import {tkColors} from 'Settings/tkColors';
 import config, {SHOP_IMAGE_DIR} from 'Settings/config';
 import {FilterList, RemoveDuplicates} from 'scenes/Shop/ProductFilterNew'
 
-const imageUrl=config[process.env.NODE_ENV].apiBaseUrl + SHOP_IMAGE_DIR
+const IMAGE_URL=process.env.REACT_APP_API_BASE_URL + SHOP_IMAGE_DIR
+
+
 
 const styles={
   root:{
@@ -47,6 +50,7 @@ const _width = (breakpoints, currentBreakpoint) =>
   :breakpoints[currentBreakpoint] <= breakpoints.desktopLarge?'12.5%'
   :breakpoints[currentBreakpoint] <= breakpoints.desktopWide?'10%'
   :'12.5%'
+  
 const _height = (breakpoints, currentBreakpoint) =>
   breakpoints[currentBreakpoint] <= breakpoints.mobile?160
   :breakpoints[currentBreakpoint] <= breakpoints.mobileLandscape?220
@@ -69,10 +73,10 @@ const Product = ({width, height, product}) => {
         backgroundColor:backgroundColor,
       },
     }
-
+    const url = IMAGE_URL + product.images[0]
     return(
       <div style={localStyles.container}>
-        <img style={{width:'80%', margin:'10%'}} src={product.productId} alt={'loading ...'} />
+        <img style={{width:'90%'}} src={url} alt={'src'} />
         <div style={styles.containerTitle}>  
           <div style={styles.title} >{product.productId}</div>
         </div>  
@@ -83,22 +87,25 @@ const Product = ({width, height, product}) => {
 // Render Product list with filter for the current productType
 const ProductList = ({breakpoints, currentBreakpoint, list, filterKeys}) => {
   console.log('ProductList: length:', list.length)
-  console.log('imageUrl:', imageUrl)
+  console.log('IMAGE_URL:', IMAGE_URL)
   const uniqueList = RemoveDuplicates(list, 'productId');
   const filterList = FilterList(uniqueList, filterKeys);
   const width = _width(breakpoints, currentBreakpoint)
   const height = _height(breakpoints, currentBreakpoint)
+  const navigate = useNavigate()
   console.log('filtetList:', filterList)
+  const handleClick = productId => navigate('/productshow/' + productId)
+
   return ( 
     <div style={styles.root}>
         {filterList.sort((a,b) => (a.productId.localeCompare(b.productId))).map(it =>
-            <Link to={'/productshow/' + it.productId} >
+            <div onClick={()=>handleClick(it.productId)}>
               <Product 
                 width={width} 
                 height={height} 
                 product={it} 
               />
-            </Link>
+            </div>
         )}
         <div style={{clear:'both'}}/>
     </div>

@@ -30,6 +30,14 @@ const styles = {
     schema:{
         margin:'auto', marginRight:'auto',
     },
+    th:{
+        textAlign:'center',
+        color:'white',
+        verticalAlign:'bottom',
+        padding:2,
+        minWidth:28,
+        fontSize:12,
+    },
     text:{
         width:'80vw',
         fontSize:16,

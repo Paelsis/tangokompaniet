@@ -11,13 +11,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import deleteRow from 'functions/deleteRow'
 import EmailIcon from '@material-ui/icons/Email';
-import {DateToDayname} from 'Settings/Weekdays';
 import TextShow from 'Components/Text/TextShow'
-import {TEXT_EDITOR} from 'Components/Text/TextAndHtmlEditor'
 import {TBL_TEACHER_NOTE} from 'Settings/Const'
 import moment from 'moment-with-locales-es6';
-import fetchList from 'functions/fetchList';
-import fetchResult from 'functions/fetchResult'
+import {serverFetchDataResult} from 'functions/serverFetch'
 import config from 'Settings/config';
 
 const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
@@ -479,7 +476,7 @@ export const View4 = props => {
 
     useEffect(()=>{
         const url = apiBaseUrl + '/getPresenceHistoryMatrix?language=' + language + '&productId=' + productId
-        fetchResult('', '', url, result => {/*alert(JSON.stringify(Object.keys(result)));*/ setMatrix(result?result[productId]?result[productId]:{}:{})})
+        serverFetchDataResult(url, '', '', result => {/*alert(JSON.stringify(Object.keys(result)));*/ setMatrix(result?result[productId]?result[productId]:{}:{})})
     }, [])
     const firstEmail = Object.keys(matrix)[0]
     return (

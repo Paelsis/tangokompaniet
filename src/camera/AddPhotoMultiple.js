@@ -8,11 +8,16 @@ import statusMessage, {STATUS_ERROR} from 'functions/statusMessage'
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
 
-
-const butColor ='#888' 
+const BUTTON_COLOR={DEFAULT:'#888', OK:'green', PROCESSING:'lightGreen', WARNING:'orange', ERROR:'red'}
 
 const styles={
-  button:{color:butColor, width:45, height:45, padding:0, border:0},
+  button: buttonColor=>({
+    color:buttonColor, 
+    width:45, 
+    height:45, 
+    padding:0, 
+    border:0
+  }),
   preview: {
     padding:1, 
     border:2, 
@@ -21,11 +26,12 @@ const styles={
   }
 }
 
+
 class AddPhotoMultiple extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        buttonColor:butColor,
+        buttonColor:BUTTON_COLOR.DEFAULT,
         selectedFiles:[],
         newFileNames: [],
         imagePreviewUrls: [],
@@ -33,10 +39,12 @@ class AddPhotoMultiple extends Component {
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
+
   
     handleSubmit(event) {
       event.preventDefault();
       console.log('files', this.state.selectedFiles)
+      this.setState({buttonColor:BUTTON_COLOR.PROCESSING})
 
       if (this.state.selectedFiles.length > 0) {
         const formData = new FormData()
@@ -50,28 +58,28 @@ class AddPhotoMultiple extends Component {
           formData.append('newfile_arr[]', selectedFile, newFileName)
         } 
         console.log('formData', formData)
-        this.setState({buttonColor:'yellow'})
-        axios.post(apiBaseUrl + '/postImages', formData,
-            {
-                onUploadProgress: progressEvent => {console.log(progressEvent.loaded / progressEvent.total)}
-            }
-        ).then(response => {
-            /*alert(JSON.stringify(response.data)) */
+        this.setState({buttonColor:BUTTON_COLOR.PROCESSING})
+        axios.post(apiBaseUrl + '/postImages', formData, 
+        {
+            onUploadProgress: progressEvent => {console.log(progressEvent.loaded / progressEvent.total); }
+        }).then(response => {
+            /* alert(JSON.stringify(response.data)) */
             if (this.props.addImage) {
               this.state.newFileNames.forEach(it => {
                 this.props.addImage(it)
               }) 
             }
-            this.setState({selectedFiles:[], imagePreviewUrls:[], newFileNames:[], buttonColor:butColor})
+            this.setState({selectedFiles:[], imagePreviewUrls:[], newFileNames:[], buttonColor:BUTTON_COLOR.DEFAULT})
             if (response.data.status ==='OK') {
               this.props.setList(response.data.result)
             } else {
               alert('Posting image failed:' + JSON.stringify(response.data))
             }
         }).catch(error => {
-            alert('ERROR: Failed to post image:' + JSON.stringify(error));
             statusMessage(STATUS_ERROR, 'ERROR: Failed to upload image/s: ' + JSON.stringify(error))
-            this.setState({selectedFiles:[], imagePreviewUrls:[], newFileNames:[], buttonColor:'red'})
+            this.setState({selectedFiles:[], imagePreviewUrls:[], newFileNames:[], buttonColor:BUTTON_COLOR.ERROR})
+
+            alert('ERROR: Failed to post image:' + JSON.stringify(error));
         });
       }
     }
@@ -109,14 +117,14 @@ class AddPhotoMultiple extends Component {
               type="submit" 
               style={{background:'transparent', border:'none'}} 
             >
-              <SaveIcon display='none' style={{...styles.button, color:this.state.buttonColor}} />
+              <SaveIcon display='none' style={styles.button(this.state.buttonColor)} />
             </button>
             <button  
               className='column is-narrow'
               style={{background:'transparent', border:'none'}}
-              onClick={()=>this.setState({selectedFiles: [], imagePreviewUrls:[], newFileNames:[], buttonColor:butColor})}
+              onClick={()=>this.setState({selectedFiles: [], imagePreviewUrls:[], newFileNames:[], buttonColor:BUTTON_COLOR.DEFAULT})}
             >
-              <CancelIcon style={{...styles.button, color:this.state.buttonColor}} />                              
+              <CancelIcon style={styles.button(this.state.buttonColor)} />                              
             </button>
         </form>
       )
@@ -155,7 +163,7 @@ class AddPhotoMultiple extends Component {
             />
             <div>
             <Tooltip title={'Add one or multiple photos from library (max 8 images per upload)'}>
-              <AddAPhotoIcon style={{...this.props.style?this.props.style:styles.button, color:this.state.buttonColor}} onClick={()=>this.fileInput.click()} />
+              <AddAPhotoIcon style={styles.button(this.state.buttonColor)} onClick={()=>this.fileInput.click()} />
             </Tooltip>  
             </div>
           </div>

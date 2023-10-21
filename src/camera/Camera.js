@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import AddPhotoMultiple from 'Components/AddPhotoMultiple';
-import PhotoList from 'Components/PhotoList';
+import AddPhotoMultiple from './AddPhotoMultiple';
+import PhotoList from './PhotoList';
 
 // Camera
 
 
 export default (props) => {
         const [list, setList] = useState([])
-        const rootdir = props.rootdir?props.rootdir:''
-        const subdir = props.subdir?props.subdir:''
+        const {rootdir, subdir} = props
         return(
                 <div style = {{marginLeft:'auto', marginRight:'auto', marginTop:50}} className='columns'>
                         <div className='is-2 column is-narrow'>

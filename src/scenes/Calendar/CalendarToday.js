@@ -48,7 +48,7 @@ const TEXTS = {
         EN:'Next event',
     },
     ONGOING_EVENT:{
-        SV:'Pågåemde dans',
+        SV:'Pågående dans',
         ES:'Ongoing dance',
         EN:'Ongoing dance',
     },

@@ -10,6 +10,10 @@ const TABLE_NAME='tbl_course_template'
 const PRODUCTION_TABLE='tbl_course'
 const RELEASE_LINK='/copySchedule'
 
+const TEXTS = {
+    TITLE:{SV:'Kurser', EN:'Courses'}
+}
+
 const COLUMNS = [
     {label:'Kurs id', name:'courseId', type:'select', tableName:'tbl_course_def', selectKey:'courseId', selectValue:'courseId', required:true},    
     {label:'Lärare 1', name:'teacher1', type:'select', tableName:'v_ref_teacher', selectKey:'shortName', selectValue:'name', required:true},    
@@ -23,10 +27,13 @@ const COLUMNS = [
     {label:'Max followers', name:'maxFollower', type:'number'},    
     {label:'Max total', name:'maxTotal', type:'number'},    
 ]
+
+
  
-const _CreateCourse = (props) => (
+const _CreateCourse = props => (
     <ScheduleCreate 
         {...props} 
+        title={TEXTS.TITLE[props.language]}
         tableName={TABLE_NAME} 
         productionTable={PRODUCTION_TABLE} 
         selectionMenuType={SELECTION_MENU_TYPE.COURSE}
@@ -35,7 +42,7 @@ const _CreateCourse = (props) => (
     />
 )
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         // Note shoppingList is the slice of the store defined by ShoppingCart reducer 
         url:'/admin/tktable?tableName=' + TABLE_NAME,

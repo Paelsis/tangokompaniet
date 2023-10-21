@@ -105,6 +105,7 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
           const calendar = mstart.calendar()
           const dateTimeRange = mstart.format('ddd D MMM H:mm') + ' - ' +  mend.format('ddd D MMM H:mm')
           const timeRange= fullDay?'Full day':(mstart.format('LT') + '-' + mend.format('LT'))
+          const calendarEndTime = mend.format('LT')
           const timeRangeWithDay = dateShift?(mstart.format('dddd LT') + '-' + mend.format('dddd LT')):(mstart.format('dddd LT') + '-' + mend.format('LT'))
           const title = it.summary?it.summary:'No Title'
           const city = cityForEvent(title, location)
@@ -134,6 +135,7 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
             timeRangeWithDay,
             durationHours,
             calendar,
+            calendarEndTime, 
             dateTimeRange,
             endsOtherDay, 
             city,

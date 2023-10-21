@@ -6,36 +6,6 @@ import {LANGUAGE_SV, LANGUAGE_ES, LANGUAGE_EN} from 'redux/actions/actionsLangua
 
 const ZOOM_URL = 'https://zoom.us/join'
 
-let styles = {
-    tr: {
-        padding: 2,
-        verticalAlign:'middle',
-    },
-    td: {
-        padding: 2,
-        verticalAlign:'middle',
-        minWidth:5,
-    },
-    tdAnchor:{
-        verticalAlign:'middle',
-        textDecoration: 'underline', 
-        cursor:'pointer',
-        padding:2,
-    },
-    tdDiamond: {
-        verticalAlign:'middle',
-        textDecoration:'none',
-        cursor:'pointer',
-        color:'yellow',
-    }, 
-    started:{
-        color:'yellow',
-    },
-    button: {
-        fontSize:'small'
-    }
-};
-
 const renderExpandedAddress = course => (
     course?
         <table>
@@ -59,7 +29,7 @@ const renderExpandedAddress = course => (
 const DateTd = ({course, language}) => {
     const started = course.started?language==='SV'?'har startat':'has started':undefined
     const ended = course.ended?language==='SV'?'avslutad':'ended':undefined
-    const style = {...styles.td, color:ended?'red':course.started?'orange':undefined}
+    const style = {color:ended?'red':course.started?'orange':undefined}
     const dt = course.dayOfWeek?course.startDate:'' 
     return(
         <td style={style}>
@@ -72,41 +42,57 @@ const DateTd = ({course, language}) => {
     )    
 }
 
-export const renderRegLine = (course, color, language) => {
-    const range = course.startTime + ' - ' + course.endTime 
+// RenderCoRegLine
+export default ({course, color, language}) => {
+    const range = course.startTime + '-' + course.endTime 
     const weekend = course.courseType === 'HK'
     const adjColor = course.started?color:color    
-    const style={
-      tr:{...styles.tr, color:adjColor},
-      anchor:{...styles.tdAnchor, color:adjColor},
-      button:{...styles.td, color:adjColor, borderColor:adjColor},
+    const styles={
+      tr:{color:adjColor},
+      anchor:{
+        verticalAlign:'middle',
+        textDecoration: 'underline', 
+        cursor:'pointer',
+        padding:2,
+        color:adjColor},
+      button:{
+        color:adjColor, 
+        borderColor:adjColor
+      },
+      tdDiamond: {
+        verticalAlign:'middle',
+        textDecoration:'none',
+        cursor:'pointer',
+        color:'yellow',
+      }, 
     }  
 
     return(
-    <tr style={style.tr}>
-        {weekend?null:
-            <>
-                <td>{weekend?' ':Weekdays[language][course.dayOfWeek-1]}</td>
-                <td>{weekend?' ':range}</td>
-            </>
-        }
-        <td>
-            <a style={style.anchor} href={course.urlLocation} >{course.city?course.city:'   '}</a>
-            &nbsp;
-            {course.online==="1"?<a href={ZOOM_URL} style={styles.tdDiamond}>&#9830;</a>:null}
-        </td>
-        <DateTd  course={course} language={language} />
-        <td>
-            <ExpandTextDialog
-                    shortText={course.teachersShort}
-                    title={course['name' + language] + ' (' + course.city + ' ' + Weekdays[language][course.dayOfWeek-1] + ' ' + course.startTime + ')'}
-                    style={style.tr}
-            >
-                {renderExpandedAddress(course)}
-            </ExpandTextDialog>     
-        </td>  
-        <td><RegistrationButton style={style.button} reg={course} /></td>          
-    </tr>
+        <tr style={styles.tr}>
+            {weekend?null:
+                <>
+                    <td>{weekend?' ':Weekdays[language][course.dayOfWeek-1]}</td>
+                    <td>{weekend?' ':range}</td>
+                </>
+            }
+            <td>
+                <a style={styles.anchor} href={course.urlLocation} >{course.city?course.city:'   '}</a>
+                &nbsp;
+                {course.online==="1"?<a href={ZOOM_URL} style={styles.tdDiamond}>&#9830;</a>:null}
+            </td>
+            <DateTd  course={course} language={language} />
+            <td>
+                <ExpandTextDialog
+                        shortText={course.teachersShort}
+                        title={course['name' + language] + ' (' + course.city + ' ' + Weekdays[language][course.dayOfWeek-1] + ' ' + course.startTime + ')'}
+                        style={styles.tr}
+                >
+                    {renderExpandedAddress(course)}
+                </ExpandTextDialog>     
+            </td>  
+            <td><RegistrationButton style={styles.button} reg={course} /></td>          
+        </tr>
+
     )
 }
 

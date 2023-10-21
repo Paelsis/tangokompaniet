@@ -8,20 +8,25 @@ import postPayload from 'functions/postPayload';
 import ScheduleEdit from './ScheduleEdit'
 import groupBy from 'functions/groupBy';
 import tkColors from 'Settings/tkColors';
-import AddIcon from '@material-ui/icons/NoteAdd';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import UploadFileIcon from '@material-ui/icons/UnarchiveOutlined';
-//import UploadFileIcon from '@material-ui/icons/UploadFile';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import EditOutlinedIcon from '@material-ui/icons/Toc';
+import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/UploadFile';
 import SaveIcon from '@material-ui/icons/Save';
+// import SaveOutlinedIcon from '@material-ui/icons/Save';
 import SaveAsIcon from '@material-ui/icons/SaveOutlined';
+// import SaveAsOutlinedIcon from '@material-ui/icons/SaveAsOutlined';
 import ReleaseIcon from '@material-ui/icons/RedoOutlined';
-import ReleaseDirectIcon from '@material-ui/icons/ArrowForward';
-import FallbackIcon from '@material-ui/icons/UndoOutlined';
+import PublishIcon from '@material-ui/icons/Publish';
+import PublishIconOutlined from '@material-ui/icons/PublishOutlined';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import FallbackIcon from '@material-ui/icons/Undo';
+import DeleteIconOutlined from '@material-ui/icons/DeleteOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
 import Tooltip from '@material-ui/core/Tooltip';
-import ScheduleChange from '../ScheduleChange';
 import {EVENT_TYPE, SELECTION_MENU_TYPE} from 'Settings/Const';
-// import AddCircleIcon from '@mui/icons-material/AddCircle';
+// import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 
 
@@ -30,7 +35,6 @@ const NEW_ACTION="NEW_ACTION"
 const OLD_ACTION="OLD_ACTION"
 const CHANGE_ACTION="CHANGE_ACTION"
 const DELETE_ACTION="DELETE_ACTION"
-const RELEASE_PRODUCTION_ACTION="RELEASE_PRODUCTION_ACTION"
 const DELETE_PRODUCTION_ACTION="DELETE_PRODUCTION_ACTION"
 const TRUNCATE_PRODUCTION_ACTION="TRUNCATE_PRODUCTION_ACTION"
 const DROPDOWN_ACTION="DROPDOWN_ACTION"
@@ -41,6 +45,7 @@ const styles={
         padding:0,
         position:'relative',
         minHeight:'100vh',
+        textAlign:'center',
         backgroundColor:tkColors.background,
         fontSize:14,
     },
@@ -52,12 +57,19 @@ const styles={
         bottom:15,
     },
     selectTemplateName: {
-        textAlign:'left',
+        position:'relative',
+        paddingTop:20, 
+        textAlign:'center',
         verticalAlign:'middle'
+    },
+    tooltip:{
+        fontSize:18,
+        color:'white',
     }
 }
 
-class ScheduleCreate extends Component {
+
+export default class ScheduleCreate extends Component {
 
     static propTypes = {
         username:PropTypes.string.isRequired,
@@ -73,26 +85,29 @@ class ScheduleCreate extends Component {
         super();
         this.state = {  
             edit:false, 
-            templateName:'', 
-            eventType:'',
-            year:'',
+            templateName:undefined, 
+            eventType:undefined,
+            year:undefined,
             action:UNSET_ACTION, 
             prodDDownList:null,
             templateDDownList:null,
             eventTypeDDownList:null,
-
+            buttonColor:'grey',
+            dbSuccess:false,
+            successText:undefined,
         }    
         this.handleSaveTemplate = this.handleSaveTemplate.bind(this)
         this.newTemplate = this.newTemplate.bind(this)
-        this.saveTemplate = this.saveTemplate.bind(this)
-        this.saveTemplateAs = this.saveTemplateAs.bind(this)
         this.renderSelectTemplateName = this.renderSelectTemplateName.bind(this)
         this.setTemplateName = this.setTemplateName.bind(this)
-        this.updateCurrentTemplateName = this.updateCurrentTemplateName.bind(this)
+        this.handleReply = this.handleReply.bind(this)
         this.setAction = this.setAction.bind(this)
-        this.executeDeleteTemplatePRODUCTION = this.executeDeleteTemplatePRODUCTION.bind(this)
-        this.executeDeleteTemplate = this.executeDeleteTemplate.bind(this)
-        this.executeTruncatePRODUCTION = this.executeTruncatePRODUCTION.bind(this)
+        this.handleDeleteTemplate = this.handleDeleteTemplate.bind(this)
+        this.handleDeleteTemplateFromProduction = this.handleDeleteTemplateFromProduction.bind(this)
+        this.handleTruncateTemplatesFromProduction = this.handleTruncateTemplatesFromProduction.bind(this)
+        this.saveTemplate = this.saveTemplate.bind(this)
+        this.saveTemplateAs = this.saveTemplateAs.bind(this)
+        this.saveTemplateAsAndRelease = this.saveTemplateAsAndRelease.bind(this)
     }
 
     fetchAllDropDownLists() {
@@ -138,6 +153,13 @@ class ScheduleCreate extends Component {
         }  
     }   
 
+    handleReply(templateName) {
+        this.setState({buttonColor:'green', dbSuccess:true})
+        setTimeout(() => this.setState({dbSuccess:false, successText:'', buttonColor:'grey'}), 3500);
+        this.fetchAllDropDownLists();
+        this.setState({templateName})
+    }
+
 
     setTemplateName(e) {
         const templateName = e.target.value
@@ -173,21 +195,22 @@ class ScheduleCreate extends Component {
     
 
     handleSaveTemplate(templateName, handleReply) {
-        if ((this.state.year === '' || this.state.eventType === '') && this.props.dontSelectScheduleId === undefined) {
+        if ((this.state.year === undefined || this.state.eventType === undefined) && !!this.props.dontSelectEventTypeAndYear) {
             alert('WARNING: Please choose eventType and year')
             return false
         } else {
             // Take the current entries and save in a new list and shift the template name to the new one
             let addObj
-            if (this.props.dontSelectScheduleId) {
+            if (this.props?this.props.dontSelectEventTypeAndYear:false) {
                 addObj = {templateName}
             } else {
                 addObj = {templateName, eventType:this.state.eventType, year:this.state.year}
             }    
 
-            const inserted=this.props.list.filter(it=>it.templateName === this.state.templateName).map(obj=>({...obj, ...addObj, id:undefined}))
+            const inserted=this.props?this.props.list.filter(it=>it.templateName === this.state.templateName).map(obj=>({...obj, ...addObj, id:undefined})):undefined
 
             if (!this.uniqueCheck(this.props.columns, inserted)) { 
+                alert('WARNING: Unique check failed')
                 return false
             }    
             //alert(JSON.stringify(inserted))
@@ -198,17 +221,16 @@ class ScheduleCreate extends Component {
                 inserted, // Insert
             }
 
-            if (crud.inserted.length===0) {
-                alert('WARNING: No records in insert array. No new records saved database.')
+            if (!crud.inserted) {
+                alert('WARNING: No schedule to save in database.')
             } else {
-                // alert(JSON.stringify(crud))
-                console.log('ScheduleCreate: crud', crud)
+                //alert(JSON.stringify(crud))
                 // Post the updated data to url
                 let url=apiBaseUrl + '/admin/crud'
                 postCrud(url, this.props.username, this.props.password, this.props.tableName, crud, list=>
                 {
-                    this.fetchAllDropDownLists();
                     this.props.setList(list)
+                    this.setState({successText:'Template ' + templateName + ' saved successfully'})
                     handleReply(templateName)
                 })
             }    
@@ -216,10 +238,17 @@ class ScheduleCreate extends Component {
         }
     }
 
-    executeDeleteTemplate(templateName) {
+
+    handleSaveAndRelease(templateName, handleReply) {
+
+        this.setState({successText:'Template saved and released successfully'})
+        this.handleSaveTemplate(templateName, templateName => this.handleReleaseProduction(templateName, handleReply))
+    }    
+
+    handleDeleteTemplate(templateName) {
         //eslint-disable-next-line
         if (!confirm("Are you sure you want to delete template " + templateName + " (y/n) ?")) {
-            this.setState({action:UNSET_ACTION, templateName:'', eventType:'', year:''})
+            this.setState({action:UNSET_ACTION, templateName:undefined, eventType:'', year:''})
             return
         } 
         const crud = { 
@@ -232,17 +261,18 @@ class ScheduleCreate extends Component {
         let url=apiBaseUrl +'/admin/crud'
         postCrud(url, this.props.username, this.props.password, this.props.tableName, crud, list=>
         {
-            console.log('executeDeleteTemplate: list after handleDelete->postCrud:', list)
+            console.log('handleDeleteTemplate: list after handleDelete->postCrud:', list)
             this.props.setList(list.map(it => {delete(it.id);return(it)}));
-            this.setState({action:UNSET_ACTION, templateName:''})
+            this.setState({action:UNSET_ACTION, successText:'Delete of template ' + templateName + ' successful'})
+            this.handleReply(undefined)
         })
     }
 
-    executeDeleteTemplatePRODUCTION(templateName) {
+    handleDeleteTemplateFromProduction(templateName, handleReply) {
         //eslint-disable-next-line
         if (!confirm("Are you sure you want to delete template " + templateName + " ?")) {
             console.log('The production template ' + templateName + ' was not deleted', crud)
-            this.setState({action:UNSET_ACTION, templateName:'', eventType:'', year:''})
+            this.setState({action:UNSET_ACTION, templateName:undefined, eventType:'', year:''})
             return
         } 
         const crud = { 
@@ -258,22 +288,17 @@ class ScheduleCreate extends Component {
             const tableName = this.props.productionTable 
             postCrud(url, this.props.username, this.props.password, tableName, crud, list=>
             {
-                const oldListLength = this.state.prodDDownList.length;
-                console.log('postCrud: list after delete:', list)
-                loadUniqueTemplateList(
-                    this.props.username, 
-                    this.props.password, 
-                    tableName, 
-                    prodDDownList=>this.setState({prodDDownList, action:UNSET_ACTION, templateName:''}));
+                this.setState({action:UNSET_ACTION, successText:'Template ' + templateName + ' removed from production'})
+                handleReply(undefined)
             })
         }    
     }
 
-    executeTruncatePRODUCTION() {
+    handleTruncateTemplatesFromProduction() {
         //eslint-disable-next-line
         if (!confirm("Are you sure you want to delete whole schedule from production ?")) {
             console.log('Production table not truncated since crud action cancelled')
-            this.setState({action:UNSET_ACTION, templateName:''})
+            this.setState({action:UNSET_ACTION, templateName:undefined})
             return
         } 
         const crud = { 
@@ -287,21 +312,14 @@ class ScheduleCreate extends Component {
         postCrud(url, this.props.username, this.props.password, this.props.productionTable, crud, (list)=>
         {
             const oldListLength = this.state.prodDDownList.length;
-            console.log('OLD list.length=', oldListLength)
-            console.log('productionDDist=', this.state.prodDDownList)
-            this.setState({action:UNSET_ACTION, prodDDownList:[], templateName:'', eventType:'', year:''})
+            this.setState({action:UNSET_ACTION, successText:'All templates removed from production'})
+            this.handleReply(undefined)
         })
     }
 
 
-    executeReleasePRODUCTION = (templateName) => {
+    handleReleaseProduction(templateName, handleReply) {
         
-        const found = this.state.templateDDownList.find(it => templateName === it);
-        if (found === undefined) {
-            const strJson = JSON.stringify(this.state.templateDDownList)
-            alert("Template " + templateName + " not found in list of templates stored in " + this.props.tableName + " (strJson" + strJson + ") , Please choose a valid template")
-            this.setState({action:UNSET_ACTION, prodDDownList:[], templateName:'', eventType:'', year:''})
-        } else {
             //eslint-disable-next-line
             if (confirm("Are you sure you want to release template " + templateName +  " to production ?")) {
                 const url=apiBaseUrl + this.props.releaseLink
@@ -311,26 +329,20 @@ class ScheduleCreate extends Component {
                 }
                 postPayload(url, this.props.username, this.props.password, payload, (data)=>
                 {
-                    console.log('return after postPayload, data:', data);
-                    loadUniqueTemplateList(
-                        this.props.username, 
-                        this.props.password, 
-                        this.props.productionTable, 
-                        (prodDDownList)=>this.setState({prodDDownList, action:UNSET_ACTION, templateName:''}));
+                    this.setState({action:UNSET_ACTION, successText:'Template ' + templateName + ' released to production'});
+                    handleReply(undefined)
                 })
-            } else {
-                this.setState({action:UNSET_ACTION, prodDDownList:[], templateName:'', eventType:'', year:''})
-            }   
-        }
+            }
     }
 
-    updateCurrentTemplateName(templateName) {
-        this.setState({templateName})
-    }
 
 
     saveTemplate() {
-        return this.handleSaveTemplate(this.state.templateName, this.updateCurrentTemplateName)    
+        if (this.state.templateName) {
+            return this.handleSaveTemplate(this.state.templateName, this.handleReply)    
+        } else {
+            alert('WARNING: No template name (function: saveTemplate)')
+        }    
     }
 
     saveTemplateAs() {
@@ -341,9 +353,19 @@ class ScheduleCreate extends Component {
                 break
             }
         }    
-        this.handleSaveTemplate(newTemplateName, this.updateCurrentTemplateName)    
+        this.handleSaveTemplate(newTemplateName, this.handleReply)    
     } 
     
+    saveTemplateAsAndRelease() {
+        let newTemplateName = prompt("Save template as:");
+        while (this.props.list.find(it => newTemplateName === it.templateName)!==undefined) {
+            newTemplateName = prompt("Template " + newTemplateName + " already exists. Please use another name:");
+            if (newTemplateName === undefined) {
+                break
+            }
+        }    
+        this.handleSaveAndRelease(newTemplateName, this.handleReply)    
+    } 
 
     setAction(action) {
         this.setState({action})        
@@ -361,7 +383,7 @@ class ScheduleCreate extends Component {
         console.log('New templateName ', templateName)   
     }    
 
-    selectEventTypeAndYear () {
+    setEventTypeAndYear () {
         const currentYear = new Date().getFullYear()
         const years = [0, 1, 2, 3, 4, 5].map(it => currentYear + it)
         return(
@@ -369,7 +391,7 @@ class ScheduleCreate extends Component {
             && this.state.eventTypeDDownList!==null
             && this.state.templateName !==undefined?
             <div>
-                <h3>Select the event and year</h3>
+                <h3 style={{paddingBottom:20}}>Set event and year</h3>
                 <select 
                     style={styles.select}
                     name={'eventType'} 
@@ -425,24 +447,24 @@ class ScheduleCreate extends Component {
                 <>
                 </>
             :this.state.action===OLD_ACTION? 
-                <>
-                <h3>Select old template:</h3>
+                <div style={{paddingBottom:20}}>
+                <h3 style={{paddingBottom:20}}>Select old template:</h3>
                 <select style={styles.select} name={'templateName'} 
-                    value={this.state.templateName?this.state.templateName:''} 
+                    value={''} 
                     onChange={this.setTemplateName}
                 > 
-                    <option value={''} disabled>Choose here</option>
+                    <option value={''} selected disabled>Choose here</option>
                     {this.selectionList(this.props.list, 'templateName').map((it, idx) =>
                         <option key={idx} style={styles.enabled} value={it} disabled={false}>{it}</option>
                     )}  
                 </select>
-                </>
+                </div>
             :this.state.action===DELETE_ACTION?
                 <>
                 <h3>Delete template:</h3>
                 <select style={styles.select} name={'templateName'} 
                     value={''} 
-                    onChange={e=>this.executeDeleteTemplate(e.target.value)}
+                    onChange={e=>this.handleDeleteTemplate(e.target.value)}
                 > 
                     <option value='' selected disabled>Choose here</option>
                     {this.selectionList(this.props.list, 'templateName').map((it, idx) =>
@@ -450,23 +472,10 @@ class ScheduleCreate extends Component {
                     )}  
                 </select>
                 </>
-            :this.state.action===RELEASE_PRODUCTION_ACTION ?
-                <>
-                    <h3>Release template to PRODUCTION:</h3>
-                    <select style={styles.select} name={'templateName'} 
-                        value={''} 
-                        onChange={e => this.executeReleasePRODUCTION(e.target.value)}
-                    > 
-                        <option value='' selected disabled>Choose here</option>
-                        {this.selectionList(this.props.list, 'templateName').map((it, idx) =>
-                            <option key={idx} style={styles.enabled} value={it} disabled={false}>{it}</option>
-                        )}  
-                    </select>
-                </>
             :this.state.action===DELETE_PRODUCTION_ACTION && this.state.prodDDownList?
                 <>
                 <h3>Delete single template from production:</h3>
-                <select style={styles.select} name={'templateName'} value={this.state.templateName?this.state.templateName:''} onChange={e=>this.executeDeleteTemplatePRODUCTION(e.target.value)}> 
+                <select style={styles.select} name={'templateName'} value={this.state.templateName?this.state.templateName:undefined} onChange={e=>this.handleDeleteTemplateFromProduction(e.target.value, this.handleReply)}> 
                     <option value='' selected disabled>Choose here</option>
                     {this.state.prodDDownList.map((it, idx) =>
                         <option key={idx} style={styles.enabled} value={it} disabled={false}>{it}</option>
@@ -477,7 +486,7 @@ class ScheduleCreate extends Component {
                     
     </div>
 
-    _List = (columns) => {
+    _List = columns => {
         const filterList=this.props.list.filter(it => it.templateName === this.state.templateName)
         return(
             (this.state.action === OLD_ACTION || this.state.action === NEW_ACTION)?
@@ -496,44 +505,66 @@ class ScheduleCreate extends Component {
     }     
 
     render = () =>{
-        const columns=this.props.columns;
+        const columns=this.props.columns
+        const buttonStyle={color:this.state.buttonColor}
+        const dontSelectEventTypeAndYear = this.props.dontSelectEventTypeAndYear
         return(
             <div style={styles.root}>
-                <Tooltip title={'Create new template'}><AddIcon style={{color:'green'}} onClick={this.newTemplate} /></Tooltip>&nbsp;
-                <Tooltip title={'Edit existing template'}><UploadFileIcon style={{color:'green'}} onClick={()=>this.setAction(OLD_ACTION)}/></Tooltip>&nbsp;
-                <Tooltip title={'Save template'}><SaveIcon  style={{color:'green'}} onClick={this.saveTemplate}/></Tooltip>&nbsp;
+                <h1>{this.props.title?this.props.title:'No title'}</h1>
+                <Tooltip title={<h4 style={styles.tooltip}>Edit existing template</h4>} style={styles.tooltip}>
+                    <EditOutlinedIcon style={buttonStyle} onClick={()=>this.setAction(OLD_ACTION)}/>
+                </Tooltip>&nbsp;
+                <Tooltip title={<h4 style={styles.tooltip}>Create a new template</h4>} style={styles.tooltip}>
+                    <NoteAddIcon style={buttonStyle} onClick={this.newTemplate} />
+                </Tooltip>&nbsp;
+                <Tooltip title={<h4 style={styles.tooltip}>Save template</h4>} style={styles.tooltip}>
+                    <SaveIcon  style={buttonStyle} onClick={()=>this.handleSaveTemplate(this.state.templateName, this.handleReply)}/>
+                </Tooltip>&nbsp;
+                <Tooltip title={<h4 style={styles.tooltip}>Save template and release it to production</h4>} style={styles.tooltip}>
+                    <PublishIcon style={buttonStyle} onClick={()=>this.handleSaveAndRelease(this.state.templateName, this.handleReply)}/>
+                </Tooltip>&nbsp;
 
                 {this.state.action === OLD_ACTION||NEW_ACTION?
-                    <Tooltip title={'Save template with a new template name'}><SaveAsIcon style={{color:'green'}} onClick={this.saveTemplateAs}/></Tooltip>
-                :
-                    null
+                    <>
+                        <Tooltip title={<h4 style={styles.tooltip}>Save template with new name</h4>} style={styles.tooltip}>
+                            <SaveAsIcon style={buttonStyle} onClick={this.saveTemplateAs}/>
+                        </Tooltip>
+                        <Tooltip title={<h4 style={styles.tooltip}>Save template with new name and release it to production</h4>} style={styles.tooltip}>
+                            <PublishIconOutlined style={buttonStyle} onClick={this.saveTemplateAsAndRelease}/>
+                        </Tooltip>
+                    &nbsp;
+                    </>
+                    :
+                        null
                 }
-                <Tooltip title={'Delete template'}><DeleteIcon style={{color:'red'}}onClick={()=>this.setAction(DELETE_ACTION)}/></Tooltip>&nbsp;
 
                 &nbsp;&nbsp;&nbsp;&nbsp;    
                 &nbsp;
-                <Tooltip title={'Choose template from picklist and release it to production'}><ReleaseIcon style={{color:'green'}} onClick={()=>this.setAction(RELEASE_PRODUCTION_ACTION)}/></Tooltip>&nbsp;
-                <Tooltip title={'Choose template from picklist and delete it from production'}><FallbackIcon style={{color:'orange'}}onClick={()=>this.setAction(DELETE_PRODUCTION_ACTION)}/></Tooltip>
-                <Tooltip title={'Remove all templates from production'}><DeleteSweepIcon style={{color:'red'}}onClick={()=>this.executeTruncatePRODUCTION()}/></Tooltip>
+                <Tooltip title={<h4 style={styles.tooltip}>Remove template</h4>} style={styles.tooltip}>
+                    <DeleteIconOutlined style={buttonStyle} onClick={()=>this.setAction(DELETE_ACTION)}/>
+                </Tooltip>&nbsp;
+                <Tooltip title={<h4 style={styles.tooltip}>Remove single template from production</h4>} style={styles.tooltip}>
+                    <DeleteIcon style={buttonStyle} onClick={()=>this.setAction(DELETE_PRODUCTION_ACTION)}/>
+                </Tooltip>
+                <Tooltip title={<h4 style={styles.tooltip}>Remove all templates from production</h4>} style={styles.tooltip}>
+                    <DeleteSweepIcon style={buttonStyle} onClick={()=>this.handleTruncateTemplatesFromProduction()}/>
+                </Tooltip>
 
+                {this.state.dbSuccess?<h4 style={{color:this.state.buttonColor}}>{this.state.successText}</h4>:null}
                 <div style={{marginBottom:10}} />
 
-                {this.state.action === CHANGE_ACTION?
-                    <ScheduleChange />
-                :    
-                    <div>        
-                        <div style={{color:tkColors.Purple.Light}}>
-                            {this.renderSelectTemplateName()}
-                        </div>
-                        <div style={{color:tkColors.Purple.Light}}>
-                            {this.props.dontSelectScheduleId===undefined?this.selectEventTypeAndYear():null}
-                        </div>
-                        {this.state.eventType !== undefined?
-                            this.state.action !== UNSET_ACTION?this._List(columns):null
-                            :null
-                        }
+                <div>        
+                    <div style={{color:tkColors.Purple.Light}}>
+                        {this.renderSelectTemplateName()}
                     </div>
-                }    
+                    <div style={{color:tkColors.Purple.Light}}>
+                        {dontSelectEventTypeAndYear?null:this.setEventTypeAndYear()}
+                    </div>
+                    {this.state.eventType !== undefined?
+                        this.state.action !== UNSET_ACTION?this._List(columns):null
+                        :null
+                    }
+                </div>
             </div>
         )
     }
@@ -541,11 +572,9 @@ class ScheduleCreate extends Component {
 /*
 {this.state.action !== UNSET_ACTION?
     <Tooltip title={'Release this template to production'}>
-        <ReleaseDirectIcon style={{color:'red'}} onClick={()=>this.handleSaveTemplate(this.state.templateName, templateName => this.executeReleasePRODUCTION(templateName))} />
+        <ReleaseDirectIcon style={{color:'red'}} onClick={()=>this.handleSaveTemplate(this.state.templateName, templateName => this.handleReleaseProduction(templateName))} />
     </Tooltip>
 :null}                                    
 */
-//<Tooltip title={'Change existing schedule'}><UploadFileIconOutlined onClick={()=>this.setAction(CHANGE_ACTION)}/></Tooltip>&nbsp;
 
 
-export default ScheduleCreate

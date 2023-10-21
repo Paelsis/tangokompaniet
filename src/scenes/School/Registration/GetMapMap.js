@@ -1,7 +1,6 @@
 import React from 'react';
 import MapMapHeader from './MapMapHeader'
 import groupBy from 'functions/groupBy';
-import compareByMultiple from 'functions/compareByMultiple';
 
 const sortList = (list, sortField) => { 
     return sortField?list.length>0?list[0][sortField]?list.sort((a,b) => a[sortField].localeCompare(b[sortField]))

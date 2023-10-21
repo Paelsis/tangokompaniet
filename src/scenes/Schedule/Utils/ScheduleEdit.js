@@ -410,13 +410,14 @@ _List = () => (
     return(
         this.props.templateName?
           <div style={styles.root}>
+            <div style={{height:30}} />  
             <h2 style={styles.header}>
               Template: {this.props.templateName}
             </h2>
-              <div>  
-                {this._AddRow()}  
-                {this._List()}
-              </div>
+            <div>  
+              {this._AddRow()}  
+              {this._List()}
+            </div>
         </div>                   
       :null
     )  

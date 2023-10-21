@@ -274,7 +274,7 @@ class Registration extends React.Component {
                 <div style={styles.root}>
                     {reg?
                         this.state.serverReady===true?
-                            <div id='success' style = {{color:tkCb .gitolors.Purple.Light, verticalAlign:'middle'}}>
+                            <div id='success' style = {{color:tkColors.Purple.Light, verticalAlign:'middle'}}>
                                 <h3>
                                     {this.state.textOK}
                                 </h3>

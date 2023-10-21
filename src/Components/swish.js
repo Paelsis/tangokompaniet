@@ -1,6 +1,7 @@
 import axios from 'axios'
 import statusMessage, {STATUS_OK, STATUS_WARNING, STATUS_ERROR} from 'functions/statusMessage'
 
+//' -H "Content-Type: application/json" POST https://mss.cpc.getswish.net/swish-cpcapi/api/v1/paymentrequests --cert "Swish Merchant Test Certificate 1231181189.p12:swish" --cert-type p12 --cacert "Swish TLS Root CA.pem
 
 const swishRequestupdateRecord = (event, url, username, password, name, data) => {
     
@@ -11,7 +12,7 @@ const swishRequestupdateRecord = (event, url, username, password, name, data) =>
         "amount": "100", 
         "currency": "SEK", 
         "message": "Kingston USB Flash Drive 8 GB" 
-    }' -H "Content-Type: application/json" POST https://mss.cpc.getswish.net/swish-cpcapi/api/v1/paymentrequests --cert "Swish Merchant Test Certificate 1231181189.p12:swish" --cert-type p12 --cacert "Swish TLS Root CA.pem
+    }
     console.log('Function updateRecord')
     axios.put(url, {
         auth: {
