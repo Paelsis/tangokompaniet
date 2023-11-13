@@ -407,7 +407,9 @@ export const View2 = props => {
 
 export const View3 = props => {
     const {list, edit} = props
-    const productId = list[0].productId
+    const productId = list[list.length -1].productId
+    const courseName = list[list.length -1].courseName 
+
     const [value, setValue] = useState({courseDate:moment().format('YYYY-MM-DD'), textId:productId, textBody:undefined})
     const handleChange = e => {
         setValue({...value, [e.target.name]:e.target.value})
@@ -415,27 +417,22 @@ export const View3 = props => {
     const handleSubmit = e => {
         e.preventDefault()
         const adjValue = {
-            groupId:'PRESENCE',
-            textId:productId + value.courseDate,
+            productId,
+            courseName,
+            courseDate:value.courseDate,
             textBody:value.textBody,
         }
-//        if (adjValue.textBody?adjValue.textBody.length > 0?true:false:false) {
-            props.replaceRow(adjValue)
-            setValue({...value, textBody:undefined})
-            /*
-        } else {
-            alert('Please fill in textBody before Save')
-        }   
-        */
+        alert(JSON.stringify(adjValue))
+        props.replaceRow(adjValue)
+        setValue({...value, textBody:undefined})
     }
 
     const style = {fontSize:'normal',padding: "12px 20px", margin: "8px 0", boxSizing: "border-box"}
-    const textId = productId  + value.courseDate
 
     return (
         <div style={{width:'100%'}}>
-        <form onSubmit={handleSubmit}>      
-                <div style={{display:'flex',  justifyContent:'flexStart' , flexDirection:'column', width:'50vw', marginLeft:50}}>
+            <form onSubmit={handleSubmit}>      
+                <div style={{display:'flex',  justifyContent:'flexStart' , flexDirection:'column', width:'80vw', marginLeft:50}}>
                     <div style={{marginTop:5, marginBottom:5}}>
                         <label>Course date:&nbsp;
                             <input type="date" name='courseDate' value={value.courseDate} onChange={handleChange} />                     <p/>   

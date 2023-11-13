@@ -83,8 +83,10 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
         let isLightColor = false
 
         JSON.parse(resp.text).items.map((it) => {
-          const start = it.start.dateTime?it.start.dateTime:it.start.date
-          const end = it.end.dateTime?it.end.dateTime:it.end.date
+          const start = Date.parse(it.start.dateTime?it.start.dateTime:it.start.date)
+          const end = Date.parse(it.end.dateTime?it.end.dateTime:it.end.date)
+
+
           const mstart = moment(start)
           const mend = moment(end)
           const timeStart = mstart.format('LT')

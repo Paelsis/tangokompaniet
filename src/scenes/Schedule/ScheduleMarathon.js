@@ -12,7 +12,7 @@ import QrCode from 'Components/QrCode'
 
 const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
 const CREATE_REG_URL = apiBaseUrl + '/createRegistrationMarathon'
-const SCHEDULE_EVENT_MARATHON_URL = apiBaseUrl + "/scheduleEvent"
+const SCHEDULE_EVENT_URL = apiBaseUrl + "/scheduleEvent"
 const FORM_FIELDS_URL = apiBaseUrl + "/formFields"
 const VIEW_MARATHON_COUNT = apiBaseUrl + "/marathonCount"
 
@@ -95,7 +95,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
     const handleReply = data => {setStep(data.status==='OK'?STEPS.SUCCESS:STEPS.FAILED); setData(data)}
 
     useEffect(()=>{
-        fetchList('', '', SCHEDULE_EVENT_MARATHON_URL + "?eventType=" + eventType, 
+        fetchList('', '', SCHEDULE_EVENT_URL + "?eventType=" + eventType, 
             result =>
             {
                 const sched = Array.isArray(result)?result[0]:result
@@ -177,7 +177,9 @@ const ScheduleMarathon = ({language, globalStyle}) => {
                         <div style={{...styles.text, fontWeight:'bold', fontSize:20, color:'darkOrange'}}>{TEXTS.CANCEL[language]}</div>
                         <h3 >Please check your mailbox (or spam mailbox) for confirmation of your registration.</h3>
                         <TextShow style={styles.legal(globalStyle.color)} url={'/getTexts'} groupId={eventType} textId={'LEGAL'} language={language}></TextShow>
+                        {schedule.QRcode?
                         <QrCode price={schedule.amount} message={eventType  + '-' +  schedule.dateRange.substring(0, 7) + '-' + data.orderId} color={globalStyle.color} />
+                        :null}
                     </div>
                     {data.mailStatus === 'ERROR'?
                             <div style={{color:'red', border:'5px solid red'}}>

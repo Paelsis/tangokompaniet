@@ -5,7 +5,7 @@ import lightGreen from '@material-ui/core/colors/lightGreen';
 import {TBL_TEACHER_NOTE} from 'Settings/Const'
 import { View2 } from 'Settings/UtilsMap';
 
-const GROUP_BY_DEF_ARR = (language) => [
+const GROUP_BY_DEF_ARR = [
     {
         groupByField:'scheduleId', 
         headerFields:['scheduleName'],
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => {
         password: state.user.password,
         language: state.language,
         url:'/getPresence?language=' + state.language,
-        groupByDefArr:GROUP_BY_DEF_ARR(state.language),
+        groupByDefArr:GROUP_BY_DEF_ARR,
         urlUpdateAll:'/admin/updateRowsInPresence',
         viewComponent:View2,
         viewFields:VIEW_FIELDS,

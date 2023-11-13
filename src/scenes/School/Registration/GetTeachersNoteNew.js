@@ -3,7 +3,7 @@ import withRecords from 'Components/Table/withRecords';
 import GetRegistrationMapMap from './GetRegistrationMapMap'
 import orange from '@material-ui/core/colors/orange';
 import {TBL_TEACHER_NOTE} from 'Settings/Const'
-import { View1, View3 } from 'Settings/UtilsMap';
+import { View3 } from 'Settings/UtilsMap';
 
 const GROUP_BY_DEF_ARR= (language) => [
     {
@@ -28,7 +28,7 @@ const GROUP_BY_DEF_ARR= (language) => [
     },    
     {
         groupByField:'productId',
-        headerFields:['courseName', 'dayname', 'time', 'siteName', 'startDate'], 
+        headerFields:['courseName', 'courseId', 'dayname', 'startTime', 'siteName', 'startDate'], 
         listSortBy:['courseDate'],
         headerProps:{
             open:{
@@ -45,10 +45,10 @@ const GROUP_BY_DEF_ARR= (language) => [
         }    
     },
 ];
-const VIEW_FIELDS=['courseDateForDisplay', 'textBody'];
-const VIEW_FIELDS_EXPAND=['courseDateForDisplay', 'textBody'];
+const VIEW_FIELDS=['courseDate', 'textBody'];
+const VIEW_FIELDS_EXPAND=['courseDate', 'textBody'];
 const UPDATE_VIEW=['textBody']
-const UPDATE_FIELDS=['groupId', 'textId', 'textBody'];
+const UPDATE_FIELDS=['productId', 'courseName', 'courseDate', 'textBody'];
 const mapStateToProps = (state) => {
     return {
         username: state.user.username,

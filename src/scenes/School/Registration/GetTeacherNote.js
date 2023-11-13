@@ -28,7 +28,7 @@ const GROUP_BY_DEF_ARR= (language) => [
     },    
     {
         groupByField:'productId',
-        headerFields:['courseName', 'dayname', 'time', 'siteName', 'startDate'], 
+        headerFields:['courseName', 'courseId', 'dayname', 'startTime', 'siteName', 'startDate'], 
         listSortBy:['textId'],
         headerProps:{
             open:{
@@ -50,7 +50,6 @@ const VIEW_FIELDS=['courseDate', 'textBody'];
 const VIEW_FIELDS_EXPAND=['courseDate', 'textBody'];
 const UPDATE_VIEW=['courseDate', 'textBody'];
 const UPDATE_FIELDS=['textBody'];
-const PRESENCE = 'PRESENCE'
 
 const mapStateToProps = (state) => {
     return {
