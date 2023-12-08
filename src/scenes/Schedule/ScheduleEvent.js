@@ -213,6 +213,7 @@ class Schedule extends Component {
             productList:[],
             formFields:[],
             amount:0,
+            includePaymentInfo:true,
             pressed:false,
         };
         this.toggleProduct = this.toggleProduct.bind(this)
@@ -257,6 +258,7 @@ class Schedule extends Component {
                         startDate:schedule.startDate, 
                         startTime:schedule.startTime, 
                         year:schedule.year, 
+                        includePaymentInfo:schedule.includePaymentInfo, 
                         emailResponsible:schedule.emailResponsible,
                         replyImage:schedule.replyImage,
                         imageUrl:schedule.replyImage?imageUrlFunc(schedule.replyImage):'No reply image',
@@ -626,6 +628,8 @@ class Schedule extends Component {
             emailResponsible:this.state.emailResponsible?this.state.emailResponsible:'No email respoinsible', 
             imageUrl:this.state.imageUrl,
             amount:this.state.amount,
+            color:this.state.color,
+            includePaymentInfo:this.state.includePaymentInfo,            
             extendedProductList:this.extendedProductList(reg)
         })
     }    

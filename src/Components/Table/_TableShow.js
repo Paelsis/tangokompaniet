@@ -8,6 +8,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import EmailIcon from '@material-ui/icons/Email'
 import SearchIcon from '@material-ui/icons/Search'
 import CancelIcon from '@material-ui/icons/Cancel'
+import ReactRte from 'react-rte';
+
+const TEXTAREA_FIELDS=['textBody']
 
 const styles = {
     root:{
@@ -29,7 +32,7 @@ const styles = {
         maxLength:20
     },
     add: {
-        fontSize:20,
+        fontSize:18,
         background:'lightGreen'
     },
     search: {
@@ -37,15 +40,32 @@ const styles = {
     }
 }
 
-const RenderEdit = ({record, handleChange, handleSave, handleCancel}) => {
+const Rte = ({value, handleSave}) => {
+    const [rteValue, setRteValue] = useState({})
+    return(
+        <ReactRte 
+                value={rteValue} onChange={val => setRteValue(val)}
+        />
+    )
+}
 
+const RenderEdit = ({record, handleChange, handleSave, handleCancel}) => {
     return(
         record?
             <div style={styles.root}>
                 {Object.entries(record).filter(it=>it[0] !== 'id' && it[0].indexOf('Timestamp') === -1).map(it=>
-                    <tr style={{fontSize:20}}>
-                        <td>{it[0]}</td>
-                        <td><input  style={styles.add} type='text' name={it[0]} placeholder={it[0]} value = {it[1]} onChange={handleChange}/></td>
+                    <tr style={{fontSize:18}}>
+                            <>
+                            <td>{it[0]}</td>
+
+                            <td>
+                            {TEXTAREA_FIELDS.includes(it[0])?
+                                <textarea style={styles.add} rows={3} columns={50} name={it[0]} placeholder={it[0]} value = {it[1]} onChange={handleChange}/>
+                            :
+                                <input style={styles.add} type={'text'} name={it[0]} placeholder={it[0]} value = {it[1]} onChange={handleChange}/>
+                            }    
+                            </td>
+                            </>
                     </tr>
                 )}       
                 <td>
@@ -105,7 +125,7 @@ const SearchValue = ({fld, search, setSearch}) => {
     )    
 }
 
-const RenderTable = ({list, filterList, handleEdit, handleDelete, search, setSearch, handleSearch, handleComment}) =>
+const RenderTable = ({list, filterList, handleEdit, handleDelete, search, setSearch, handleFilter, handleComment}) =>
     <table style={{...styles.root, border:'1px solid lightGrey', margin:10}} >
         <thead>
             <tr>
@@ -113,11 +133,11 @@ const RenderTable = ({list, filterList, handleEdit, handleDelete, search, setSea
                     <Tooltip title={handleComment(it)}>  
                         <HeaderValue list={list} fld={it?it:'No name'} comment={handleComment(it)}/>
                     </Tooltip>
-            )}    
+                )}    
             </tr>
             <tr>
                 {Object.entries(list[0]).filter(it=>it[0]!=='id').map(it=><SearchValue fld={it?it[0]?it[0]:'No name':'No object'} search={search} setSearch={setSearch} />)}
-                {<th><SearchIcon onClick={handleSearch} /></th>}
+                {<th><SearchIcon onClick={handleFilter} /></th>}
             </tr>
         </thead>          
         <tbody>
@@ -139,10 +159,15 @@ const RenderTable = ({list, filterList, handleEdit, handleDelete, search, setSea
 
 export default ({table, list, setList, columns, style}) => {
     const [record, setRecord] = useState(undefined)
+    const [recordRte, setRecordRte] = useState(undefined)
     const [search, setSearch] = useState({})
     const [filterList, setFilterList] = useState()
 
-    useEffect(()=>setRecord(undefined), [columns])
+    useEffect(()=>{
+        setRecord(undefined)
+        setFilterList(undefined)
+        setSearch({})
+    },[table])
 
     const columnsToObject = columns => {
         let obj = {}
@@ -161,6 +186,7 @@ export default ({table, list, setList, columns, style}) => {
         if (data.status === 'OK') {
             if (data.list !== undefined) {
                 setList(data.list) 
+                handleFilter(data.list)
             } else {
                 alert('Delete successful but the reply is missing value data.list, data:' + JSON.stringify(data))    
             }    
@@ -178,7 +204,7 @@ export default ({table, list, setList, columns, style}) => {
         if (data.status === 'OK') {
             if (data.list !== undefined) {
                 setList(data.list) 
-                setFilterList(undefined)
+                handleFilter(data.list)
             } else {
                 alert('Replace successful but the reply is missing value data.list, data:' + JSON.stringify(data))    
             }    
@@ -189,17 +215,8 @@ export default ({table, list, setList, columns, style}) => {
 
     const handleReplaceReply = data => {
         if (data.status === 'OK') {
-            if (data.record) {
-                setList(list.map(it=> {
-                    if (it.id === data.record.id) {
-                        return {...it, ...data.record}
-                    } else {
-                        return it
-                    } 
-                })) 
-            } else {
-                alert('Replace successful but the reply is missing value data.record, data:' + JSON.stringify(data))    
-            }       
+            setList(data.list)
+            handleFilter(data.list)
         } else {
             alert('Failed to replace row, result:' + JSON.stringify(data))    
         }
@@ -213,7 +230,7 @@ export default ({table, list, setList, columns, style}) => {
             // alert('change row:' + JSON.stringify(record))
             replaceRow(table, record, handleReplaceReply)
         }   
-            // Replace row in database
+        // Replace row in database
         setRecord(undefined)
     }
 
@@ -221,12 +238,16 @@ export default ({table, list, setList, columns, style}) => {
         setRecord({...record, [e.target.name]:e.target.value})
     }
 
+    const handleChangeRte = (key, val) => {
+        setRecordRte({...recordRte, [key]:val})
+    }
+
     const handleCancel = e => {
         setRecord(undefined)
     }
 
 
-    const handleSearch = () => {
+    const handleFilter = list => {
         let filterList = list
         const first = list[0] 
         Object.entries(search).forEach(it => {
@@ -259,6 +280,7 @@ export default ({table, list, setList, columns, style}) => {
                 <RenderEdit 
                     record={record} 
                     handleChange={handleChange} 
+                    handleChangeRte={handleChangeRte} 
                     handleSave={handleSave} 
                     handleCancel={handleCancel}
                     />
@@ -272,7 +294,7 @@ export default ({table, list, setList, columns, style}) => {
                         filterList={filterList?filterList:list} 
                         search={search}
                         setSearch={setSearch}
-                        handleSearch={handleSearch}
+                        handleFilter={()=>handleFilter(list)}
                         handleEdit={row=>setRecord(row)} 
                         handleDelete={handleDelete} 
                         handleComment={handleComment} 

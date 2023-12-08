@@ -9,12 +9,7 @@ import config from 'Settings/config';
 import {EVENT_TYPE} from 'Settings/Const'
 import QrCode from 'Components/QrCode'
 
-
 const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
-const CREATE_REG_URL = apiBaseUrl + '/createRegistrationMarathon'
-const SCHEDULE_EVENT_URL = apiBaseUrl + "/scheduleEvent"
-const FORM_FIELDS_URL = apiBaseUrl + "/formFields"
-const VIEW_MARATHON_COUNT = apiBaseUrl + "/marathonCount"
 
 //const imageUrlFunc = replyImage => apiBaseUrl + '/' + replyImage
 const imageUrlFunc = replyImage => replyImage.toLowerCase().indexOf('http')!==-1?replyImage
@@ -37,7 +32,7 @@ const styles = {
     registration:(color) => ({
         //paddingLeft:'5%',
         display:'inline-block',
-        width:'70%',
+        width:'80%',
         marginLeft:'5%',
         color:color?color:'red',
         padding:20,
@@ -95,6 +90,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
     const handleReply = data => {setStep(data.status==='OK'?STEPS.SUCCESS:STEPS.FAILED); setData(data)}
 
     useEffect(()=>{
+        const SCHEDULE_EVENT_URL = apiBaseUrl + "/scheduleEvent"
         fetchList('', '', SCHEDULE_EVENT_URL + "?eventType=" + eventType, 
             result =>
             {
@@ -110,6 +106,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
             }
         )    
 
+        const FORM_FIELDS_URL = apiBaseUrl + "/formFields"
         fetchList('', '', FORM_FIELDS_URL + '?formName=' + eventType, 
             result =>
             {
@@ -120,6 +117,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
                 }
             }
         )
+        const VIEW_MARATHON_COUNT = apiBaseUrl + "/marathonCount"
         fetchList('', '', VIEW_MARATHON_COUNT, 
         result =>
         {
@@ -134,6 +132,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
     }, [])
 
     const handleRegistration= (reg) => {
+        const CREATE_REG_URL = apiBaseUrl + '/createRegistrationMarathon'
         console.log('REGISTRATION:', reg)
         postData(CREATE_REG_URL, '', '', reg, handleReply);
     }
@@ -146,8 +145,10 @@ const ScheduleMarathon = ({language, globalStyle}) => {
             dateRange:schedule.dateRange, 
             emailResponsible:schedule.emailResponsible?schedule.emailResponsible:'marathon@tangokompaniet.com', 
             year:schedule.year, 
+            includePaymentInfo:schedule.includePaymentInfo,            
             amount:schedule.amount,
             imageUrl:schedule.imageUrl,
+            color:globalStyle.color,
         }
         handleRegistration(expandedReg)
     }
@@ -165,7 +166,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
                 <div style={styles.registration(globalStyle.color?globalStyle.color:'red')}>
 
                     <h4>Registration marathon {schedule.dateRange}</h4>
-                        {schedule.avaStatusText[language]?<h2>{schedule.avaStatusText[language]}&nbsp;({schedule.avaStatus})</h2>:<h3>Open</h3>}
+                        {schedule.avaStatusText[language]?<h2>{schedule.avaStatusText[language]}&nbsp;({schedule.status})</h2>:<h3>Open</h3>}
                         <FormTemplate schedule={schedule} fields={formFields} handleSubmit={handleSubmit}/>
                     <p/>
                 </div>
@@ -177,7 +178,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
                         <div style={{...styles.text, fontWeight:'bold', fontSize:20, color:'darkOrange'}}>{TEXTS.CANCEL[language]}</div>
                         <h3 >Please check your mailbox (or spam mailbox) for confirmation of your registration.</h3>
                         <TextShow style={styles.legal(globalStyle.color)} url={'/getTexts'} groupId={eventType} textId={'LEGAL'} language={language}></TextShow>
-                        {schedule.QRcode?
+                        {schedule.includePaymentInfo?
                         <QrCode price={schedule.amount} message={eventType  + '-' +  schedule.dateRange.substring(0, 7) + '-' + data.orderId} color={globalStyle.color} />
                         :null}
                     </div>

@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import SaveIcon from '@material-ui/icons/Save';
 import tkColors from 'Settings/tkColors';
 
-const RichReactRte = props => {
+const RichTextEditor = props => {
   const [value, setValue] = useState(ReactRte.createValueFromString(props.value, 'html'))
   const [edit, setEdit] = useState(props.edit?props.edit:false)
 
@@ -37,5 +37,12 @@ const RichReactRte = props => {
   )
 }
 
-export default RichReactRte
+export const Edit = props => {
+  const {value, setValue} = props
+  return (
+        <ReactRte value={value} onChange={val => setValue(ReactRte.createValueFromString(val, 'html'))}
+       />
+  )
+}
 
+export default RichTextEditor

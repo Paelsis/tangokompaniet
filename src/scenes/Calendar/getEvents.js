@@ -87,14 +87,14 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
           const end = Date.parse(it.end.dateTime?it.end.dateTime:it.end.date)
 
 
-          const mstart = moment(start)
-          const mend = moment(end)
+          const mstart=moment(start)
+          const mend=moment(end).add(start.length <= 10?-1:0, 'days')
           const timeStart = mstart.format('LT')
           const timeEnd = mend.format('LT')
           const dateShift = mend.dayOfYear() - mstart.dayOfYear()  
           const fullDay = start.length <= 10 || (timeStart==="00:00" && timeEnd ==="00:00") && dateShift <= 1 || (timeStart==="00:00" && timeEnd ==="23:59")
           const durationHours = moment.duration(mend.diff(mstart)).asHours()
-          const endsOtherDay=(mstart.calendar('l') !== mend.calendar('l')) && (mend.diff(mstart, 'hours') > 11) && !fullDay
+          const moreThan11Hours=(mstart.calendar('l') !== mend.calendar('l')) && (mend.diff(mstart, 'hours') > 11) 
           const description = (it.description?it.description:'')
           const maxPar = findNumberInText(description, 'MAX_PAR')
           const maxInd = findNumberInText(description, 'MAX_IND')
@@ -139,7 +139,7 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
             calendar,
             calendarEndTime, 
             dateTimeRange,
-            endsOtherDay, 
+            moreThan11Hours, 
             city,
             maxInd,
             maxPar,

@@ -4,7 +4,7 @@ import Button from 'Components/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import tkColors,{boxShadowValue} from 'Settings/tkColors'
 
-import {LANGUAGE_EN, LANGUAGE_SV, LANGUAGE_ES, setLanguage} from 'redux/actions/actionsLanguage'
+import {LANGUAGE_EN, LANGUAGE_SV, setLanguage} from 'redux/actions/actionsLanguage'
 
 const styles = {
   contained:color => ({
@@ -24,7 +24,6 @@ const styles = {
 const LANGUAGE = {
   'SV':'Svenska',
   'EN':'English',
-  'ES':'Espanol',
 } 
 
 const LanguageButton = ({language, setLanguage, globalStyle}) => {

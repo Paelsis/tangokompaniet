@@ -10,7 +10,7 @@ import {getEvents} from './getEvents'
 import {PRODUCT_TYPE, AVA_STATUS} from 'Settings/Const'
 import fetchList from 'functions/fetchList';
 import config from 'Settings/config';
-import SmallCalendarView from './CalendarSmall'
+import CalendarSmall from './CalendarSmall'
 import DialogSlide from './DialogSlide'
 
 
@@ -342,7 +342,7 @@ class _Calendars extends Component {
             </Button>
           </div>
           {breakpoints[currentBreakpoint] <= breakpoints.mobile?
-              <SmallCalendarView 
+              <CalendarSmall 
                   events={this.state.events} 
                   calendarType={this.state.calendarType} 
                   handleEvent={this.handleEvent} 

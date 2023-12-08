@@ -162,7 +162,7 @@ class Calendar extends Component {
         return(
                 moment() <= mend?
                     <tr key={'Row' + event.productId} style={styles.tr(event.isToday)}> 
-                    {event.endsOtherDay && !event.forceSmallFonts ?
+                    {event.moreThan11Hours?
                         <td colSpan={3} style={{...style, textAlign:'center', fontWeight:800, fontSize:18, color:'gold'}} onClick={()=>this.props.handleEvent(event)}>  
                             {event.title}<br/>{event.dateTimeRange}
                         </td>
