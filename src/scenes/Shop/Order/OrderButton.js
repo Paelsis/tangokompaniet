@@ -26,8 +26,8 @@ const styles = {
 };
 
 const OrderButton = (props) => {
-  console.log('--- Order Button ---')
-  console.log('props:', props)
+  // console.log('--- Order Button ---')
+  // console.log('props:', props)
   return (
     <Link to='/order'> 
       <Button {...props} >

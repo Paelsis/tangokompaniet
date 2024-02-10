@@ -9,8 +9,6 @@ const styles = {
     margin:'auto',
     width:'auto',
     color: tkColors.color,
-    backgroundColor:tkColors.background,
-    fontSize:'small',
     paddingTop:30,
   },
   tbody: {
@@ -20,17 +18,31 @@ const styles = {
     height:40,
     padding: 10,
     width:400,
-    // backgroundColor:'transparent',
   },
-  td: (haveBorder) => ({
+  td: haveBorder => ({
     padding: 10,
     verticalAlign:'middle',
     borderBottom:haveBorder?'1px solid':'none',
-    color: tkColors.color,
     borderColor:tkColors.border,
-    backgroundColor:tkColors.background,
+    // backgroundColor:'transparent',
   }),
 };
+
+const Lokaler = () =>
+<>
+  <tr style={styles.tr}>
+  <td style={styles.td(true)}>Lokal i Malmö</td>
+  <td style={styles.td(true)}>Tangokompaniet studio (TKstudio)<br />Fredriksbergsgatan 7</td>
+  </tr>
+  <tr style={styles.tr}>
+  <td style={styles.td(true)}>Lokaler i Lund</td>
+  <td style={styles.td(true)}>
+      Västgöta Nation<br />Tornavägen 17
+      <br /><br />Svaneskolan<br />Möllegatan 6
+      <br /><br />Michael Hansens Kollegium<br />Dag Hammarskjölds Väg 4
+  </td>
+  </tr>
+</>
 
 
 const Contact = () => (
@@ -80,18 +92,6 @@ Gasverksgatan 3, 211 29 Malmö</td>
 <tr style={styles.tr}>
 <td style={styles.td(true)}>Org.nr:</td>
 <td style={styles.td(true)}>969666-1769</td>
-</tr>
-<tr style={styles.tr}>
-<td style={styles.td(true)}>Lokal i Malmö</td>
-<td style={styles.td(true)}>Tangokompaniet studio (TKstudio)<br />Fredriksbergsgatan 7</td>
-</tr>
-<tr style={styles.tr}>
-<td style={styles.td(true)}>Lokaler i Lund</td>
-<td style={styles.td(true)}>
-    Västgöta Nation<br />Tornavägen 17
-    <br /><br />Svaneskolan<br />Möllegatan 6
-    <br /><br />Michael Hansens Kollegium<br />Dag Hammarskjölds Väg 4
-</td>
 </tr>
 <td></td>
 </tbody>

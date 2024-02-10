@@ -2,11 +2,11 @@ import {store} from 'index.js'
 import {setStatusMessage, setSleepTime} from 'redux/actions/actionsStatusMessage' 
 import {wait} from 'Settings/Utils'
 
-export const STATUS_OK='STATUS_OK';
-export const STATUS_WARNING='STATUS_WARNING';
-export const STATUS_ERROR='STATUS_ERROR';
-export const STATUS_MESSAGE='STATUS_MESSAGE';
-export const STATUS_UNSET='STATUS_UNSET';
+export const STATUS_OK='OK';
+export const STATUS_WARNING='WARNING';
+export const STATUS_ERROR='ERROR';
+export const STATUS_MESSAGE='MESSAGE';
+export const STATUS_UNSET='UNSET';
 
 
 export const statusMessage = (status, message) => {

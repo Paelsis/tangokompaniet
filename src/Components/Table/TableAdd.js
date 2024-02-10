@@ -67,7 +67,7 @@ export default class TableAdd extends Component {
 
   componentDidMount () {
     const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/tkcolumns?tableName=' + this.props.table;
-    console.log('component TableAdd mounted url=', url); 
+    // console.log('component TableAdd mounted url=', url); 
     this.fetchFromDatabase(url)
   }  
 
@@ -76,14 +76,14 @@ export default class TableAdd extends Component {
     if (this.props.table !== nextProps.table) {
       const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/tkcolumns?tableName=' + nextProps.table;
       this.fetchFromDatabase(url)
-      console.log('component TableAdd recieved props url=', url); 
+      // console.log('component TableAdd recieved props url=', url); 
     }   
   }
 
   fetchFromDatabase(url) {
     try {
       fetchList(this.props.username, this.props.password, url, (columns) => {
-        console.log('fetching from database columns: ', columns)
+        // console.log('fetching from database columns: ', columns)
         // Set the columns
         this.setState({columns});
 
@@ -95,7 +95,7 @@ export default class TableAdd extends Component {
     } catch(e) {
       this.setState({columns:[]})
       let errMessage = 'ERROR:' + e.message 
-      console.log(errMessage);
+      // console.log(errMessage);
       alert(errMessage)
     }    
   }
@@ -114,7 +114,7 @@ export default class TableAdd extends Component {
       e.preventDefault();
       this.props.addRow(this.state.row); 
       this.setState({row:this.state.emptyRow}); 
-      console.log('TableAdd: handleSubmit with row:', this.state.row);
+      // console.log('TableAdd: handleSubmit with row:', this.state.row);
     }
 
   render() {

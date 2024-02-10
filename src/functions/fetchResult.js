@@ -2,8 +2,8 @@ import axios from 'axios'
 
 // fetchResult
 export const fetchResult = (username, password, url, handleResult) => {
-    // console.log('fetchList: url:' + url);
-    // console.log('fetchList: url:' + url + ' username:' + username + ' password:' + password);
+    // // console.log('fetchList: url:' + url);
+    // // console.log('fetchList: url:' + url + ' username:' + username + ' password:' + password);
     axios({	
         method: 'get',
         url: url, 
@@ -17,8 +17,8 @@ export const fetchResult = (username, password, url, handleResult) => {
         handleResult(result);
     })
     .catch(e => {
-        console.log('(function: functions/fetchList) URL:', url);
-        console.log('(function: functions/fetchList) Error message:', e);
+        // console.log('(function: functions/fetchList) URL:', url);
+        // console.log('(function: functions/fetchList) Error message:', e);
         handleResult(undefined);
     });
 }

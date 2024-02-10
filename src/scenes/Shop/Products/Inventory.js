@@ -124,12 +124,12 @@ class _Inventory extends Component {
             let invFound = inventoryList.find(iv => pr.productId === iv.productId);  
             if (typeof(invFound) !== 'undefined') {
                 let updProduct = {...pr, ...invFound}
-                console.log('updProduct:', updProduct);
+                // console.log('updProduct:', updProduct);
                 return(updProduct)
             }    
             return(pr);
         })
-        console.log('resetBothLists:', products)
+        // console.log('resetBothLists:', products)
         this.setState({inventoryList, products})
     }
 
@@ -137,7 +137,7 @@ class _Inventory extends Component {
 
 
     getLists = (products) => {
-        console.log('products:', products)
+        // console.log('products:', products)
         this.setState({products});
     }
 
@@ -168,7 +168,7 @@ class _Inventory extends Component {
     createProducts = (list) => {
         var products=[];
         let id=0;
-        console.log('number of products:' + list.length)
+        // console.log('number of products:' + list.length)
         
         // list contains all image names in the shops images directory
         if (typeof(list) != "undefined") {
@@ -199,7 +199,7 @@ class _Inventory extends Component {
                 return 0;    
             }
         })    
-        console.log('number of products:' + products.length)
+        // console.log('number of products:' + products.length)
         return(products);
     }
 
@@ -296,7 +296,7 @@ class _Inventory extends Component {
 
 
     renderImage = (pr, index) => {
-        console.log('buttonPressed:', pr.buttonPressed)  
+        // console.log('buttonPressed:', pr.buttonPressed)  
         
         return(
             <div>
@@ -311,7 +311,7 @@ class _Inventory extends Component {
 
 
     renderInventory = (pr, index) => {
-        console.log('buttonPressed:', pr.buttonPressed)  
+        // console.log('buttonPressed:', pr.buttonPressed)  
         
         return(
             <div key={pr.id}>

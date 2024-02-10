@@ -133,7 +133,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
 
     const handleRegistration= (reg) => {
         const CREATE_REG_URL = apiBaseUrl + '/createRegistrationMarathon'
-        console.log('REGISTRATION:', reg)
+        // console.log('REGISTRATION:', reg)
         postData(CREATE_REG_URL, '', '', reg, handleReply);
     }
 

@@ -18,11 +18,11 @@ export default (props) => {
     const initialValues = process.env.NODE_ENV==='development'?INITIAL_VALUES_DEV:INITIAL_VALUES_PROD
     const [values, setValues] = useState(initialValues);
     const handleInputChange = e => {
-        //console.log('name:', e.target.name, ' value:', e.target.value, 'e.target.type:', e.target.type)
+        //// console.log('name:', e.target.name, ' value:', e.target.value, 'e.target.type:', e.target.type)
         setValues({...values, [e.target.name]: e.target.value})
     }
     const handleInputChecked = e => {
-        // console.log('name:', e.target.name, ' checked:', e.target.checked, ' e.target.type:', e.target.type)
+        // // console.log('name:', e.target.name, ' checked:', e.target.checked, ' e.target.type:', e.target.type)
         setValues({...values, [e.target.name]: e.target.checked})
     }
     const handleSubmit = (e) => {
@@ -31,7 +31,7 @@ export default (props) => {
         setValues(initialValues)
     }
     const clearFields = e => {
-        console.log('name:', e.target.name, ' value:', e.target.value, ' checked:', e.target.checked)
+        // console.log('name:', e.target.name, ' value:', e.target.value, ' checked:', e.target.checked)
 
         e.preventDefault()
         setValues(initialValues)

@@ -10,10 +10,10 @@ connection.connect();
 
 connection.query('SELECT * from INVENTORY', function(err, rows, fields) {
   if (!err) {
-      console.log('Number of rows in table INVENTORY: ', rows.length);
-      console.log('The solution is: ', rows);
+      // console.log('Number of rows in table INVENTORY: ', rows.length);
+      // console.log('The solution is: ', rows);
   } else {
-    console.log('Error while performing Query.');
+    // console.log('Error while performing Query.');
   }
 });
 

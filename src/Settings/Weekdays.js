@@ -41,14 +41,14 @@ export const CourseLength = (len, language) => {
 export const DateToDaynameShort = (sdate, language) => {
     const dat = new Date(sdate);
     const dow = (dat.getDay() + 6)%7;
-    // console.log('sdate=', sdate, ' jsdow=', dat.getDay(), ' dow=', dow)
+    // // console.log('sdate=', sdate, ' jsdow=', dat.getDay(), ' dow=', dow)
     return(WeekdaysShort[language?language:'SV'][dow])
 }    
 
 export const DateToDayname = (sdate, language) => {
     const dat = new Date(sdate);
     const dow = (dat.getDay() + 6)%7;
-    // console.log('sdate=', sdate, ' jsdow=', dat.getDay(), ' dow=', dow)
+    // // console.log('sdate=', sdate, ' jsdow=', dat.getDay(), ' dow=', dow)
     return(Weekdays[language?language:'SV'][dow])
 }    
 

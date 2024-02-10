@@ -134,10 +134,10 @@ class ProductShow extends Component {
     let inv = product?product.inv?product.inv:null:null;
     let price = product?product.price > 0?product.price:0:0;
     if (product) {
-      console.log('product:', product?product:null);
-      console.log('productId:', productId);
-      console.log('sizes:', inv?inv:[]);
-      console.log('price:', price);
+      // console.log('product:', product?product:null);
+      // console.log('productId:', productId);
+      // console.log('sizes:', inv?inv:[]);
+      // console.log('price:', price);
     }
     return (
       <div style={styles.root}>

@@ -8,7 +8,7 @@ const initialState = {
 const ShopReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM:
-    //console.log('ShopReducer - payload:', action.payload)
+    //// console.log('ShopReducer - payload:', action.payload)
     return Object.assign({}, state, 
         {
           list: [...state.list, action.payload]        
@@ -29,7 +29,7 @@ const ShopReducer = (state = initialState, action) => {
           {
             list: state.list.map((it) => {
                 if (it.index === action.index) {
-                  console.log('deleted:', it.deleted)
+                  // console.log('deleted:', it.deleted)
                   return Object.assign({}, it, {deleted: !it.deleted})
                 } else {
                   return it
@@ -37,7 +37,7 @@ const ShopReducer = (state = initialState, action) => {
             })
           })
       case UPDATE_ITEM:
-        console.log('In ShopReducer: reg', action.payload)  
+        // console.log('In ShopReducer: reg', action.payload)  
         return Object.assign({}, state, 
           {
             list: state.list.map((it) => {

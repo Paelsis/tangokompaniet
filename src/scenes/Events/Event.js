@@ -64,7 +64,7 @@ class _Event extends Component {
 
   handleClick = (e, openIndex) => {
     e.preventDefault();
-    console.log('handleClick:', openIndex)
+    // console.log('handleClick:', openIndex)
     this.setState({openIndex}) 
   }  
 
@@ -77,7 +77,7 @@ class _Event extends Component {
     const event = this.props.list.find(it => it.eventType === this.props.eventType && it.dateRange === this.props.dateRange)
     const bannerTitle = event?event['name' + this.props.language]:this.props.eventType
     // const groupId=eventType.charAt(0).toUpperCase() + eventType.slice(1).toLowerCase()   PGE PGE PGE PGE
-    //console.log('eventType', eventType, ' textId', obj.textId, ' openIndex', this.state.openIndex, ' registrationKey:', registrationKey);
+    //// console.log('eventType', eventType, ' textId', obj.textId, ' openIndex', this.state.openIndex, ' registrationKey:', registrationKey);
     return(
       <div style={styles.root}>
           <div style={styles.banner}>

@@ -84,7 +84,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         handleClick: (index) => {
-            console.log('handleClick:dispatchToggleItem(index), index:', index)
+            // console.log('handleClick:dispatchToggleItem(index), index:', index)
             dispatch(toggleItem(index))
         }
     }        

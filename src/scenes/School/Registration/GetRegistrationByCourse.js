@@ -31,7 +31,7 @@ const GROUP_BY_DEF_ARR=[
     {
         groupByField:'groupByProductId',
         headerFields:['name',  'city', 'dayname', 'startTime', 'teachers', 'startDate'], 
-        headerSortBy:'dayOfWeek',
+        headerSortBy:'groupByProductId',
         listSortBy:['firstName','lastName'],
         headerProps:{
             open:{
@@ -70,7 +70,7 @@ const mapStateToProps = (state) => {
         updateView:UPDATE_VIEW,
         tableUpdate:'tbl_registration',
         urlUpdate:'/admin/updateRow',
-        urlUpdateAll:'/admin/updateTableAll',
+        urlUpdateAll:'/admin/updateList',
     }
 }    
 

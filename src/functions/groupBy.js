@@ -3,7 +3,7 @@ const groupBy = (list, keyGetter) => {
     const map = new Map();
     list.forEach((item) => {
         const key = keyGetter(item);
-        // console.log('key:', key)
+        // // console.log('key:', key)
         const collection = map.get(key);
         if (!collection) {
             map.set(key, [item]);

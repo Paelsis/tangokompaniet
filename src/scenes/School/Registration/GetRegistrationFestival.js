@@ -8,7 +8,6 @@ const GROUP_BY_DEF_ARR=[
     {
         groupByField:'eventType', 
         headerFields:['eventType'],
-        headerSortBy:['startDate'],
         headerProps:{
             open:{
                 width:'100vw', 
@@ -25,7 +24,6 @@ const GROUP_BY_DEF_ARR=[
     {
         groupByField:'dateRange', 
         headerFields:['dateRange'],
-        headerSortBy:['startDate'],
         headerProps:{
             open:{
                 width:'100vw', 
@@ -40,6 +38,7 @@ const GROUP_BY_DEF_ARR=[
     {
         groupByField:'role', 
         headerFields:['role'],
+        listSortBy:['firstName','lastName'],
 
         headerProps:{
             open:{

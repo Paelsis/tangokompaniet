@@ -2,7 +2,7 @@ import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 const cremeDePeche='#F5D6C6'
 const color = grey[900] 
-const background = '#f4f1f2' // '#f2e6e9' // #FAFAFA'
+const background = '#e8e8e8'// '#fbf7f5' // '#f2e6e9' // #FAFAFA'
 export const defaultGradientBackground = 'linear-gradient(45deg, #81185B 0%,  #610a41 100%)'
 
 export const tkColors = {
@@ -15,7 +15,6 @@ export const tkColors = {
 
     Home:{
         color:grey[700],
-        background,
     },
     AppBar:{
         color:'white',

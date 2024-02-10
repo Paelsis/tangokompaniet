@@ -101,7 +101,7 @@ let _WithBadge = ({ length, onClick, product, value}) => {
       opacity:value.length===0?0.25:100,
       color:tkColors.icon,
   }
-  console.log('_WithBadge value:', value)
+  // console.log('_WithBadge value:', value)
   return (
       <Badge  badgeStyle={badgeStyle}
               badgeContent={length}

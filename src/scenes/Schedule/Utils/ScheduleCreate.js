@@ -147,7 +147,7 @@ export default class ScheduleCreate extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.list !== this.props.list) {  
           /*   
-          console.log('componentWillReceiveProps:', this.props.list)
+          // console.log('componentWillReceiveProps:', this.props.list)
           this.fetchAllDropDownLists();
           */
         }  
@@ -187,7 +187,7 @@ export default class ScheduleCreate extends Component {
         if (duplicates.length === 0) {
             return true 
         } else {    
-          console.log('duplicates:', duplicates)
+          // console.log('duplicates:', duplicates)
           alert('Duplicates exists for column/s:' + JSON.stringify(duplicates))
           return false
         }
@@ -255,13 +255,13 @@ export default class ScheduleCreate extends Component {
             action:DROPDOWN_ACTION,
             deleteByValue:[{templateName}]
         }
-        console.log('The following will be deleted, crud', crud)
+        // console.log('The following will be deleted, crud', crud)
 
         // Post the updated data to url
         let url=apiBaseUrl +'/admin/crud'
         postCrud(url, this.props.username, this.props.password, this.props.tableName, crud, list=>
         {
-            console.log('handleDeleteTemplate: list after handleDelete->postCrud:', list)
+            // console.log('handleDeleteTemplate: list after handleDelete->postCrud:', list)
             this.props.setList(list.map(it => {delete(it.id);return(it)}));
             this.setState({action:UNSET_ACTION, successText:'Delete of template ' + templateName + ' successful'})
             this.handleReply(undefined)
@@ -271,7 +271,7 @@ export default class ScheduleCreate extends Component {
     handleDeleteTemplateFromProduction(templateName, handleReply) {
         //eslint-disable-next-line
         if (!confirm("Are you sure you want to delete template " + templateName + " ?")) {
-            console.log('The production template ' + templateName + ' was not deleted', crud)
+            // console.log('The production template ' + templateName + ' was not deleted', crud)
             this.setState({action:UNSET_ACTION, templateName:undefined, eventType:'', year:''})
             return
         } 
@@ -279,7 +279,7 @@ export default class ScheduleCreate extends Component {
             action:DROPDOWN_ACTION,
             deleteByValue:[{templateName}]
         }
-        console.log('The following will be deleted, crud:', crud)
+        // console.log('The following will be deleted, crud:', crud)
         if (!templateName) {
             alert('WARNING: No template to be deleted')
         } else {
@@ -297,7 +297,7 @@ export default class ScheduleCreate extends Component {
     handleTruncateTemplatesFromProduction() {
         //eslint-disable-next-line
         if (!confirm("Are you sure you want to delete whole schedule from production ?")) {
-            console.log('Production table not truncated since crud action cancelled')
+            // console.log('Production table not truncated since crud action cancelled')
             this.setState({action:UNSET_ACTION, templateName:undefined})
             return
         } 
@@ -305,7 +305,7 @@ export default class ScheduleCreate extends Component {
             action:TRUNCATE_PRODUCTION_ACTION,
             truncate:true
         }
-        console.log('The production table will be trunctaced, crud:', crud)
+        // console.log('The production table will be trunctaced, crud:', crud)
 
         // Post the updated data to url
         let url=apiBaseUrl +'/admin/crud'
@@ -380,7 +380,7 @@ export default class ScheduleCreate extends Component {
             }
         } 
         this.setState({templateName, eventType:'', year:'', action:NEW_ACTION});
-        console.log('New templateName ', templateName)   
+        // console.log('New templateName ', templateName)   
     }    
 
     setEventTypeAndYear () {

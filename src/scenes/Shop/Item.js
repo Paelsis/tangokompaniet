@@ -63,7 +63,7 @@ const Item = (props) => {
     const name = language===LANGUAGE_SV?props.nameSV:
        language===LANGUAGE_ES?props.nameES:
        props.nameEN
-    console.log('Function Item(), props=', props)
+    // console.log('Function Item(), props=', props)
     return (
         <div style={props.style}>
             {props.productType === PRODUCT_TYPE.COURSE?

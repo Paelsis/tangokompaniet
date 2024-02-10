@@ -67,7 +67,7 @@ class InventoryUpdateImage extends Component {
         let url=apiBaseUrl + '/renameImages2'
         let products = this.state.products;
         this.setState({buttonPressed:true});
-        console.log('handleSumbitImages: products:', products);  
+        // console.log('handleSumbitImages: products:', products);  
         e.preventDefault()
 
         postImageNames(url, this.props.username, this.props.passsword, products, (list) => this.setList(list));

@@ -72,7 +72,7 @@ const mapStateToProps = (state) => {
         updateFields:UPDATE_FIELDS,
         tableUpdate:'tbl_registration_history',
         urlUpdate:'/admin/updateRow',
-        urlUpdateAll:'/admin/updateTableAll',
+        urlUpdateAll:'/admin/updateList',
     }
 }    
 

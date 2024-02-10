@@ -9,6 +9,7 @@ import EmailIcon from '@material-ui/icons/Email'
 import SearchIcon from '@material-ui/icons/Search'
 import CancelIcon from '@material-ui/icons/Cancel'
 import ReactRte from 'react-rte';
+import tkColors from 'Settings/tkColors'
 
 const TEXTAREA_FIELDS=['textBody']
 
@@ -17,6 +18,8 @@ const styles = {
         margin:'auto'
     },
     th: {
+        color:tkColors.background,  
+        backgroundColor:'black',
         wordWrap:'break-word',
         width:20
     },
@@ -96,7 +99,7 @@ const maillist = (list, fld) => list.map(it => it[fld]?it[fld]:'').join(', ')
 const HeaderValue = ({list, fld, comment}) => 
     fld.indexOf('email')===-1?
         <Tooltip title={<h2>{comment}</h2>}>
-            <th size={10} key={fld}>
+            <th size={10} key={fld} style={styles.th}>
                 {fld}
             </th>
         </Tooltip>
@@ -104,7 +107,7 @@ const HeaderValue = ({list, fld, comment}) =>
         <th>
             {fld}&nbsp;
             <a href={'mailto:?bcc=' + maillist(list, fld) + '&subject=Mail från TK'} target="_top">
-                <EmailIcon style={{cursor:'pointer', fontSize:'small'}} />
+                <EmailIcon style={{cursor:'pointer', fontSize:'small', color:'lightBlue'}} />
             </a>
         </th>
 
@@ -127,19 +130,18 @@ const SearchValue = ({fld, search, setSearch}) => {
 
 const RenderTable = ({list, filterList, handleEdit, handleDelete, search, setSearch, handleFilter, handleComment}) =>
     <table style={{...styles.root, border:'1px solid lightGrey', margin:10}} >
-        <thead>
-            <tr>
-                {Object.keys(list[0]).filter(it=>it !=='id').map(it=>
-                    <Tooltip title={handleComment(it)}>  
-                        <HeaderValue list={list} fld={it?it:'No name'} comment={handleComment(it)}/>
-                    </Tooltip>
-                )}    
-            </tr>
-            <tr>
-                {Object.entries(list[0]).filter(it=>it[0]!=='id').map(it=><SearchValue fld={it?it[0]?it[0]:'No name':'No object'} search={search} setSearch={setSearch} />)}
-                {<th><SearchIcon onClick={handleFilter} /></th>}
-            </tr>
-        </thead>          
+        <tr style={{color:'white', backgroundColor:'black'}}>
+            {Object.keys(list[0]).filter(it=>it !=='id').map(it=>
+                <Tooltip title={handleComment(it)}>  
+                    <HeaderValue list={list} fld={it?it:'No name'} comment={handleComment(it)}/>
+                </Tooltip>
+            )}    
+            <th colSpan={2} style={styles.th}/>
+        </tr>
+        <tr>
+            {Object.entries(list[0]).filter(it=>it[0]!=='id').map(it=><SearchValue fld={it?it[0]?it[0]:'No name':'No object'} search={search} setSearch={setSearch} />)}
+            {<th><SearchIcon onClick={handleFilter} /></th>}
+        </tr>
         <tbody>
             {filterList.map(row => 
                     <tr style={styles.tr(row.active)}>

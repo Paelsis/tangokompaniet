@@ -65,7 +65,7 @@ const styles = {
 const _Images = ({username, password, list, handleChangeIndex, handleChangeValueByIndex, edit, toggleEdit}) => {
     const updateFilename = (image, index) =>  handleChangeValueByIndex('filename', image.filename, index);
     const toggleEditLocal = (index) => {
-        console.log('Updating image:', list[index])
+        // console.log('Updating image:', list[index])
         edit[index]?
             postImageName(username, password, list[index], index, (image) => image.code?image.code===200?updateFilename(image, index)
                 :alert('Message:' + image.message)

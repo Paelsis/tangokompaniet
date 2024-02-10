@@ -54,7 +54,7 @@ const GROUP_BY_DEF_ARR = [
     {
         groupByField:'groupByProductId',
         headerFields:['name', 'city', 'dayname', 'startTime','startDate'], 
-        headerSortBy:'dayOfWeek',
+        headerSortBy:'groupByProductId',
         listSortBy:['firstName','lastName'],
         headerProps:{
             open:{

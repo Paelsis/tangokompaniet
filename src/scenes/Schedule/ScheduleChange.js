@@ -28,7 +28,7 @@ const ScheduleChange = (props) => {
     }
     const onSubmit = e =>{
         const text = productId + ' ' + schedule.startDate + ' ' + schedule.startDate + ' ' + schedule.teacher1 + ' ' + schedule.teacher2
-        console.log(text);
+        // console.log(text);
         e.preventDefault(); 
         setSubmitted(true)
         setProductId(undefined)

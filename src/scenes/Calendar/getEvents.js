@@ -19,10 +19,10 @@ const API_KEY_TK = 'AIzaSyB0EBiE8xd5ItS59IahMyficWWAanHhMzU' // Per 2
 
 const findNumberInText = (s, val) => {
   const idx = s.indexOf(val)  
-  console.log('findParameter', val, 'idx',  idx)
+  // console.log('findParameter', val, 'idx',  idx)
   if (idx != -1) {
     const value = Number(s.slice(idx).match(/(\d+)/)[0])
-    console.log('newString', s.slice(idx), 'value', value)
+    // console.log('newString', s.slice(idx), 'value', value)
     return value
   } else {
     return undefined

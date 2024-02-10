@@ -43,7 +43,7 @@ class AddPhotoMultiple extends Component {
   
     handleSubmit(event) {
       event.preventDefault();
-      console.log('files', this.state.selectedFiles)
+      // console.log('files', this.state.selectedFiles)
       this.setState({buttonColor:BUTTON_COLOR.PROCESSING})
 
       if (this.state.selectedFiles.length > 0) {
@@ -57,7 +57,7 @@ class AddPhotoMultiple extends Component {
           let newFileName = this.state.newFileNames[i]
           formData.append('newfile_arr[]', selectedFile, newFileName)
         } 
-        console.log('formData', formData)
+        // console.log('formData', formData)
         this.setState({buttonColor:BUTTON_COLOR.PROCESSING})
         axios.post(apiBaseUrl + '/postImages', formData, 
         {
@@ -139,7 +139,7 @@ class AddPhotoMultiple extends Component {
                 {imagePreviewUrls.map((it, ix)=>
                   <div className='column is-one-quarter is-narrow'>            
                     <img src={it} style={{padding:0, border:'2px dotted yellow'}}/>
-                    <input 
+                    New filename:<input 
                       type='text' 
                       style={{marginTop:0, paddingTop:0, height:20, fontSize:'x-small'}}
                       value={this.state.newFileNames[ix]} 
@@ -170,8 +170,6 @@ class AddPhotoMultiple extends Component {
     )
   }
 }
-
-
   
 export default AddPhotoMultiple
   

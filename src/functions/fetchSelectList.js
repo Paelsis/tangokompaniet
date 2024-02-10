@@ -7,7 +7,7 @@ export const fetchSelectList = (username, password, table, func) => {
     const url=apiBaseUrl + '/admin/tktable?tableName=' + table;
     fetchList(username, password, url, 
         list=>{
-            console.log('selectList:', list);
+            // console.log('selectList:', list);
             func(list)
         }
     )  

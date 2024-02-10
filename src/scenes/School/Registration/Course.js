@@ -183,7 +183,7 @@ class Course extends React.Component {
     }
 
     goBackToMenu() {
-        console.log('goBack fired')
+        // console.log('goBack fired')
         this.setState({openCourseId: undefined, openCourseType: undefined })
     }
 
@@ -243,8 +243,8 @@ class Course extends React.Component {
         const { language, list } = this.props;
         const groupedMap = groupBy(list, it => it.courseType);
         const courseTypes = Array.from(groupedMap.keys()).sort((a, b) => a.groupSequenceNumber - b.groupSequenceNumber);
-        console.log('groupedMap:', groupedMap);
-        console.log('courseTypes:', courseTypes);
+        // // console.log('groupedMap:', groupedMap);
+        // // console.log('courseTypes:', courseTypes);
         const styleType = coType => styles.groupItem(coType === this.state.openCourseType)
         const styleCourse = courseId => styles.courseItem(courseId === this.state.openCourseId)
         const styleGeneral = styles.groupItem(this.state.openCourseType === undefined && this.state.openCourseId === undefined)

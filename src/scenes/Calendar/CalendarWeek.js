@@ -94,7 +94,7 @@ class Calendar extends Component {
         } catch(e) {                                
             this.setState({events:[]})
             let errMessage = 'ERROR:' + e.message 
-            console.log(errMessage);
+            // console.log(errMessage);
         }    
     }    
 

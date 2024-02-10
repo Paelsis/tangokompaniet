@@ -6,7 +6,6 @@ import {acceptKeys} from 'Settings/Utils'
 
 let styles = {
     root:{
-        flex:1,
         position:'relative',
         marginRight:'auto',
         marginLeft:'auto',
@@ -24,7 +23,6 @@ export default class GetRegistrationMapMap extends Component {
         this.handleOpen = this.handleOpen.bind(this)
         this.toggleEditAndSave = this.toggleEditAndSave.bind(this)
         this.toggleEdit = this.toggleEdit.bind(this)
-        this.toggleEditList = this.toggleEditList.bind(this)
     }
 
     componentDidMount () {
@@ -44,7 +42,7 @@ export default class GetRegistrationMapMap extends Component {
                 return(op);
             }
         })
-        //console.log('handleOpen open:', open);
+        //// console.log('handleOpen open:', open);
         this.setState({open});
     };
 
@@ -56,7 +54,7 @@ export default class GetRegistrationMapMap extends Component {
             return
         }
         acceptRow={...acceptRow, id:row.id};
-        this.props.edit[row.id]?this.props.updateRow(acceptRow):console.log('Do nothing in database');
+        this.props.edit[row.id]?this.props.updateRow(acceptRow):// console.log('Do nothing in database');
         this.props.toggleEdit(row.id)
     }
 
@@ -64,16 +62,6 @@ export default class GetRegistrationMapMap extends Component {
         this.props.toggleEdit(row.id);
     }
 
-    toggleEditList(list) {
-        // Don't remove the row.id for updateFields 
-        // const acceptList = list.map(row => ({...acceptKeys(row, this.props.updateFields), id:row.id}));  
-        
-        // 15/5-2022 Remove id's. The id must be undefined, otherwise replace stmt will update primary key id, instead of unique key on name and course date  
-        const acceptList = list.map(row => ({...acceptKeys(row, this.props.updateFields), id:undefined}));  
-        this.props.edit[list[0].id]?this.props.updateTableAll(acceptList):console.log('Do nothing in database');
-        const ids = list.map(it => it.id)
-        this.props.toggleEditIds(ids);
-    }
 
     render = () => {
         return(

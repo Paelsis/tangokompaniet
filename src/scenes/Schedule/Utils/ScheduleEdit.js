@@ -165,15 +165,15 @@ class ScheduleEdit extends Component {
   }        
   
   onChange (e) {
-    console.log('e.target.name:', e.target.name);
-    console.log('e.target.value:', e.target.value);
+    // console.log('e.target.name:', e.target.name);
+    // console.log('e.target.value:', e.target.value);
     this.setState({record:{...this.state.record, [e.target.name]:e.target.value}});  
     
   }
 
   onChangeChk = (e) => {
-    console.log('e.target.name:', e.target.name);
-    console.log('e.target.checked:', e.target.checked);
+    // console.log('e.target.name:', e.target.name);
+    // console.log('e.target.checked:', e.target.checked);
     this.setState({record:{...this.state.record, [e.target.name]:e.target.checked}});  
   }
 
@@ -380,7 +380,7 @@ _List = () => (
     if (duplicates.length === 0) {
         return true 
     } else {    
-      console.log('duplicates:', duplicates)
+      // console.log('duplicates:', duplicates)
       alert('Duplicates exists for column/s:' + JSON.stringify(duplicates))
       return false
     }
@@ -389,7 +389,7 @@ _List = () => (
   handleAdd(e) {
     e.preventDefault();
     const newRecord = {...this.state.record, templateName: this.props.templateName}
-    console.log('newRecord:', newRecord)
+    // console.log('newRecord:', newRecord)
 
     const testDuplicatesList = [...this.props.filterList, newRecord]
     if (!this.uniqueCheck(this.props.columns, testDuplicatesList)) {
@@ -406,7 +406,7 @@ _List = () => (
   }
 
   render() {
-    console.log('record:', this.state.record)
+    // console.log('record:', this.state.record)
     return(
         this.props.templateName?
           <div style={styles.root}>

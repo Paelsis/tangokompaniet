@@ -154,7 +154,7 @@ const _useAvatarList = (currentBreakpoint, breakpoints) => breakpoints[currentBr
 const ContactList = (props) => {
   const {list, currentBreakpoint, breakpoints, language, privateLessons} = props; 
   let activeTeachers = privateLessons?list.filter(te=>te.privateLessons==='1' && te.active === '1'):list.filter(te=>te.active==='1');
-  console.log('Teacher list has length', props.list.length)
+  // console.log('Teacher list has length', props.list.length)
   return (
     <div>
       {(activeTeachers.length > 0)?_useAvatarList(currentBreakpoint,breakpoints)?_AvatarView(activeTeachers, language)

@@ -5,7 +5,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
 // serverFetchDataResult
 export function serverFetchDataResult(irl, username, password, handleResult) {
     const url= irl.slice(0,4).toLowerCase().localeCompare('http')===0?irl:apiBaseUrl + irl
-    console.log('fetch url:', url)
+    // console.log('fetch url:', url)
     axios({
         method: 'get',
         url,
@@ -31,10 +31,10 @@ export function serverFetchDataResult(irl, username, password, handleResult) {
     });
 }
 
-// serverFetchDataResult
+// serverFetchData
 export function serverFetchData(irl, username, password, handleReply) {
     const url= irl.slice(0,4).toLowerCase().localeCompare('http')===0?irl:apiBaseUrl + irl
-    console.log('fetch url:', url)
+    // console.log('fetch url:', url)
     //axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
     //axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     axios({
@@ -51,13 +51,15 @@ export function serverFetchData(irl, username, password, handleReply) {
         const data = response.data?response.data:undefined
         if (data === undefined) {
             alert('serverFetchData: No data found in response')
+            const message = 'ERROR no response.data in reply for url=' + url
+            handleReply({status:'ERROR', message});
+        } else {
+            handleReply(data)
         }
-        handleReply(data);
     })
     .catch(e => {
-        const message = 'ERROR no response.data in reply for url=' + url + ' ERROR:' + JSON.stringify(e)
-        alert(message)
-        console.log('Error message:', message);
+        const message = 'ERROR no response.data in reply for url=' + url
+        // console.log('Error message:', message);
         handleReply({status:'ERROR', message});
     });
 }

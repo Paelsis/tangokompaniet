@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Weekdays from 'Settings/Weekdays';
 import {ROLE} from 'Settings/Const'
+import tkColors from 'Settings/tkColors'
 
 const styles = {
     open: {
@@ -10,8 +11,8 @@ const styles = {
         marginRight:'auto',
         marginBottom:2,
         textAlign:'center',
-        color:'white',
-        transition: '0.5s ease'
+        transition: '1.0s ease',
+        color:tkColors.background, 
     }, 
     closed:{
         fontSize:18,
@@ -20,8 +21,8 @@ const styles = {
         marginRight:'auto',
         marginBottom:2,
         textAlign:'center',
-        color:'white',
-        transition: '0.5s ease'
+        transition: '1.0s ease',
+        color:tkColors.background, 
     } 
 }
 

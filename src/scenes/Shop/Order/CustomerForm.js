@@ -377,7 +377,7 @@ const getPayLabel = (language, numberOfItems, paymentMethod, phone) =>
     } else {
       label=TEXTS.EMPTY[language];
     }  
-    console.log('getPayLabel: paymentMethod:', paymentMethod)
+    // console.log('getPayLabel: paymentMethod:', paymentMethod)
     return(label)
 }
 

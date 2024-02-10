@@ -2,8 +2,10 @@ import { connect } from 'react-redux';
 import withRecords from 'Components/Table/withRecords';
 import GetRegistrationMapMap from './GetRegistrationMapMap'
 import lightGreen from '@material-ui/core/colors/lightGreen';
+import Button from '@material-ui/core/Button';
 import {TBL_TEACHER_NOTE} from 'Settings/Const'
 import { View2 } from 'Settings/UtilsMap';
+
 
 const GROUP_BY_DEF_ARR = [
     {
@@ -46,7 +48,6 @@ const GROUP_BY_DEF_ARR = [
 ];
 
 const VIEW_FIELDS=['firstName', 'lastName', 'present', 'courseDate'];
-const VIEW_FIELDS_EXPAND=['firstName', 'lastName', 'present', 'courseDate'];
 const UPDATE_VIEW=['present']
 const UPDATE_FIELDS=['productId', 'firstName', 'lastName', 'email', 'courseDate', 'courseName', 'scheduleName', 'present'];
 const mapStateToProps = (state) => {
@@ -59,7 +60,6 @@ const mapStateToProps = (state) => {
         urlUpdateAll:'/admin/updateRowsInPresence',
         viewComponent:View2,
         viewFields:VIEW_FIELDS,
-        viewFieldsExpand:VIEW_FIELDS_EXPAND,
         tableUpdate:'tbl_presence',
         updateView:UPDATE_VIEW,
         updateFields:UPDATE_FIELDS,

@@ -26,7 +26,7 @@ class ImageUploadMultiple extends Component {
           let selectedFile = this.state.selectedFiles[i]
           formData.append('newfile_arr[]', selectedFile, selectedFile.name)
         } 
-        console.log('formData', formData)
+        // console.log('formData', formData)
         axios.post(apiBaseUrl + '/postImages', formData,
             {
                 onUploadProgress: progressEvent => {console.log(progressEvent.loaded / progressEvent.total)}

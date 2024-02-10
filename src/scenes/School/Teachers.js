@@ -81,7 +81,7 @@ const _Teacher = (teacher, language, breakpoints, currentBreakpoint) => {
 }
 
 const Teachers = (props) => {
-    console.log('Teachers:', props.list)
+    // console.log('Teachers:', props.list)
     return (
       props.list.length > 0?
         <div style={styles.root}>

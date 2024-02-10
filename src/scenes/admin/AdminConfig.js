@@ -82,41 +82,43 @@ export const regList = [
         component:React.cloneElement(<GetRegistrationHistory />),
     },
     { 
-        titleSV:'Närvaro - registering + kommentar', 
-        titleEN:'Precense - register + comment',  
-        titleES:'Precensia - registrarse + commentario', 
+        titleSV:'Lärarens noteringar', 
+        titleEN:'Teachers comment',  
+        titleES:'Profesor + commentario', 
+        component:React.cloneElement(<GetTeachersNoteNew />),
+    },
+    { 
+        titleSV:'Närvaro - registering', 
+        titleEN:'Precense - register',  
+        titleES:'Precensia - registrarse', 
         component:React.cloneElement(<GetPresence />),
     },
     { 
-        titleSV:'Närvaro - historik', 
-        titleEN:'Presence - history',  
+        titleSV:'Närvaro - tabell', 
+        titleEN:'Presence - table',  
         titleES:'Histora del presencia', 
         component:React.cloneElement(<GetPresenceHistory />),
     },
     { 
-        titleSV:'Närvaro - historik (Ny)', 
-        titleEN:'Presence - history (New)',  
+        titleSV:'Närvaro - kryss-markeringar', 
+        titleEN:'Presence - cross-marks',  
         titleES:'Histora del presencia (Nuevo)', 
         component:React.cloneElement(<GetPresenceHistoryNew />),
     },
     { 
-        titleSV:'Frånvaro - historik', 
+        titleSV:'Frånvaro - tabell', 
         titleEN:'Absence - history',  
         titleES:'Historial de ausencia', 
         component:React.cloneElement(<GetAbsenceHistory />),
     },
+    /*
     { 
         titleSV:'Lärarens noteringar', 
         titleEN:'Teachers notes',  
         titleES:'Las notas del maestro', 
         component:React.cloneElement(<GetTeacherNote />),
     },
-    { 
-        titleSV:'Lärarens noteringar (Ny)', 
-        titleEN:'Teachers comment (New)',  
-        titleES:'Profesor + commentario (Nuevo)', 
-        component:React.cloneElement(<GetTeachersNoteNew />),
-    },
+    */
 ]
 
 export const scheduleList = [   

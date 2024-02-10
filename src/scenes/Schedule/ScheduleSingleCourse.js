@@ -74,7 +74,7 @@ class ScheduleSingleCourse extends Component {
 
     // Render all courses for one scheduleId
     renderCourseTemplateId(courses) {
-        console.log('renderCourseTempateId, courses:', courses)
+        // // console.log('renderCourseTempateId, courses:', courses)
         const weekend = courses?courses[0].courseType === 'HK':false
         return (
                 <>

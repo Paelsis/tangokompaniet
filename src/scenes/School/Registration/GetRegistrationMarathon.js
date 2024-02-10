@@ -5,6 +5,7 @@ import backgroundColor from '@material-ui/core/colors/teal';
 import { View1 } from 'Settings/UtilsMap'
 
 const GROUP_BY_DEF_ARR=[
+    /*
     {
         groupByField:'eventType', 
         headerFields:['eventType'],
@@ -21,6 +22,7 @@ const GROUP_BY_DEF_ARR=[
             }
         }    
     },    
+    */
     {
         groupByField:'dateRange', 
         headerFields:['dateRange'],
@@ -40,7 +42,8 @@ const GROUP_BY_DEF_ARR=[
     {
         groupByField:'role', 
         headerFields:['role'],
-
+        headerSortBy:'role',
+        listSortBy:['firstName','lastName'],
         headerProps:{
             open:{
                 width:'100vw', 

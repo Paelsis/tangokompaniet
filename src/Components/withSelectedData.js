@@ -15,14 +15,14 @@ const withSelectedData = (WrappedComponent) => {
     componentDidMount () {
       let url=config[process.env.NODE_ENV].apiBaseUrl + this.props.url?this.props.url:this.props.xxx;
       this.fetchFromDatabase(url)
-      console.log('componentDidMount (datafeched from DB for url:' + url); 
+      // console.log('componentDidMount (datafeched from DB for url:' + url); 
     }  
 
 
     componentWillReceiveProps(nextProps) {
       if (this.props.url !== nextProps.url) {
         let url=config[process.env.NODE_ENV].apiBaseUrl + nextProps.url;
-        console.log('component Table recieved props'); 
+        // console.log('component Table recieved props'); 
         this.fetchFromDatabase(url)
       }   
     }
@@ -40,7 +40,7 @@ const withSelectedData = (WrappedComponent) => {
       } catch(e) {
         this.setState({records:[]})
         let errMessage = 'ERROR:' + e.message 
-        console.log(errMessage);
+        // console.log(errMessage);
         alert(errMessage)
       }    
     }

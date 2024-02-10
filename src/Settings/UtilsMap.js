@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Weekdays from 'Settings/Weekdays';
 import tkColors, {boxShadowValue} from 'Settings/tkColors'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
-import Button from 'Components/Button'
+import Button from '@material-ui/core/Button';
 import MessageIcon from '@material-ui/icons/Message';
 import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
@@ -14,8 +14,11 @@ import EmailIcon from '@material-ui/icons/Email';
 import TextShow from 'Components/Text/TextShow'
 import {TBL_TEACHER_NOTE} from 'Settings/Const'
 import moment from 'moment-with-locales-es6';
-import {serverFetchDataResult} from 'functions/serverFetch'
+import {serverFetchData} from 'functions/serverFetch'
 import config from 'Settings/config';
+import {replaceRow} from 'functions/tableUtils'
+import {acceptKeys} from 'Settings/Utils'
+
 
 const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
 
@@ -25,6 +28,16 @@ const TEXTS = {
         'ES':'Descargar como archivo XLS' ,
         'EN':'Download as XLS'
     },   
+}
+
+const isValidDate = dateString => {
+    var regEx = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateString) return false; // No date string
+    if(!dateString.match(regEx)) return false;  // Invalid format
+    var d = new Date(dateString);
+    var dNum = d.getTime();
+    if(!dNum && dNum !== 0) return false; // NaN value, Invalid date
+    return d.toISOString().slice(0,10) === dateString;
 }
 
 let styles = {
@@ -41,7 +54,6 @@ let styles = {
     },
     tbody: {
       overflowX:'auto',
-      margin:10,
       border:'0.1px solid',
       borderColor:tkColors.border,
     },  
@@ -259,6 +271,7 @@ const editRowWithoutButton = (row, rowIndex, props) =>
         {editFields(row, props)}
     </tr>            
 
+
 const isPaid = pr => {
     return pr?pr.amount?pr.paidAmount?pr.paidAmount === pr.amount?true:false:false:false:false;
 }
@@ -276,7 +289,7 @@ export const View1 = props => {
     let {viewFields} = props
     viewFields = expand?viewFieldsExpand?viewFieldsExpand:viewFields:viewFields 
     const newProps = {...props, viewFields}
-    console.log('_view1 list:', list)
+    // console.log('_view1 list:', list)
     return (
         <div>
             <ReactHTMLTableToExcel
@@ -286,13 +299,12 @@ export const View1 = props => {
                     sheet="Sheet"
                     buttonText="Download as XLS"
             />
-            <button onClick={()=>setExpand(!expand)}>          
+            <Button variant='outlined'  onClick={()=>setExpand(!expand)}>          
                 Expand
-            </button>
+            </Button>
             <table id={'table-map-view-1'} style={styles.table}>
-                <thead>
-                    {
-                        viewFields?
+                <tr>
+                    {viewFields?        
                             viewFields.map(fld => 
                                 <th key={fld} style={styles.th} onClick={()=>fld.includes('email')?null:props.sortStateListByKey(fld)}>    
                                     {fld.includes('email')?
@@ -313,13 +325,14 @@ export const View1 = props => {
                     }    
 
                     <th key={'Message'} style={styles.th}>Message</th>
+                    
 
                     {newProps.updateView?newProps.updateView.length > 0?
                         <>
-                            <th style={styles.th} key={'buttons'} colSpan={3}>Buttons</th>
+                            <th style={styles.th} key={'Buttons'} colSpan={3}>Buttons</th>
                         </>
                     :null:null}
-                </thead>
+                </tr>
                 <tbody>
                     {list.map((row, rowIndex)=> 
                         edit[row.id]?editRowWithButton(row, rowIndex, newProps)
@@ -339,68 +352,153 @@ export const View1 = props => {
     </Button>    
     {props.edit[list[0].id]?<UpdateProductId fromProductId = {list[0].productId} handleResult={(data) => props.fetchListAgain()} />:null}
 */
+const TextArea = props => {
+    const {productId, courseDate, handleSave} = props
+    const [textBody, setTextBody] = useState()
+    const handleReply = reply => {
+        if (reply.status === 'OK') {
+            const text = reply.result?reply.result[0]?reply.result[0].textBody:'':''
+            setTextBody(text)
+        } else {
+            // alert('Text not found ' + JSON.stringify(reply))
+        }
+    }
+    useEffect(()=>{
+        const url = apiBaseUrl + '/getTeacherNote?productId=' + productId + '&courseDate=\'' + courseDate + '\''
+        serverFetchData(url, '', '', handleReply)
+    }, [productId, courseDate])
+
+    const handleReplaceRowReply = reply => {
+        if (reply.status === 'OK') {
+            handleSave()
+        } else {
+            alert('ERROR: reply:' + JSON.stringify(reply))
+        }
+
+    }
+
+    const handleClick = () => {
+        if (textBody) {
+            const value = {
+                data:{
+                    productId,
+                    courseDate:courseDate,
+                    textBody:textBody,
+                }    
+            }
+                replaceRow('tbl_teacher_note', value.data, handleReplaceRowReply);
+        } else {
+            handleSave()
+        }    
+    }
+
+    return(
+        <>
+            <textarea rows={4} cols={40} value={textBody} placeholder={'Write your comment here'} onChange={e=>{setTextBody(e.target.value)}} />
+            <br/>
+            <Tooltip title = 'Saves both text and presence'>
+                <div>
+                <Button variant='outlined' onClick={handleClick}>Save</Button> 
+                </div>
+            </Tooltip>
+        </>            
+    )
+}
+
+
+
 export const View2 = props => {
-    const [expand, setExpand] = useState(false)
-    const newProps = {...props, viewFields:expand?props.viewFieldsExpand:props.viewFields}
-    const {list, viewFields, edit, toggleEditList, language} = newProps
+    const {list, viewFields} = props
     const defaultCourseDate = moment().format('YYYY-MM-DD')
     const [courseDate, setCourseDate] = useState(defaultCourseDate)
+    const [localList, setLocalList] = useState()
     const productId = list.length > 0?list[0].productId:undefined
-    let textId = productId?productId:'NoProductId' + courseDate?courseDate:'NoCourseDate'
-    const editMode = edit[list[0].id]?true:false
+    const [edit, setEdit] = useState(false)
+
+    const toggleEditList = () => {
+        // Don't remove the row.id for updateFields 
+        // const acceptList = list.map(row => ({...acceptKeys(row, this.props.updateFields), id:row.id}));  
+        
+        // 15/5-2022 Remove id's. The id must be undefined, otherwise replace stmt will update primary key id, instead of unique key on name and course date  
+    }
+
     const handleToggle = () => {
-        let newList = list
-        if  (!editMode) {
-            const defaultCourseDate = moment().format('YYYY-MM-DD')
-            const ans=prompt('Please enter course date', defaultCourseDate) 
-            setCourseDate(ans)
-            newProps.setList(props.getList().map(it =>({...it, courseDate:ans})))
-            if (ans.length !== 10) {
-                alert('You must enter a valid date in format YY-MON-YY. Example 2022-12-31')
+        if  (!edit) {
+            if (isValidDate(courseDate)) {
+                const url = apiBaseUrl + '/getPresence?productId=' + productId + '&courseDate=' + courseDate 
+                let lclList = []
+                if (list.find(it=>it.courseDate === courseDate)) {
+                    lclList = list.filter(it=>it.courseDate===courseDate).map(it=>({...it, exist:true}))
+                } else {    
+                    // Use first date of the list since all are comming up on that date
+                    lclList = list.filter((it)=>it.courseDate === list[0].courseDate).map((it, idx)=>({...it, courseDate, present:0, id:idx, exist:false}));
+                }    
+                // alert(JSON.stringify(lclList))
+                setLocalList(lclList)
+                // serverFetchData(url, '', '', reply => handleReply(reply, ans))
+            } else {
+                alert('Please enter a valid date in format YYYY-MM-DD. Example 2024-06-30')
                 return
             }
-        } 
-        toggleEditList(list)
+        } else {
+            // alert('VVVVVVV ' + JSON.stringify(localList))
+            props.updateList(localList.map(it => ({...it, update:undefined, id:it.exist === true?it.id:undefined})))
+        }
+        setEdit(!edit);
     }
+
+    const handleChangeChecked = (e, idx) => {
+        let newList = localList.map((it, ix) => {
+            if (ix === idx) {
+                return {...it, [e.target.name]:e.target.checked?1:0}
+            } else {
+                return it
+            }
+        })            
+        setLocalList(newList)
+    }
+
     return (
         <div>
-            <button onClick={()=>handleToggle()}>
-                {editMode?'Save':'Edit'}  
-            </button>   
-            <button onClick={()=>setExpand(!expand)}>          
-                Expand
-            </button>
-            <ReactHTMLTableToExcel
-                    className="btn btnInfo"
-                    table="table-map-view-2"
-                    filename={props.tableUpdate?props.tableUpdate:"ReportExcel"}
-                    sheet="Sheet"
-                    buttonText="Download as XLS"
-            />
-                <table id={'table-map-view-2'} style={styles.table}>
-                    <thead>
+            
+            <div>
+                {!edit?
+                <div style={{textAlign:'center', width:'100%'}}>
+                <input type='date' value={courseDate} onChange={e=>setCourseDate(e.target.value)} />
+                <Button variant='outlined' onClick={()=>handleToggle()}>
+                    Hämta deltagare 
+                </Button>  
+                </div>
+                :null} 
+                
+                {edit?
+                
+                <table style={styles.table}>
+                    <tr>
                         {viewFields.map((fld, ndx) => 
                             <th key={ndx} style={styles.th} onClick={()=>fld.includes('email')?null:props.sortStateListByKey(fld)}>    
-                                {fld.includes('email') ?
-                                    <a href={'mailto:?bcc=' + maillist(list, fld) + '&subject=Mail från TK'} target="_top">
-                                        {fld}&nbsp;
-                                        <Tooltip title={'Send mail to group'}>  
-                                        <EmailIcon style={{cursor:'pointer', fontSize:'small'}} />
-                                        </Tooltip>
-                                    </a>
-                                :fld}
+                                {fld}
                             </th>
                         )}    
-                    </thead>
+                        <th style={styles.th}>Exists</th>
+                    </tr>
                     <tbody style={styles.tbody}>
-                        {list.map((row, rowIdx)=> 
-                            editMode?editRowWithoutButton(row, rowIdx, newProps):viewRowWithoutButton(row, rowIdx, newProps)
-                        )} 
+                        {localList?localList.map((row, idx)=> 
+                            <tr>
+                                <td>{row.firstName}</td>
+                                <td>{row.lastName}</td>
+                                <td><input type='checkbox' name='present' checked={row.present==1?1:0} onChange={e=>handleChangeChecked(e, idx)} /></td>
+                                <td>{row.courseDate}</td>
+                                <td style={{paddingLeft:10}}>{row.exist?' Yes ':'  '}</td>
+                            </tr>
+                        ):null}
                     </tbody>
                 </table>
-            {newProps.insertTeacherNote && editMode?
-                <TextShow tableName={TBL_TEACHER_NOTE} url={'/getTexts?tableName=' + TBL_TEACHER_NOTE} groupId={'PRESENCE'} textId={textId} language={language} /> 
-            :null}    
+                :null}
+            </div>
+            <div>
+                {edit?<TextArea productId={productId} handleSave={handleToggle} courseDate={courseDate} {...props} />:null}
+            </div>
         </div>
     )
 }
@@ -422,7 +520,8 @@ export const View3 = props => {
             courseDate:value.courseDate,
             textBody:value.textBody,
         }
-        alert(JSON.stringify(adjValue))
+        // alert(JSON.stringify(adjValue))
+
         props.replaceRow(adjValue)
         setValue({...value, textBody:undefined})
     }
@@ -450,7 +549,7 @@ export const View3 = props => {
                         /> 
                     </div>
                     <div style={{marginTop:10, marginBottom:20}}>
-                        <button className='button' style={{color:'green', borderColor:'green'}} type="submit">Save note</button>
+                        <Button variant='outlined'  className='Button' style={{color:'green', borderColor:'green'}} type="submit">Save note</Button>
                     </div>
                 </div>
             </form>
@@ -468,33 +567,50 @@ export const View3 = props => {
 
 export const View4 = props => {
     const {list, language} = props
-    const [matrix, setMatrix] = useState({})
+    const [matrix, setMatrix] = useState(undefined)
     const productId = list[0]?list[0].productId:undefined
+
+    const handleReply = reply => {
+        if (reply.status === 'OK') {
+            const result = reply.result
+            setMatrix(result?result[productId]?result[productId]:undefined:undefined)
+        } else {
+            alert('Cannot find any presence records')
+        }    
+    }
+
+    const compareFunction = (email1, email2) => {
+        return (Object.values(matrix[email1])[0].firstName?Object.values(matrix[email1])[0].firstName:'ZZZ')
+        .localeCompare(
+            Object.values(matrix[email2])[0].firstName?Object.values(matrix[email2])[0].firstName:'ZZZ')
+    }
 
     useEffect(()=>{
         const url = apiBaseUrl + '/getPresenceHistoryMatrix?language=' + language + '&productId=' + productId
-        serverFetchDataResult(url, '', '', result => {/*alert(JSON.stringify(Object.keys(result)));*/ setMatrix(result?result[productId]?result[productId]:{}:{})})
+        serverFetchData(url, '', '', handleReply)
     }, [])
-    const firstEmail = Object.keys(matrix)[0]
+    const firstEmail = matrix!==undefined?(Object.keys(matrix)[0]):undefined
     return (
-        firstEmail?
-        <div style={{width:'100%'}}>
-            <table><thead>
-                <th>email</th>
-                {Object.keys(matrix[firstEmail]).map(courseDate =>
-                    <th>{courseDate}</th>
-                )}
-            </thead>
-            <tbody>
-            {Object.keys(matrix).map(email =>
-                <tr>
-                    <td>{Object.values(matrix[email])[0].firstName}&nbsp;{Object.values(matrix[email])[0].lastName}</td>
-                    {Object.values(matrix[email]).map(obj => <td>{obj.present?'X':'-'}</td>)}
-                </tr>
-            )}
-            </tbody>    
-            </table>
-        </div>    
-        :null
+        !firstEmail?
+            <h1 style={{textAlign:'center'}}>No data</h1>
+        :
+            <div style={{width:'100%'}}>
+                <table>
+                    <thead>
+                    <th style={{paddingRight:3}}>name</th>
+                    {Object.keys(matrix[firstEmail]).map(courseDate =>
+                        <th style={{padding:3}}>{courseDate}</th>
+                    )}
+                    </thead>
+                <tbody>
+                {Object.keys(matrix)?Object.keys(matrix).sort(compareFunction).map(email =>
+                    <tr>
+                        <td style={{paddingRight:3}}>{Object.values(matrix[email])[0].firstName}&nbsp;{Object.values(matrix[email])[0].lastName}</td>
+                        {Object.values(matrix[email]).map(obj => <td>{obj.present?'X':'-'}</td>)}
+                    </tr>
+                ):null}
+                </tbody>    
+                </table>
+            </div>    
     )
 }

@@ -86,14 +86,14 @@ const Product = ({width, height, product}) => {
 
 // Render Product list with filter for the current productType
 const ProductList = ({breakpoints, currentBreakpoint, list, filterKeys}) => {
-  console.log('ProductList: length:', list.length)
-  console.log('IMAGE_URL:', IMAGE_URL)
+  // console.log('ProductList: length:', list.length)
+  // console.log('IMAGE_URL:', IMAGE_URL)
   const uniqueList = RemoveDuplicates(list, 'productId');
   const filterList = FilterList(uniqueList, filterKeys);
   const width = _width(breakpoints, currentBreakpoint)
   const height = _height(breakpoints, currentBreakpoint)
   const navigate = useNavigate()
-  console.log('filtetList:', filterList)
+  // console.log('filtetList:', filterList)
   const handleClick = productId => navigate('/productshow/' + productId)
 
   return ( 

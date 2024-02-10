@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'Settings/config'
 
 const postWaitlist = (url, username, password, course, handleResult) => {
-    console.log('function:postPaymentCheckout course:', course);
+    // console.log('function:postPaymentCheckout course:', course);
        
     axios.post(url, {
         auth: {
@@ -12,13 +12,13 @@ const postWaitlist = (url, username, password, course, handleResult) => {
         course,
     })
     .then((response) => {
-        console.log('url:', url);
-        console.log('response:', response);
+        // console.log('url:', url);
+        // console.log('response:', response);
         handleResult(response.data.result);
     })
     .catch((error) => {
-        console.log('ERROR: Failed to post URL:' + url);
-        console.log(error); // Error
+        // console.log('ERROR: Failed to post URL:' + url);
+        // console.log(error); // Error
     });
   }
 

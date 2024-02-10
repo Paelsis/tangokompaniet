@@ -12,7 +12,7 @@ export function loadDropdownList(username, password, tableName, selectKey, selec
         list=>{ 
 
             const selectList = list.map(li => ({key:li[selectKey], value:li[selectValue]}))   
-            console.log('selectKey', selectKey, ' selectValue:', selectValue, ' selectList:', selectList);
+            // console.log('selectKey', selectKey, ' selectValue:', selectValue, ' selectList:', selectList);
             func(selectList);
         })
 }   
@@ -37,7 +37,7 @@ export function loadDropdownListObjects(username, password, tableName, func) {
         apiBaseUrl + '/admin/tktableWithoutId?tableName=' + tableName,
         objectList=>{ 
 
-            console.log('loadDropdownListObjects:selectList=', objectList);
+            // console.log('loadDropdownListObjects:selectList=', objectList);
             func(objectList);
         })
 }   

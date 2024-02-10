@@ -24,18 +24,18 @@ const duplicateEvent = (event, rrule) => {
     let endDate = rrule.UNTIL?moment(rrule.UNTIL).clone():moment().clone().add(0.5, 'years')
     let freq = momentFreq(rrule.FREQ);
     let interval = rrule.INTERVAL;
-    console.log('dublicate event start:', start)
-    console.log('dublicate event end:', end)
-    console.log('dublicate event endDate:', endDate)
-    console.log('INTERVAL:', interval)
-    console.log('FREQ:', freq)
+    // console.log('dublicate event start:', start)
+    // console.log('dublicate event end:', end)
+    // console.log('dublicate event endDate:', endDate)
+    // console.log('INTERVAL:', interval)
+    // console.log('FREQ:', freq)
     let maxCount=rrule.COUNT?rrule.COUNT:100;
     let count=0;
     while ((start < endDate) && (count < maxCount))  {
         start.add(interval?interval:1, freq);
         end.add(interval?interval:1, freq);
         let strLog='start:'+ start.format('YYYY-MM-DD HH:mm') + ' end:'+ end.format('YYYY-MM-DD HH:mm') + ' count:' + count;
-        console.log(strLog)
+        // console.log(strLog)
         count++;
     }
 }
@@ -93,7 +93,7 @@ export function expandEvents (events) {
         if (event.recurrence?true:false) {
             event.recurrence.forEach(rr =>{
                 let rrule = rruleObject(rr.split(':')[1].split(';')) 
-                console.log('XXXXXXXXXXXXX rrule', rrule);
+                // console.log('XXXXXXXXXXXXX rrule', rrule);
 
                 // Duplicate the events with repect to the RRULE 
                 duplicateEvent(event, rrule);
@@ -111,13 +111,13 @@ export function recurrenceEvents(events) {
       arr.push(event);
 
     //  if (event.recurrence?true:false) {
-        console.log(event.title);
+        // console.log(event.title);
 
         let endDateRecurrance = moment('20191031', 'YYYYMMDD');
         let nextStart=moment('20170728', 'YYYYDDMM').add(1, 'week') ;
         let nextEnd=moment('20170728', 'YYYYDDMM').add(1,'week');
         while (nextEnd <= endDateRecurrance) {
-          console.log('1111111111111111111111111');
+          // console.log('1111111111111111111111111');
           arr.push(
               {start: nextStart, end: nextEnd, title: event.title, }  
           )

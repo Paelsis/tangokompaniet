@@ -29,6 +29,6 @@ if (module.hot) {
 
 /*
 let unsubscribe = store.subscribe(() =>
-  console.log(store.getState())
+  // console.log(store.getState())
 )
 */

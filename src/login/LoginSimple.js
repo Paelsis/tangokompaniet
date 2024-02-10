@@ -88,8 +88,8 @@ const Login =  (props) => {
             })    
         } catch(event) {
             let errMessage = 'ERROR:' + e 
-            console.log('ERROR: Failed to login as user +', username);
-            console.log(errMessage);
+            // console.log('ERROR: Failed to login as user +', username);
+            // console.log(errMessage);
             alert(errMessage)
         } 
        e.preventDefault()
@@ -105,7 +105,7 @@ const Login =  (props) => {
     }       
     
     const handleChange = e => {
-        console.log('[' + e.target.name + '] = ' + e.target.value)
+        // console.log('[' + e.target.name + '] = ' + e.target.value)
         setUser(e.target.name, e.target.value);
     }
 

@@ -25,13 +25,13 @@ const withCombinedRecords = (WrappedComponent) => {
         }
 
         componentDidMount () {
-            console.log('componentDidMount: withCombinedRecords'); 
+            // console.log('componentDidMount: withCombinedRecords'); 
             this.fetch2FromDatabase(this.props.url1, this.props.url2, 
                 (list1, list2) => this.props.handleLists(list1, list2));
         }  
 
         componentWillReceiveProps(nextProps) {
-            console.log('componentWillReceiveProps: withCombinedRecords'); 
+            // console.log('componentWillReceiveProps: withCombinedRecords'); 
             if (this.props.url1 !== nextProps.url1 && this.props.url2 !== nextProps.url2)  {
                 this.fetch2FromDatabase(nextProps.url1, nextProps.url2, 
                     (list1, list2) => this.props.handleLists(list1, list2));
@@ -53,14 +53,14 @@ const withCombinedRecords = (WrappedComponent) => {
                 let username=this.props.username?this.props.username:'';
                 let password=this.props.password?this.props.password:'';
                 fetchTwoList(username, password, [url1, url2], (list1, list2) => {
-                    console.log('(withCombinedRecords) Number of found lists1:', list1.length)
-                    console.log('(withCombinedRecords) Number of found lists2:', list2.length)
+                    // console.log('(withCombinedRecords) Number of found lists1:', list1.length)
+                    // console.log('(withCombinedRecords) Number of found lists2:', list2.length)
                     this.handleLists(list1, list2);
                 })
             } catch(e) {
                 this.handleLists([], []);
                 let errMessage = 'ERROR:' + e.message + ' ' + ' url1=' + url1 + ' url2=' + url2;
-                console.log(errMessage);
+                // console.log(errMessage);
                 alert(errMessage);
             } 
         }

@@ -18,7 +18,7 @@ function submit1(values) {
       })
     } else {
       alert(`You submitted this fantastic:\n\n${JSON.stringify(values, null, 2)}`)
-      console.log(values)  
+      // console.log(values)  
     }
   })
 }
@@ -60,7 +60,7 @@ function checkForm(values) {
     } else {
       // Here the postOrder functionality shall be added
       alert(`Form is OK:\n\n${JSON.stringify(values, null, 2)}`)
-      console.log(values)  
+      // console.log(values)  
     }
   })
 }

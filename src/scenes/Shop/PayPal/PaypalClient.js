@@ -14,15 +14,15 @@ const ENV = process.env.NODE_ENV === 'production'
 class PaypalClient extends Component {
   render() {
     const onSuccess = (payment) =>
-      console.log('Successful payment!', payment);
+      // console.log('Successful payment!', payment);
 
     const onError = (error) =>
-      console.log('Erroneous payment OR failed to load script!', error);
+      // console.log('Erroneous payment OR failed to load script!', error);
 
     const onCancel = (data) =>
-      console.log('Cancelled payment!', data);
+      // console.log('Cancelled payment!', data);
 
-    console.log(CLIENT.sandbox);
+    // console.log(CLIENT.sandbox);
 
     return (
 

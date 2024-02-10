@@ -37,10 +37,10 @@ const withRecords = (WrappedComponent) => {
             this.setWeeksBack = this.setWeeksBack.bind(this);
             this.setOverruleUrl = this.setOverruleUrl.bind(this);
             this.updateRow = this.updateRow.bind(this);
+            this.updateList = this.updateList.bind(this);
             this.replaceRow = this.replaceRow.bind(this);
             this.deleteRow = this.deleteRow.bind(this);
             this.addRow = this.addRow.bind(this);
-            this.updateTableAll = this.updateTableAll.bind(this);
             this.fetchFromDatabase = this.fetchFromDatabase.bind(this);
             this.fetchColumns = this.fetchColumns.bind(this);
             this.sortStateListByKey = this.sortStateListByKey.bind(this);
@@ -48,10 +48,12 @@ const withRecords = (WrappedComponent) => {
             this.toggleEdit = this.toggleEdit.bind(this);
             this.toggleEditIds = this.toggleEditIds.bind(this);
             this.handleReply = this.handleReply.bind(this);
+            this.handleReplyUpdateList = this.handleReplyUpdateList.bind(this);
+            this.handleFetchListReply = this.handleFetchListReply.bind(this);
         }
 
         componentDidMount () {
-            console.log('componentDidMount: withRecords this.props.url=', this.props.url?this.props.url:'nextProps.url not found'); 
+            // console.log('componentDidMount: withRecords this.props.url=', this.props.url?this.props.url:'nextProps.url not found'); 
             this.fetchFromDatabase(this.props.url)
             if (this.props.table !== undefined) {
                 this.fetchColumns(this.props.table)
@@ -61,7 +63,7 @@ const withRecords = (WrappedComponent) => {
         componentWillReceiveProps(nextProps) {
             if (this.props.url !== nextProps.url && (this.props.subdir?this.props.subdir 
                 || this.props.subdir !== nextProps.subdir:true))  {
-                console.log('componentDidMount: withRecords nextProps.url=', nextProps.url?nextProps.url:'nextProps.url not found'); 
+                // console.log('componentDidMount: withRecords nextProps.url=', nextProps.url?nextProps.url:'nextProps.url not found'); 
                 this.fetchFromDatabase(nextProps.url)
             } 
             if (nextProps.table !== this.props.table) {
@@ -78,18 +80,23 @@ const withRecords = (WrappedComponent) => {
         }
 
         fetchListAgain() {
-            console.log('fetchListAgain url=', this.props.url); 
+            // console.log('fetchListAgain url=', this.props.url); 
             this.fetchFromDatabase(this.props.url)
         }
 
-    
-        handleReplyAll(statusFlag, data) {
-            console.log('withRecords.handleReplyAll: statusFlag:' + statusFlag + 'data:' + data);
-        }    
-
         handleReply(status, data) {
-            console.log('status:' + status + ' Data:' + JSON.stringify(data))
+            // console.log('status:' + status + ' Data:' + JSON.stringify(data))
             this.fetchListAgain()
+        } 
+
+        handleReplyUpdateList(status, data) {
+            if (status === 'OK') {
+                console.log('[handleReplyUpdateList] Update of list is successful. status:' + status)
+                // alert('OK ' +  JSON.stringify(data))
+                this.fetchListAgain()
+            } else {
+                alert('[handleReplyUpdateList] status =' + status + ' Data=' + JSON.stringify(data))
+            }    
         } 
 
         updateRow(row)
@@ -137,12 +144,12 @@ const withRecords = (WrappedComponent) => {
         }
 
 
-        updateTableAll(list)
+        updateList(list)
         {
             const urlUpdate = this.props.urlUpdate?this.props.urlUpdate:'/admin/updateRowsInPresence'
             const url = config[process.env.NODE_ENV].apiBaseUrl + urlUpdate
             const table=this.props.tableUpdate
-            postUpdTableAll(url, table, this.props.username, this.props.password, list, this.handleReply)
+            postUpdTableAll(url, table, this.props.username, this.props.password, list, this.handleReplyUpdateList)
         }
     
 
@@ -160,14 +167,14 @@ const withRecords = (WrappedComponent) => {
                 let {url}=this.props.location.state?this.props.location.state:{url:'No url in location state'};
                 urlActive=config[process.env.NODE_ENV].apiBaseUrl + url;
             } else {
-                console.log('ERROR: Function \"withRecords\" did not find any url in props or in this.props.location.state'); 
+                // console.log('ERROR: Function \"withRecords\" did not find any url in props or in this.props.location.state'); 
             }   
-            console.log('subdir:', this.props.subdir)
-            console.log('urlActive before:', urlActive)
+            // console.log('subdir:', this.props.subdir)
+            // console.log('urlActive before:', urlActive)
             let subdir=this.props.subdir
             subdir=subdir?subdir.charAt(0)==='/'?'':'/' + subdir:undefined
             urlActive += subdir?'?subdir=' + subdir:''; 
-            console.log('urlActive after:', urlActive)
+            // console.log('urlActive after:', urlActive)
 
             return urlActive;
         }    
@@ -193,22 +200,25 @@ const withRecords = (WrappedComponent) => {
             }   
         }    
 
+
+        handleFetchListReply(list) {
+                const sortKey = this.state.sortKey?this.state.sortKey:this.props.sortKey?this.props.sortKey:undefined
+                const sortedList = this.sortListByKey(list, sortKey, this.state.sortDirection)
+                // console.log('(withRecords) Number of found elements in list:' + list.length)
+                this.setState({list:sortedList, sortKey});
+        }
+
         // Fetchrecords from database
         fetchFromDatabase(propsUrl) {
             let url = this.findUrl(propsUrl);
             try {
                 let username=this.props.username?this.props.username:'';
                 let password=this.props.password?this.props.password:'';
-                fetchList(username, password, url, (list) => {
-                    const sortKey = this.state.sortKey?this.state.sortKey:this.props.sortKey?this.props.sortKey:undefined
-                    const sortedList = this.sortListByKey(list, sortKey, this.state.sortDirection)
-                    console.log('(withRecords) Number of found elements in list:' + list.length + ' for url=' + url)
-                    this.setState({list:sortedList, sortKey});
-                })
+                fetchList(username, password, url, this.handleFetchListReply)
             } catch(e) {
                 this.setState({list:[]});
                 let errMessage = 'ERROR:' + e.message + ' ' + ' url=' + url;
-                console.log(errMessage);
+                alert('[withRecords.fetchFromDatabase] ERROR = ' + errMessage);
             } 
         }
 
@@ -223,14 +233,14 @@ const withRecords = (WrappedComponent) => {
             } catch(e) {
                 this.setState({list:[]});
                 let errMessage = 'ERROR:' + e.message + ' ' + ' url=' + url;
-                console.log(errMessage);
+                alert('[withRecords.fetchColumns] ERROR = ' + errMessage);
             } 
         }
 
 
         // Handle change on a single property of a single element in a list
         handleChangeId(e, id) {
-            console.log('withRecords: handleChangeId for id:', id, 'type:', e.target.type, 'name:', e.target.name, 'value:', e.target.value, 'checked:', e.target.checked)
+            // console.log('withRecords: handleChangeId for id:', id, 'type:', e.target.type, 'name:', e.target.name, 'value:', e.target.value, 'checked:', e.target.checked)
             const list = this.state.list.map(it=> {
                 if (it.id === id) {
                     switch(e.target.type) {
@@ -247,7 +257,7 @@ const withRecords = (WrappedComponent) => {
 
         handleChangeIndex(e, index)
         {
-            console.log('withRecords: handleChangeIndex for index:' +  index +  ' ' + e.target.name + ' = ' + e.target.value + ' (checked=' + e.target.checked + ')' );
+            // console.log('withRecords: handleChangeIndex for index:' +  index +  ' ' + e.target.name + ' = ' + e.target.value + ' (checked=' + e.target.checked + ')' );
             let list = this.state.list.map((it, ix)=> {
                 if (index === ix) {
                     switch(e.target.type) {
@@ -264,7 +274,7 @@ const withRecords = (WrappedComponent) => {
 
         handleChangeValueById(name, value, id)
         {
-            console.log('withRecords: handleChangeValueById for id:' +  id +  ' name:' + name + ' value:' + value);
+            // console.log('withRecords: handleChangeValueById for id:' +  id +  ' name:' + name + ' value:' + value);
             let list = this.state.list.map((it)=> {
                 if (it.id === id) {
                     return({...it, [name]:value})
@@ -277,7 +287,7 @@ const withRecords = (WrappedComponent) => {
 
         handleChangeValueByIndex(name, value, index) 
         {
-            console.log('withRecords: handleChangeValue for index:' +  index +  ' name:' + name + ' value:' + value);
+            // console.log('withRecords: handleChangeValue for index:' +  index +  ' name:' + name + ' value:' + value);
             let list = this.state.list.map((it, ix)=> {
                 if (ix === index) {
                     return({...it, [name]:value})
@@ -291,14 +301,14 @@ const withRecords = (WrappedComponent) => {
 
         handleDeleteById(id)
         {
-            // console.log('withRecords: handleDelete for index:' +  index);
+            // // console.log('withRecords: handleDelete for index:' +  index);
             let list = this.state.list.filter((it)=> it.id !==id);
             this.setState({list})
         }
 
         handleCopyLine(id)
         {
-            // console.log('withRecords: handleDelete for index:' +  index);
+            // // console.log('withRecords: handleDelete for index:' +  index);
             if (this.state.list?this.state.list.length > 0:false) {
                 let list =  this.state.list
                 let record = list.find(it=>it.id === id)
@@ -312,7 +322,7 @@ const withRecords = (WrappedComponent) => {
 
         handleAdd(obj)
         {
-            console.log('withRecords: handleAdd object:', obj);
+            // console.log('withRecords: handleAdd object:', obj);
             const objWithId = obj.id?obj:{...obj, id:100000 + idNumber++}
             let list = [...this.state.list, objWithId];
             this.setState({list})
@@ -320,7 +330,7 @@ const withRecords = (WrappedComponent) => {
 
 
         toggleEdit(id) {
-            //console.log('Flag edit:', edit)
+            //// console.log('Flag edit:', edit)
             let edit = {...this.state.edit,[id]: this.state.edit[id]?undefined:true}
             this.setState({edit});
         };
@@ -361,7 +371,7 @@ const withRecords = (WrappedComponent) => {
                 updateRow={this.updateRow}
                 replaceRow={this.replaceRow}
                 deleteRow={this.deleteRow}
-                updateTableAll={this.updateTableAll}
+                updateList={this.updateList}
                 sortStateListByKey={this.sortStateListByKey}
                 edit={this.state.edit}
                 toggleEdit={this.toggleEdit} 

@@ -12,10 +12,10 @@ const GetMapMapViewAll = (props) => {
     const headerFields=groupByDef?groupByDef.headerFields:undefined;
     const headerSortBy=groupByDef?groupByDef.headerSortBy:undefined;
     const headerProps=groupByDef?groupByDef.headerProps:undefined;
-    console.log('groupByDef:', groupByDef)
-    console.log('groupByField:', groupByField)
-    console.log('headerFields:', headerFields)
-    console.log('headerProps:', headerProps)
+    // console.log('groupByDef:', groupByDef)
+    // console.log('groupByField:', groupByField)
+    // console.log('headerFields:', headerFields)
+    // console.log('headerProps:', headerProps)
     const filterList = props.productType?props.list.filter(it => it.productType===props.productType):props.list;
     const fieldMap = groupByField?groupBy(filterList.sort((a,b) => a[groupByField] - b[groupByField]), it => it[groupByField].replace(/\s+/g, '')):null;
     // If one menu is open, all other options at the same level shall be hidden

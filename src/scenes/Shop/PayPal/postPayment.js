@@ -14,17 +14,17 @@ const postPayment  = (url, paymentMethod, username, password, itemsList, handleR
         }    
     })
     .then((response) => {
-        console.log('url:', url);
-        console.log('Status code:', response.status);
-        console.log('response:', response);
-        console.log('response.data:', response.data);
-        console.log('response.data.result:', response.data.result);
-        console.log('response.data.status:', response.data.status);
+        // console.log('url:', url);
+        // console.log('Status code:', response.status);
+        // console.log('response:', response);
+        // console.log('response.data:', response.data);
+        // console.log('response.data.result:', response.data.result);
+        // console.log('response.data.status:', response.data.status);
         handleResult(paymentMethod, response.data);
     })
     .catch((error) => {
-        console.log('ERROR: Failed to post URL:' + url);
-        console.log(error); // Error
+        // console.log('ERROR: Failed to post URL:' + url);
+        // console.log(error); // Error
         handleResult(paymentMethod, {});
     });
   

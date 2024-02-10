@@ -253,7 +253,7 @@ class Order extends Component {
       this.setState({step:STEP.PAYMENT_ERROR.BAMBORA, message:result.message?result.message:'message not not recieved from BAMBORA'})
     } else {  
       const redirectUrl = result?result.url?result.url:null:null;
-      console.log('--- before window.location.replace, url =', redirectUrl); 
+      // console.log('--- before window.location.replace, url =', redirectUrl); 
       window.location.replace(redirectUrl)
     }  
   }
@@ -276,7 +276,7 @@ class Order extends Component {
   handlePayment = (reply) => {
     if (reply?reply.code?reply.code===200?reply.order?true:false:false:false:false)
     {
-      console.log('--- handlePayment ---, reply=', reply); 
+      // console.log('--- handlePayment ---, reply=', reply); 
       const order=reply.order
       const {username, password, language, resetCart} = this.props
       const inputData = {order, language}
@@ -302,14 +302,14 @@ class Order extends Component {
             break;
       }
     } else {
-      console.log('--- handlePayment ---, reply=', reply); 
+      // console.log('--- handlePayment ---, reply=', reply); 
       this.setState({step:STEP.PAYMENT_ERROR.UNKNOWN, message:'No data in the Order reply message'})
     }  
   }
 
   // Create the order from customer data and shoppingCart
   createOrder = (customer) => {
-    console.log('createOrder: customer:', customer)
+    // console.log('createOrder: customer:', customer)
     this.setState({paymentMethod:customer.paymentMethod})
     const payload={
       customer,
@@ -331,7 +331,7 @@ class Order extends Component {
   }
 
   renderPaymentBG = (order) => {
-    console.log('renderPaymentBg, order', order)
+    // console.log('renderPaymentBg, order', order)
     const orderId = order?order.id?order.id:undefined:undefined
     const amount = order?order.amount?order.amount:undefined:undefined
     const currency = order?order.currency?order.currency:undefined:undefined
@@ -357,7 +357,7 @@ class Order extends Component {
 
   renderPaymentOther = order => {
     const {language} = this.props 
-    console.log('renderPaymentBg, order', order)
+    // console.log('renderPaymentBg, order', order)
     const orderId = order?order.id?order.id:undefined:undefined
     const amount = order?order.amount?order.amount:undefined:undefined
     const currency = order?order.currency?order.currency:undefined:undefined
@@ -384,7 +384,7 @@ class Order extends Component {
   }
 
   renderOpenSwish = (order) => {
-    console.log('renderOpenSwish, order', order)
+    // console.log('renderOpenSwish, order', order)
     const orderId = order?order.id?order.id:undefined:undefined
     const amount = order?order.amount?order.amount:undefined:undefined
     const currency = order?order.currency?order.currency:undefined:undefined
@@ -410,7 +410,7 @@ class Order extends Component {
   }
 
   renderPaymentSwish = (order) => {
-    console.log('renderPaymentSwish, order', order)
+    // console.log('renderPaymentSwish, order', order)
     const orderId = order?order.id?order.id:undefined:undefined
     const amount = order?order.amount?order.amount:undefined:undefined
     const currency = order?order.currency?order.currency:undefined:undefined
@@ -453,7 +453,7 @@ class Order extends Component {
   render = () => {
     const {language} = this.props
     const order=this.state.order
-    console.log('render - order:', order)
+    // console.log('render - order:', order)
     return(
         <div style={styles.root} >
           {this.state.step===STEP.ORDER?

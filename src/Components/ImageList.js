@@ -134,7 +134,7 @@ class ImageList extends Component {
         if (!found) {
             deleted=[...this.state.deleted, index]
         }        
-        console.log('deleted:', deleted);
+        // console.log('deleted:', deleted);
         this.setState({deleted});
     }
 
@@ -156,7 +156,7 @@ class ImageList extends Component {
 
     handleReply(data) {
       this.props.fetchListAgain();
-      console.log('ERROR: status:', data?data.status:'No data returned')
+      // console.log('ERROR: status:', data?data.status:'No data returned')
     }
 
     deleteFiles() {
@@ -171,14 +171,14 @@ class ImageList extends Component {
           onUploadProgress: progressEvent => {console.log(progressEvent.loaded / progressEvent.total)}
         }
         ).then(response => {
-          console.log('Status code:', response.status);
-          console.log('Status data:', response.data);
+          // console.log('Status code:', response.status);
+          // console.log('Status data:', response.data);
           statusMessage(STATUS_OK, 'OK: images deleted in dir ' + this.props.subdir)
           this.setState({selectedFile: undefined, imagePreviewUrl:undefined, newFileName:undefined, deleted:[]})
           this.props.fetchListAgain();
         }).catch(error => {
           statusMessage(STATUS_ERROR, 'ERROR: Failed to delete images')
-          console.log('ERROR: Failed to upload:', error);
+          // console.log('ERROR: Failed to upload:', error);
         });
     }
 

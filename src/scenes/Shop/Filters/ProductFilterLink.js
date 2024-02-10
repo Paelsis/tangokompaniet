@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const Link = ({ list, label, name, filterKeys, addFilterKey }) => {
-  console.log('productFilter:', filterKeys);
+  // console.log('productFilter:', filterKeys);
   return (
     <ProductFilterNew label={label} name={name} list={list} filterKeys={filterKeys} addFilterKey={e => addFilterKey(e)} />  
   )

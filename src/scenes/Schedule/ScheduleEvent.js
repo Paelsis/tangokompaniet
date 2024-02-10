@@ -235,14 +235,14 @@ class Schedule extends Component {
         const eventTypeParams=this.props.match?this.props.params?this.props.params.eventType:undefined:undefined
         const eventTypeProps = this.props.eventType?this.props.eventType:undefined
         const eventType = eventTypeProps?eventTypeProps:eventTypeParams?eventTypeParams:undefined
-        console.log('eventType:', eventType)  
+        // console.log('eventType:', eventType)  
         this.setState({eventType, color:this.props.globalStyle.color?this.props.globalStyle.color:'brown'});         
 
         fetchList('', '', SCHEDULE_EVENT_URL + '?eventType=' + eventType, 
             result =>
             {
                 const schedule = Array.isArray(result)?result[0]:result
-                console.log(SCHEDULE_EVENT_URL, ' schedule:', schedule)
+                // console.log(SCHEDULE_EVENT_URL, ' schedule:', schedule)
                 if (schedule) {
                     this.setState({
                         name:schedule.name,
@@ -276,7 +276,7 @@ class Schedule extends Component {
                         formFields:result
                     }) 
                 }
-                console.log(SCHEDULE_EVENT_URL, ' result:', result)
+                // console.log(SCHEDULE_EVENT_URL, ' result:', result)
             }
         )    
 
@@ -489,10 +489,10 @@ class Schedule extends Component {
             :this.props.match.dateRange?this.props.match.dateRange
             :undefined     
         if (eventType !== undefined) {
-            console.log('filterList before:', list, 'eventType:', eventType)           
+            // console.log('filterList before:', list, 'eventType:', eventType)           
             list = this.state.workshopList.filter(it => it.eventType === eventType && dateRange?it.dateRange===dateRange:true)
         }    
-        console.log('filterList after:', list, eventType)           
+        // console.log('filterList after:', list, eventType)           
         return list    
     }  
 

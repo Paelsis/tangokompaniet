@@ -100,7 +100,6 @@ export default class TableUpdate extends Component {
 
   componentDidMount () {
     let url=config[process.env.NODE_ENV].apiBaseUrl + this.props.url;
-    console.log('component Table mounted with process.env.NODE_ENV', pricess.env.NODE_ENV); 
 
     // If there the records already are included in call, use this (no need to read new ones)
     if (this.props.list?true:false) {
@@ -117,11 +116,11 @@ export default class TableUpdate extends Component {
     if ((this.props.url !== nextProps.url) && nextProps.records?false:true) {
       // Load records from DB via URL
       let url=config[process.env.NODE_ENV].apiBaseUrl + nextProps.url;
-      console.log('TableUpdate: new url or new records'); 
+      // // console.log('TableUpdate: new url or new records'); 
       this.fetchFromDatabase(url)
     } else {
       // Get records from props
-      console.log('component taking Table recieved props'); 
+      // // console.log('component taking Table recieved props'); 
       this.initializeStateVariables(nextProps.records);
     } 
   }
@@ -139,7 +138,7 @@ export default class TableUpdate extends Component {
     } catch(e) {
       this.setState({records:[]})
       let errMessage = 'ERROR:' + e.message 
-      console.log(errMessage);
+      // console.log(errMessage);
       alert(errMessage)
     }    
   }
@@ -180,7 +179,7 @@ export default class TableUpdate extends Component {
                 return {...item, [name]:value}    
             }    
         });
-        console.log('updateRecords:', updateRecords)
+        // console.log('updateRecords:', updateRecords)
         this.setState({updateRecords});
     }
     
@@ -194,7 +193,7 @@ export default class TableUpdate extends Component {
         return {...item,[name]:value};  
       });
       this.setState({records});
-      console.log('value:', value)
+      // console.log('value:', value)
   
     }
 

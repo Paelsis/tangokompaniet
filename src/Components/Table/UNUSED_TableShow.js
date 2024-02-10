@@ -95,7 +95,7 @@ class _TableShow extends Component {
     }
 
   componentDidMount () {
-    console.log('_TableShow: componentDidMount, list:', this.props.list)
+    // console.log('_TableShow: componentDidMount, list:', this.props.list)
     if (this.props.list.length > 0) {
       this.initSearchKeys(this.props.list);
       this.initValidEmails(this.props.list);
@@ -105,7 +105,7 @@ class _TableShow extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.list !== nextProps.list) {
-      console.log('_TableShow: componentWillReceiveProps mount, list:', nextProps.list)
+      // console.log('_TableShow: componentWillReceiveProps mount, list:', nextProps.list)
       this.initSearchKeys(nextProps.list);
       this.initValidEmails(nextProps.list);
       this.initValidImages(nextProps.list);
@@ -133,7 +133,7 @@ class _TableShow extends Component {
       )
       this.setState({validEmails})
     }
-    console.log('validEmails:', validEmails)
+    // console.log('validEmails:', validEmails)
   }
 
   initValidImages(list) {
@@ -142,7 +142,7 @@ class _TableShow extends Component {
       Object.values(list[0]).forEach((value, index) => 
         validImages = [...this.state.validImages, String(value).indexOf('.jpg') !==-1?true:false]
       )
-      console.log('validImages:', validImages)
+      // console.log('validImages:', validImages)
       this.setState({validImages})
     }
   }
@@ -163,7 +163,7 @@ class _TableShow extends Component {
 
   handleButton() {
     const url=apiBaseUrl + this.props.button.link
-    console.log('handleButton: url:', url)
+    // console.log('handleButton: url:', url)
     axiosGet(url, (data) => alert(data.message?data.message:data.status))
   }
 
@@ -173,7 +173,7 @@ class _TableShow extends Component {
       {
         const fld = this.props.sortBy[i]
         if (a[fld]===undefined || b[fld]===undefined) {
-          console.log('Sort property not found', a[fld]?a[fld]:null, b[fld]?b[fld]:null)
+          // console.log('Sort property not found', a[fld]?a[fld]:null, b[fld]?b[fld]:null)
           return(1)
         }
         const ret = a[fld].localeCompare(b[fld])
@@ -193,7 +193,7 @@ class _TableShow extends Component {
   }  
 
   render() {
-      console.log('---TableShow---', this.state.searchValues);
+      // console.log('---TableShow---', this.state.searchValues);
 
       let filterList = this.props.list;
       if (this.state.searchValues.length > 0) {
@@ -214,7 +214,7 @@ class _TableShow extends Component {
 
 
   
-      console.log('filterList:', filterList);
+      // console.log('filterList:', filterList);
       return(
       <div style={styles.root}>
         <div>

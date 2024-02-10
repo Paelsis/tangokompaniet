@@ -86,20 +86,20 @@ class _Upload extends Component {
 
       if (this.state.selectedFile) {
         const formData = new FormData()
-        console.log('XXXXXX subdir:', this.state.subdir)
+        // console.log('XXXXXX subdir:', this.state.subdir)
         formData.append('subdir', this.state.subdir)
         formData.append('newfile', this.state.selectedFile, this.state.newFileName)
-        console.log('formData', formData)
+        // console.log('formData', formData)
         axios.post(apiBaseUrl + '/postImage', formData, {
             onUploadProgress: progressEvent => console.log(progressEvent.loaded / progressEvent.total)
         }).then(response => {
-            console.log('response:', response);
+            // console.log('response:', response);
             statusMessage(STATUS_OK, 'OK: ' + this.state.newFileName + ' saved in ' + this.state.subdir)
             this.setState({selectedFile: undefined, imagePreviewUrl:undefined, newFileName:undefined})
             this.props.fetchListAgain();
         }).catch(error => {
             statusMessage(STATUS_ERROR, 'ERROR: Failed to store image ' + this.state.newFileName + ' in dir ' + this.state.subdir)
-            console.log('ERROR: Failed to upload:', error);
+            // console.log('ERROR: Failed to upload:', error);
         });
       }
     }
@@ -146,7 +146,7 @@ class _Upload extends Component {
 
     createThumbnails(subdir) {
       const url = apiBaseUrl + '/createThumbnails?subdir=' + subdir
-      console.log('createThumbnails, url:', url)
+      // console.log('createThumbnails, url:', url)
       this.setState({pressed:true});
       axiosGet(url, data => {
         if (data === null) {
@@ -228,7 +228,7 @@ class _Upload extends Component {
 
     onClick(e) {
       alert('Image clicked')
-      console.log('Image clicked', e)
+      // console.log('Image clicked', e)
     }
 
     _form2() {    

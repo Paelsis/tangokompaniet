@@ -119,8 +119,8 @@ class _TableEdit extends Component {
   }
 
   componentDidMount () {
-    console.log('_TableEdit.componentDidMount: _TableEdit passed this.props.list=', this.props.list)
-    console.log('_TableEdit.componentDidMount: _TableEdit number of records in this.props.list =', this.props.list.length)
+    // console.log('_TableEdit.componentDidMount: _TableEdit passed this.props.list=', this.props.list)
+    // console.log('_TableEdit.componentDidMount: _TableEdit number of records in this.props.list =', this.props.list.length)
 
     // Initially add all NEW records (where id starts with an N, which is the first letter of ADD_PREFIX) and add them to insertedList
     const insertRecords = this.props.list.filter(rec => rec.id?rec.id[0]==='A':false) 
@@ -134,8 +134,8 @@ class _TableEdit extends Component {
   componentWillReceiveProps(nextProps) {
     // if (nextProps.list?true:false) {
     if (nextProps.list != this.props.list) {  
-      console.log('componentWillReceiveProps: _TableEdit passed nextProps.list=', nextProps.list)
-      console.log('componentWillReceiveProps: _TableEdit number nextProps.list length', nextProps.list.length)
+      // console.log('componentWillReceiveProps: _TableEdit passed nextProps.list=', nextProps.list)
+      // console.log('componentWillReceiveProps: _TableEdit number nextProps.list length', nextProps.list.length)
       
       const insertRecords = nextProps.list.filter(rec => rec.id?rec.id[0]==='A':false) 
       if (insertRecords.length > 0) {
@@ -169,14 +169,14 @@ class _TableEdit extends Component {
         Object.entries(rec).forEach((obj, colIndex) => {
             line=line + '[\'' + obj[0] + '\']:' + obj[1] + ','; 
         })
-        console.log(line)
+        // console.log(line)
     })
   }
 
   setListAfterCRUD = list => {
       if (list) {
-        console.log('After crud:', list)    
-        console.log('List length:', list.length)    
+        // console.log('After crud:', list)    
+        // console.log('List length:', list.length)    
         this.setState({searchValues:[]})
         if (list !== null && list.length > 0) {
           this.props.setList(list);
@@ -233,11 +233,11 @@ class _TableEdit extends Component {
       Object.entries(upd).map((obj, index) => {
         // Do not send over variables that contains ORIGINAL_SUFFIX and don't send unchanged values
         if (obj[0].indexOf(ORIGINAL_SUFFIX)==-1 && obj[0]!=='id') {
-          // console.log('my fucking object:', obj)
+          // // console.log('my fucking object:', obj)
           withoutOriginal = {...withoutOriginal, [obj[0]]:obj[1]}
         }
       });
-      // console.log('updWithoutOriginal', updWithoutOriginal);
+      // // console.log('updWithoutOriginal', updWithoutOriginal);
       adjInsertedRecords = [...adjInsertedRecords, upd];
     })
     insertRecords = [...insertRecords, ...adjInsertedRecords];
@@ -249,7 +249,7 @@ class _TableEdit extends Component {
       }
     });
 
-    console.log('sortedRecords:', insertRecords);
+    // console.log('sortedRecords:', insertRecords);
 
     // Remove the ORIGINAL_SUFFIX elements from the updated records 
     let adjUpdatedRecords = [];
@@ -261,11 +261,11 @@ class _TableEdit extends Component {
       Object.entries(upd).map((obj, index) => {
         // Do not send over variables that contains ORIGINAL_SUFFIX and don't send unchanged values
         if (obj[0].indexOf(ORIGINAL_SUFFIX)==-1 && obj[1]!=upd[obj[0] + ORIGINAL_SUFFIX]) {
-          // console.log('my fucking object:', obj)
+          // // console.log('my fucking object:', obj)
           withoutOriginal = {...withoutOriginal, [obj[0]]:obj[1]}
         }
       });    
-      // console.log('updWithoutOriginal', updWithoutOriginal);
+      // // console.log('updWithoutOriginal', updWithoutOriginal);
       adjUpdatedRecords = [...adjUpdatedRecords, withoutOriginal];
       */
      adjUpdatedRecords = [...adjUpdatedRecords, upd];
@@ -293,7 +293,7 @@ class _TableEdit extends Component {
     let newList = [recAdd, ...this.props.list];
     this.props.setList(newList);
     this.setState({insertRecords: [...this.state.insertRecords, recAdd], addedIndex:this.state.addedIndex+1});
-    console.log('_TableEdit insertRecords: ', this.state.insertRecords);
+    // console.log('_TableEdit insertRecords: ', this.state.insertRecords);
   }
 
   deleteRow = (id) => {
@@ -302,7 +302,7 @@ class _TableEdit extends Component {
     this.setState({deleteRows: [...this.state.deleteRows, {id:id}]})
     this.setState({insertRecords: this.state.insertRecords.filter(it => it.id !==id)?
     this.state.insertRecords.filter(it => it.id !==id):[]})
-    console.log('Delete record id:', id);
+    // console.log('Delete record id:', id);
   }
 
   changeRecord = (event, id) => {
@@ -326,7 +326,7 @@ class _TableEdit extends Component {
           }    
        });
        this.setState({updateRecords})   
-       // console.log('original changeRecords:', updateRecords); 
+       // // console.log('original changeRecords:', updateRecords); 
       } else {
         // New record (new id)
 
@@ -334,7 +334,7 @@ class _TableEdit extends Component {
         let updateRecords = this.state.updateRecords;
         updateRecords = [...updateRecords, {id, [name]:value, [name + ORIGINAL_SUFFIX]:this.props.list[actionIndex][name]}]
         this.setState({updateRecords})   
-        // console.log('subsequent... changeRecords:', updateRecords); 
+        // // console.log('subsequent... changeRecords:', updateRecords); 
     }
     
     let list = this.props.list.map((item, index) => {
@@ -346,7 +346,7 @@ class _TableEdit extends Component {
         return {...item,[name]:value};  
     });
     this.props.setList(list);
-    // console.log('value:', value)
+    // // console.log('value:', value)
   }
 
   handleSearch(event, index) {
@@ -494,14 +494,14 @@ class _TableEdit extends Component {
     let idColumnExists = true;
     let filterList = this.props.list;
     if (this.props.list?this.props.list.length > 0:false) {
-      console.log('_TableEdit filterList 1:', filterList.length)
+      // console.log('_TableEdit filterList 1:', filterList.length)
       this.state.searchValues.forEach((sv, index) => {
         typeof sv === 'object'?
           filterList = sv?(sv.from && sv.to)?filterList.filter(it => (sv.from.localeCompare(Object.entries(it)[index][1]) <=0 && sv.to.localeCompare(Object.entries(it)[index][1])>=0)):filterList:filterList
         :
           filterList = sv?sv.length > 0?filterList.filter(it => Object.entries(it)[index][1].indexOf(sv) !== -1):filterList:filterList
       })
-      console.log('_TableEdit filterList 2:', filterList.length)
+      // console.log('_TableEdit filterList 2:', filterList.length)
       if (this.props.list[0].hasOwnProperty('id') === false) {
        idColumnExists = false;
       }

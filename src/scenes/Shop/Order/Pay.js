@@ -50,12 +50,12 @@ class Pay extends Component {
             this.setState({step:STEP.CARD_PAYMENT_ERROR, message:result.message?result.message:'requestUrl not recieved from BAMBORA'})
         } else {  
             const redirectUrl = result?result.url?result.url:null:null;
-            console.log('--- before window.location.replace, url =', redirectUrl); 
+            // console.log('--- before window.location.replace, url =', redirectUrl); 
             window.location.replace(redirectUrl)
         }  
     }
     handlePayment = (order) => {
-        console.log('--- handleOrderReply ---, paymentMethod=', this.state.paymentMethod); 
+        // console.log('--- handleOrderReply ---, paymentMethod=', this.state.paymentMethod); 
         switch (this.state.paymentMethod) {
         case PAYMENT_METHOD.SWISH:
             this.props.resetCart();

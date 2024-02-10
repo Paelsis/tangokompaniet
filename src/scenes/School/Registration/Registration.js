@@ -136,13 +136,13 @@ class Registration extends React.Component {
         const fullPath = apiBaseUrl + "/scheduleCourse?productId=" + productId
         fetchList('', '', fullPath, (list)=> {
             const course = list.find(it =>it.productId === productId)
-            console.log('Registration->fetchCourseForProductId->course', course)
+            // console.log('Registration->fetchCourseForProductId->course', course)
             this.setState({course})
         })
     }
 
     componentDidMount () {
-        console.log('componentDidMount')
+        // console.log('componentDidMount')
         moment.locale(CULTURE(this.props.language?this.props.language:LANGUAGE_SV))
         this.fetchCourseForProductId()
 
@@ -151,7 +151,7 @@ class Registration extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.language !== this.props.language) {
             moment.locale(CULTURE(nextProps.language?nextProps.language:LANGUAGE_SV))
-            console.log('Registration->componentWillReceiveProps->language', nextProps.language)
+            // console.log('Registration->componentWillReceiveProps->language', nextProps.language)
         }
     }   
 
@@ -176,13 +176,13 @@ class Registration extends React.Component {
         const productList = [reg]
         // const debitable=this.debitable(status);
         const registration = {...reg, ...values, status, language:this.props.language, index:0, debitable:false, showInCart:false, deleted:false, productList}
-        console.log('Registration:', registration);
+        // console.log('Registration:', registration);
         return(registration);
     }    
 
     handlePutInCart = (values, reg) => {
         let regUpd = this.createRegistration(values, reg);
-        console.log('Updated registration object:', regUpd);
+        // console.log('Updated registration object:', regUpd);
         this.setState({linkTo:values.linkTo});
         this.props.updateRegistration(regUpd);
     }

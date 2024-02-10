@@ -88,16 +88,16 @@ class InventoryEdit extends Component {
     }   
 
     componentDidMount () {
-        console.log('_Inventory.componentDidMount: _Inventory passed this.props.product=', this.props.product)
-        console.log('_Inventory.componentDidMount: _Inventory number of records in this.props.index =', this.props.index)
+        // console.log('_Inventory.componentDidMount: _Inventory passed this.props.product=', this.props.product)
+        // console.log('_Inventory.componentDidMount: _Inventory number of records in this.props.index =', this.props.index)
         fetchList(this.props.username, this.props.password, invUrl, (inventoryList)=> this.setState({inventoryList}));
         this.setState({product:this.props.product, index:this.props.index});
     }  
 
     componentWillReceiveProps(nextProps) {
         if (this.props.product != nextProps.product || this.props.index != nextProps.index) {  
-            console.log('_Inventory.componentDidMount: _Inventory passed this.props.product=', this.props.product)
-            console.log('_Inventory.componentDidMount: _Inventory number of records in this.props.index =', this.props.index)
+            // console.log('_Inventory.componentDidMount: _Inventory passed this.props.product=', this.props.product)
+            // console.log('_Inventory.componentDidMount: _Inventory number of records in this.props.index =', this.props.index)
             fetchList(this.props.username, this.props.password, invUrl, (inventoryList)=> this.setState({inventoryList}));
             this.setState({product:this.props.product, index:this.props.index});
         }

@@ -23,7 +23,7 @@ const withListFromStore = (WrappedComponent, loadOnce) => {
     
         componentDidMount () {
             if (!loadOnce || this.props.list.length === 0) {
-                console.log('componentDidMount: withListFromStore this.props.url=', this.props.url?this.props.url:'nextProps.url not found'); 
+                // console.log('componentDidMount: withListFromStore this.props.url=', this.props.url?this.props.url:'nextProps.url not found'); 
                 this.fetchFromDatabase(this.props.url)
             }    
         }  
@@ -31,7 +31,7 @@ const withListFromStore = (WrappedComponent, loadOnce) => {
     
         componentWillReceiveProps(nextProps) {
             if (this.props.url !== nextProps.url && (!loadOnce || this.props.list.length === 0))  {
-                console.log('componentDidMount: withListFromStore nextProps.url=', nextProps.url?nextProps.url:'nextProps.url not found'); 
+                // console.log('componentDidMount: withListFromStore nextProps.url=', nextProps.url?nextProps.url:'nextProps.url not found'); 
                 this.fetchFromDatabase(nextProps.url)
             } 
         }
@@ -45,7 +45,7 @@ const withListFromStore = (WrappedComponent, loadOnce) => {
                 let {url}=this.props.location.state?this.props.location.state:{url:'No url in location state'};
                 urlActive=config[process.env.NODE_ENV].apiBaseUrl + url;
             } else {
-                console.log('ERROR: Function \"withListFromStore\" did not find any url in props or in this.props.location.state'); 
+                // console.log('ERROR: Function \"withListFromStore\" did not find any url in props or in this.props.location.state'); 
             }   
             return urlActive;
         }    
@@ -59,17 +59,17 @@ const withListFromStore = (WrappedComponent, loadOnce) => {
                 const password=this.props.password?this.props.password:undefined
                 
                 fetchList(username, password, url, (records) => {
-                    console.log('(withListFromStore) Number of found records:', records.length)
+                    // console.log('(withListFromStore) Number of found records:', records.length)
                     if (typeof this.props.setList != undefined) {
                         this.props.setList(records);
                     } else {
-                        console.log('ERROR: function setList in call')
+                        // console.log('ERROR: function setList in call')
                     }   
                 })
             } catch(e) {
                 this.props.setList([]);
                 let errMessage = 'ERROR:' + e.message + ' ' + ' url=' + url;
-                console.log(errMessage);
+                // console.log(errMessage);
                 alert(errMessage);
             } 
         }

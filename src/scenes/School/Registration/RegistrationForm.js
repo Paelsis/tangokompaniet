@@ -386,7 +386,7 @@ const renderTextArea = ({ input, label, placeholder, maxLength, type, meta: { to
 
 
 const renderGenderRadioButtons = ({input, language, meta: { touched, error }}) => {
-  console.log('input',input) 
+  // console.log('input',input) 
   const style = value => ({color:input.value == value?tkColors.Purple.Light:tkColors.color, fontWeight:input.value == value?'bold':200})
   return(
   <div>  
@@ -419,7 +419,7 @@ const renderGenderRadioButtons = ({input, language, meta: { touched, error }}) =
 }
 
 const renderDanceSiteRadioButtons = ({input, language, meta: { touched, error }}) => {
-  console.log('input',input) 
+  // console.log('input',input) 
   const style = value => ({color:input.value === value?tkColors.Purple.Light:tkColors.color, fontWeight:input.value === value?'bold':200})
   return(
   <div>  

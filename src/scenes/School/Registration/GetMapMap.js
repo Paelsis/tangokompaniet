@@ -17,9 +17,9 @@ const GetMapMap = (props) => {
     const headerFields=groupByDef?groupByDef.headerFields:undefined;
     const headerSortBy=groupByDef?groupByDef.headerSortBy:undefined;
     const headerProps=groupByDef?groupByDef.headerProps:null;
-    console.log('groupByDef:', groupByDef)
-    console.log('groupByField:', groupByField)
-    console.log('headerFields:', headerFields)
+    // console.log('groupByDef:', groupByDef)
+    // console.log('groupByField:', groupByField)
+    // console.log('headerFields:', headerFields)
     let filterList = props.list
     const fieldMap = groupByField?groupBy(filterList, it => it[groupByField]?it[groupByField].replace(/\s+/g, ''):it):null;
     let singleOpen=[...fieldMap.keys() ].find(key=>props.open[idx][key]);
@@ -29,10 +29,9 @@ const GetMapMap = (props) => {
     }
     // If one menu is open, the other options at the same level shall be hidden
     return(
-        <div>   
-            <div>
+        <>   
                 {Array.from(fieldMap.keys()).map(key =>  
-                <div key={key}>
+                <>
                     {!singleOpen||props.open[idx][key]?
                         <MapMapHeader 
                             list={fieldMap.get(key)}
@@ -52,10 +51,9 @@ const GetMapMap = (props) => {
                     :
                         <h1>No viewComponent in props for MapMap function</h1>                           
                     :null}    
-                </div>    
+                </>    
                 )}
-            </div>
-        </div>
+        </>
     )
 }
 

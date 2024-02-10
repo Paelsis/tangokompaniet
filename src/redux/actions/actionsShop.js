@@ -35,7 +35,7 @@ export const addRegistration = (reg) => {
 }
 
 export const updateRegistration = (reg) => {
-  console.log(reg.productId?'OK: Object reg exists and contains productId:' + reg.productId:'WARNING: Object reg does not contain productId')
+  // console.log(reg.productId?'OK: Object reg exists and contains productId:' + reg.productId:'WARNING: Object reg does not contain productId')
   return {
     type: UPDATE_ITEM,
     payload: reg

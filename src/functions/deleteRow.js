@@ -12,6 +12,6 @@ export default (table, id, handleReply) => {
     const user = store.getState().user
     const username = user?user.username:''
     const password = user?user.password:''
-    console.log(url, username, password, payload)
+    // console.log(url, username, password, payload)
     postPayload(url, username, password, payload, handleReply)
 }

@@ -6,8 +6,8 @@ const successUrl = apiBaseUrl + "/successUrl"
 const cancelUrl = apiBaseUrl + "/checkoutCancel"
 
 const postPaymentRequest = (url, data, handleResult) => {
-    console.log('--- function:postPaymentRequest --- url:', url);
-    console.log('data:', data);
+    // console.log('--- function:postPaymentRequest --- url:', url);
+    // console.log('data:', data);
     axios.post(url, {
         data,
         urls: {
@@ -16,12 +16,12 @@ const postPaymentRequest = (url, data, handleResult) => {
         },
     })
     .then((response) => {
-        console.log('data:', response.data);
+        // console.log('data:', response.data);
         const result = response.data.result?response.data.result:undefined;
         handleResult(result);
     })
     .catch((e) => {
-        console.log('Error object:', e); // Error object
+        // console.log('Error object:', e); // Error object
         handleResult(undefined);
     });
   }

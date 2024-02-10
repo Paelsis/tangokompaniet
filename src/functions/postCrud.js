@@ -17,15 +17,15 @@ const logArray = (title, array) => {
         strList += strObject(rec) + ',';
     })
     strList += ']';
-    console.log(title + ':' + strList);    
+    // console.log(title + ':' + strList);    
 }
 
 const postCrud = (url, username, password, table, crud, handleList) => {
-    console.log('---- postCrud ---')
-    console.log('url=', url)
-    console.log('username/password=' +  username + '/' + password)
-    console.log(' table=' + table);
-    console.log('crud=', crud)
+    // console.log('---- postCrud ---')
+    // console.log('url=', url)
+    // console.log('username/password=' +  username + '/' + password)
+    // console.log(' table=' + table);
+    // console.log('crud=', crud)
 
     let list=[]
         
@@ -42,8 +42,8 @@ const postCrud = (url, username, password, table, crud, handleList) => {
         }    
     )
     .then(response => {
-        console.log('url:', url);
-        console.log('response:', response);
+        // console.log('url:', url);
+        // console.log('response:', response);
         list = response.data.result;
         if (response.status === 200) {
             statusMessage(STATUS_OK, 'OK: database modified successfully (status=' + response.status + ')')
@@ -53,8 +53,8 @@ const postCrud = (url, username, password, table, crud, handleList) => {
         handleList(list);
     })
     .catch((e) => {
-        console.log('ERROR: Failed to post URL:' + url);
-        console.log('Error object e:', e);
+        // console.log('ERROR: Failed to post URL:' + url);
+        // console.log('Error object e:', e);
         statusMessage(STATUS_ERROR, 'ERROR: CRUD transaction failed in url:' + url + ' Error:' + JSON.stringify(e)) 
         handleList(list);
     });

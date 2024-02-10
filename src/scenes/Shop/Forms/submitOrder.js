@@ -18,7 +18,7 @@ function submit1(values) {
       })
     } else {
       // alert(`You submitted this fantastic:\n\n${JSON.stringify(values, null, 2)}`)
-      console.log(values)  
+      // console.log(values)  
     }
   })
 }
@@ -62,7 +62,7 @@ function submitOrder(values) {
     } else {
       // Here the postOrder functionality shall be added
       // alert(`Tack. Din beställning är nu skickad till Tangokompaniet:\n\n${JSON.stringify(values, null, 2)}`)
-      console.log(values)  
+      // console.log(values)  
     }
   })
 }

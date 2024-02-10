@@ -6,11 +6,11 @@ export default function axiosGet(url, handleReply) {
     })
     .then(
         response => {
-            console.log('OK: axiosGet response.data:', response.data);
+            // console.log('OK: axiosGet response.data:', response.data);
             handleReply(response.data);
     })  
     .catch(error => {
-            console.log('(Function: axiosGet) ERROR:', error);
+            // console.log('(Function: axiosGet) ERROR:', error);
             handleReply(null)
     })
 }

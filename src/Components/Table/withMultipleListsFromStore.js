@@ -24,7 +24,7 @@ const withMultipleListsFromStore = (WrappedComponent) => {
 
         componentDidMount () {
             this.props.urls.forEach((url, index) => {
-                console.log('componentDidMount: withMultiple... this.props.urls=', url?url:'url not found'); 
+                // console.log('componentDidMount: withMultiple... this.props.urls=', url?url:'url not found'); 
                 this.fetchFromDatabase(url, index)
             })    
         }  
@@ -33,7 +33,7 @@ const withMultipleListsFromStore = (WrappedComponent) => {
         componentWillReceiveProps(nextProps) {
             nextProps.urls.forEach((url, index) => {
                 if (this.props.urls[index] !== url) {
-                    console.log('componentDidReceiveProps: withMultiple nextProps.url=', url?url:'nextProps.url not found'); 
+                    // console.log('componentDidReceiveProps: withMultiple nextProps.url=', url?url:'nextProps.url not found'); 
                     this.fetchFromDatabase(url, index)
                 }})
         }
@@ -45,17 +45,17 @@ const withMultipleListsFromStore = (WrappedComponent) => {
             try {
                 let urlComplete=config[process.env.NODE_ENV].apiBaseUrl + url;
                 fetchList(username, password, urlComplete, (records) => {
-                    console.log('(withMultiple ...) Number of found records:', records.length)
+                    // console.log('(withMultiple ...) Number of found records:', records.length)
                     if (typeof this.props.setLists[index] !== undefined) {
                         this.props.setLists[index](records);
                     } else {                           
-                        console.log('ERROR: function setLists in call')
+                        // console.log('ERROR: function setLists in call')
                     }   
                 })
             } catch(e) {
                 this.setLists[index]([]);
                 let errMessage = 'ERROR:' + e.message + ' ' + ' url=' + url;
-                console.log(errMessage);
+                // console.log(errMessage);
                 alert(errMessage);
             } 
         }

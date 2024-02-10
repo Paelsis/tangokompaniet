@@ -30,10 +30,10 @@ const styles = {
 
 const filterList = (records, groupId, textId, language) => {
     var list=records;
-    console.log('filterList: groupId:' + groupId + ' textId:' + textId  + ' language:' + language);
-    console.log('filterList: list size before filter:' + list.length);
+    // console.log('filterList: groupId:' + groupId + ' textId:' + textId  + ' language:' + language);
+    // console.log('filterList: list size before filter:' + list.length);
     list = list.filter(it => it.groupId === groupId && it.textId === textId && it.language=== language)
-    console.log('filterList.list size after filter:' + list.length);
+    // console.log('filterList.list size after filter:' + list.length);
     return list;
 } 
 

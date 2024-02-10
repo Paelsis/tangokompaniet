@@ -174,10 +174,10 @@ class _Calendars extends Component {
 
   findParameter(s, val) {
     const idx = s.indexOf(val)  
-    console.log('findParamter', val, 'idx',  idx)
+    // console.log('findParamter', val, 'idx',  idx)
     if (idx != -1) {
       const value = s.slice(idx).match(/(\d+)/)[0]
-      console.log('newString', s.slice(idx), 'value', value)
+      // console.log('newString', s.slice(idx), 'value', value)
       return value
     } else {
       return undefined
@@ -289,7 +289,7 @@ class _Calendars extends Component {
       } catch(e) {                                
           this.setState({events:[]})
           let errMessage = 'ERROR:' + e.message 
-          console.log(errMessage);
+          // console.log(errMessage);
       }    
   }    
 

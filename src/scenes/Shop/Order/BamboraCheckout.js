@@ -71,10 +71,10 @@ export default class BamboraCheckout extends React.Component {
   }
   
   handleResult = (result) => {
-    console.log('BamboraCheckout: result:', result); 
-    console.log('BamboraCheckout: result.meta.status:', result.meta.result); 
-    console.log('BamboraCheckout: result.token:', result.token); 
-    console.log('BamboraCheckout: result.url:', result.url); 
+    // console.log('BamboraCheckout: result:', result); 
+    // console.log('BamboraCheckout: result.meta.status:', result.meta.result); 
+    // console.log('BamboraCheckout: result.token:', result.token); 
+    // console.log('BamboraCheckout: result.url:', result.url); 
     this.props.handleResult(result.token);
     this.setState({redirectUrl:result.url})
   }

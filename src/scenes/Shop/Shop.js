@@ -28,7 +28,7 @@ const styles = {
 
 let _Shop = ({list, filterKeys}) => {
   
-  console.log('vivalla ... filterKeys:', filterKeys);
+  // console.log('vivalla ... filterKeys:', filterKeys);
   return(
   <div style={styles.root}>
     <div style={styles.filter}>

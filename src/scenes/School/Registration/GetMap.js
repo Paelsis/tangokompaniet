@@ -3,8 +3,8 @@ import GetTableView, {header, VIEW_1} from 'Settings/UtilsMap';
 import groupBy from 'functions/groupBy';
 
 const GetMap = ({language, list, groupByDef, viewFields, open, handleOpen, handleChange, handleChangeValue, edit, toggleEdit}) => {
-    console.log('GetMap: groupByDef:', groupByDef);
-    //console.log('GetMap: open', open);
+    // console.log('GetMap: groupByDef:', groupByDef);
+    //// console.log('GetMap: open', open);
     let fieldMap = groupBy(list.sort((a,b) => a.productId - b.productId), it => it[groupByDef.groupByField]);
    
     return(

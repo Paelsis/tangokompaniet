@@ -17,7 +17,7 @@ const UpdateProductId = (props) => {
             setButtonColor('green');
             postPayload(url, username, password, payload, (data)=>handleResult(data))
     }
-    console.log(url, username, password, fromProductId, toProductId)
+    // console.log(url, username, password, fromProductId, toProductId)
     return(
         <form onSubmit={onSubmit}>
             <label>

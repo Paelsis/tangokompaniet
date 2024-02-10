@@ -74,7 +74,7 @@ class InventoryUpdate extends Component {
     }    
 
     handleSubmit = (e) => {
-        console.log('product:', this.state.product)
+        // console.log('product:', this.state.product)
         e.preventDefault()
         this.setState({buttonPressed:true})
         postInventory(apiBaseUrl + '/updateProduct', 

@@ -24,7 +24,7 @@ export default class ImagesSubdir extends Component {
     }
 
     render = () => {
-        console.log('subdir:', this.state.subdir);
+        // console.log('subdir:', this.state.subdir);
         return(
             <div>
                 <form onSubmit={this.onSubmit}>

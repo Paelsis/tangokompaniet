@@ -16,7 +16,7 @@ export default class InventoryFetch extends React.Component {
 
     // Immediately after a component is mounted, fetch inventory
     componentDidMount () {
-        console.log('InventoryFetch mounted'); 
+        // console.log('InventoryFetch mounted'); 
 
         let username=this.props.userid?this.props.userid:'';
         let password=this.props.password?this.props.password:'';
@@ -24,15 +24,15 @@ export default class InventoryFetch extends React.Component {
         // const url='http://slimserver.local:8080/classes'
         let environment = process.env.NODE_ENV;
         const url=config[process.env.NODE_ENV].apiBaseUrl + '/inventory'
-        console.log('process.env.NODE_ENV =' +  environment);
-        console.log('URL =' +  url);
+        // console.log('process.env.NODE_ENV =' +  environment);
+        // console.log('URL =' +  url);
         
         try {
             fetchList(username, password, url, (inventory) => this.setState({inventory}));
         } catch(e) {
             this.setState({inventory:[]})
             let errMessage = 'ERROR:' + e.message 
-            console.log(errMessage);
+            // console.log(errMessage);
             alert(errMessage)
         }    
 

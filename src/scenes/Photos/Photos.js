@@ -20,7 +20,7 @@ const _Photos = (props) => {
       const url = apiBaseUrl + "/listImagesData?rootdir=" + rootdir + '&subdir=' + subdir
       fetchList(props.username, props.password, url, (list)=> setList(list));
     }, [subdir])
-    console.log('list:', list)
+    // console.log('list:', list)
     const dirname = apiBaseUrl + '/user/' + rootdir.trim('/') + '/' + subdir.trim('/')
     return(
     <div style={{maxWidth:800, margin:'auto'}}>
