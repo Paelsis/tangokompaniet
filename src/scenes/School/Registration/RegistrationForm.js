@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, createRef} from 'react'
 import { connect } from 'react-redux'
 import { Field, reset, reduxForm, formValueSelector } from 'redux-form'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
@@ -16,7 +16,6 @@ import TextShow from 'Components/Text/TextShow'
 import QrCode from 'Components/QrCode'
 
 const LINK_TO_COURSE='/scheduleCourse'
-const LINK_TO_SHOPPING_CART='/shoppingcart'
 const LINK_TO_HOME='/home'
 
 const TEXTS = {
@@ -149,10 +148,6 @@ const TEXTS = {
     BUTTON_GO_BACK:{SV:'Gå tillbaka',
           ES:'Espalda',
           EN:'Go Back'},
-    BUTTON_SHOPPING_CART:{SV:'Lägg i varukorg',
-          ES:'Ve al carrito',
-          EN:'Put in shopping cart',
-    },
     BUTTON_REGISTER_NOW:{SV:'Skicka in anmälan',
           ES:'Enviar registro',
           EN:'Send regstration',
@@ -532,7 +527,6 @@ let RegistrationForm = (props) => {
   const linkTo = productType==='course'?LINK_TO_COURSE
     :productType==='social'?LINK_TO_HOME
     :LINK_TO_HOME;
-  const payViaApp = reg?reg.payViaApp?true:false:false
   const startDate = reg?reg.startDate?reg.startDate:reg.productId.substr(0,6):''
   const startTime = reg?reg.startTime?reg.startTime:reg.productId.substr(6,4):''
   const dayname = reg.dayname?reg.dayname:reg.dayOfWeek?Weekdays[language][reg.dayOfWeek-1]:''
@@ -566,7 +560,6 @@ let RegistrationForm = (props) => {
 
   const mustHavePartner = reg?reg.mustHavePartner?true:reg.courseType === 'AV'?true:false:false
   const mustHavePhonePartner = reg?reg.mustHavePhonePartner?true:false:false
-  const cartObject = values => ({...values, leader:values.leader==1?1:0, newsletter:values.newsletter?1:0, linkTo:LINK_TO_SHOPPING_CART})
   const registerObject = values => ({...values, leader:values.leader==1?1:0, danceSite:danceSiteDefault, newsletter:values.newsletter?1:0, linkTo})
   const closedText = avaStatus === AVA_STATUS.CL?TEXTS.COURSE_FULL_LEADER[language]
     :avaStatus === AVA_STATUS.CF?TEXTS.COURSE_FULL_FOLLOWER[language]
@@ -722,15 +715,7 @@ let RegistrationForm = (props) => {
                 {error &&<strong>{error}</strong>}
                 <p />
                 <div>
-                    {avaStatus !== AVA_STATUS.CC?payViaApp?
-                      <Button 
-                        variant="outlined" 
-                        onClick={handleSubmit(values => handlePutInCart(cartObject(values)))}
-                        disabled={pristine || error}
-                      >
-                          {TEXTS.BUTTON_SHOPPING_CART[language]}
-                      </Button>
-                    : 
+                    {avaStatus !== AVA_STATUS.CC?
                       <Button 
                         variant="outlined" 
                         disabled={pristine || error}
@@ -776,7 +761,6 @@ const mapStateToProps = state => {
   const newsletter = selector(state, 'newsletter');
   return {
     language: state.language,
-    shoppingCartList: state.shoppingCart.list,
     leader, 
     danceSite,
     havePartner,

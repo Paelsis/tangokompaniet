@@ -57,7 +57,6 @@ import ScheduleSingleCourse from 'scenes/Schedule/ScheduleSingleCourse';
 import Shop from 'scenes/Shop/Shop'
 // import InventoryList from 'scenes/Shop/InventoryList';
 import InventoryFetch from 'scenes/Shop/InventoryFetch';
-import ShoppingCart from 'scenes/Shop/ShoppingCart'
 import ProductShow from 'scenes/Shop/ProductShow';
 import Order from 'scenes/Shop/Order/Order'
 
@@ -263,7 +262,6 @@ class Wrapper extends Component {
                           <Route exact path='/teacher/:shortName' component={Teacher} />
                           <Route path="/studio" component={Studio}/>
                           <Route exact path="/shop" component={Shop}/>
-                          <Route path="/shoppingcart" component={ShoppingCart}/>
                           <Route path="/order" component={Order}/>
                           <Route path="/inventoryfetch" component={InventoryFetch}/>
                           <Route exact path="/editor" component={Editor}/>

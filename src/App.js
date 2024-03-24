@@ -78,7 +78,6 @@ import ScheduleSingleCourse from 'scenes/Schedule/ScheduleSingleCourse';
 import Shop from 'scenes/Shop/Shop'
 // import InventoryList from 'scenes/Shop/InventoryList';
 import InventoryFetch from 'scenes/Shop/InventoryFetch';
-import ShoppingCart from 'scenes/Shop/ShoppingCart'
 import ProductShow from 'scenes/Shop/ProductShow';
 import Order from 'scenes/Shop/Order/Order'
 
@@ -86,8 +85,6 @@ import Order from 'scenes/Shop/Order/Order'
 import Editor from 'scenes/Editor/Editor'
 
 // Payment
-import OkPayPal from 'scenes/Payment/OkPayPal'
-import ErrorPayPal from 'scenes/Payment/ErrorPayPal'
 import TextShow from 'Components/Text/TextShow'
 import InputText from 'Components/Text/InputText'
 import ThankYou from 'scenes/Payment/ThankYou'
@@ -98,11 +95,6 @@ import InfoBox from 'scenes/School/InfoBox'
 
 // Not found  
 import PageNotFound from 'scenes/PageNotFound/PageNotFound' 
-
-// Callbacks
-import PaymentCancel from 'callback/PaymentCancel'
-import PaymentAccept from 'callback/PaymentAccept'
-import CallbackText from 'callback/CallbackText'
 
 // Data
 import tkColors from 'Settings/tkColors'
@@ -354,7 +346,6 @@ const App = props => {
                           <Route path='/teacher/:shortName' element={<Teacher />}/>
                           <Route path="/studio" element={<Studio/>}/>
                           <Route exact path="/shop" element={<Shop/>}/>
-                          <Route path="/shoppingcart" element={<ShoppingCart/>}/>
                           <Route path="/order" element={<Order/>}/>
                           <Route path="/inventoryfetch" element={<InventoryFetch/>}/>
                           <Route exact path="/editor" element={<Editor/>}/>
@@ -364,15 +355,9 @@ const App = props => {
                           <Route path="/inputText" element={<InputText/>} />
                           <Route exact path="/thankyou" element={<ThankYou/>} />
                           <Route exact path="/admin" element={<Admin/>} />
-                          <Route exact path='/errorPaypal' element={<ErrorPayPal/>} />
-                          <Route exact path='/okPaypal' element={<OkPayPal/>} />
                           <Route exact path="/shoes" element={<GalleryShoes />} />
-                          <Route exact path='/paymentAccept/:orderId/:amount/:currency/:language' element={<PaymentAccept/>} />
-                          <Route exact path='/paymentCancel/:orderId/:language' element={<PaymentCancel/>} />
                           <Route exact path='/registration/:productType/:productId/:avaStatus' element={<Registration/>} />
                           <Route exact path='/registration/:productType/:productId' element={<Registration/>} />
-                          <Route path='/callbackText/:groupId/:textId/:language' element={<CallbackText/>} />
-                          <Route path='/paypal' element={<a href='https://example.zendesk.com/hc/en-us/articles/123456789-Privacy-Policies'/>}/>
                           <Route path="/malmotangomaraton" element={<Marathon/>}/>
                           <Route exact path="/marathon" element={<Navigate to="/malmotangomaraton" />} />
                           <Route exact path="/malmotangomarathon" element={<Navigate to="/malmotangomaraton"/>} />

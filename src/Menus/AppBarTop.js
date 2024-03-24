@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import { withBreakpoints } from 'react-breakpoints'
 import tkColors from 'Settings/tkColors'
-import ShoppingCartButton from 'scenes/Shop/ShoppingCartButton'
 import imgUrl140 from "images/logo/TK_element140.png";
 import imgTk600 from "images/logo/TK_vit600.png";
 import imgCovid from "images/covid19.jpg";
@@ -218,9 +217,6 @@ const AppBarTop = props => {
       <span style = {styles.rightContainer} >
         {/*covid19*/}
         <NewsBadge {...props}/>
-        <div style={styles.shoppingCart(hover)}>
-          <ShoppingCartButton iconColor={'white'} textColor={tkColors.Purple.Light}/>
-        </div>
         <div style={styles.secondaryMenu(hover)}>{TEXTS.SECONDARY_MENU[language]}</div>
         <div 
           style={styles.iconMenu} 

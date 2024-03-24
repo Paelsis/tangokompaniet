@@ -41,7 +41,6 @@ const StatusLine = ({status, message}) =>
 
 const mapStateToProps = (state) => {
     return {
-        // Note shoppingList is the slice of the store defined by ShoppingCart reducer 
         status: state.statusMessage.status,
         message: state.statusMessage.message,
     }

@@ -137,7 +137,6 @@ const Login =  (props) => {
 // Get the state from the Map the props that you want to pass to the State
 const mapStateToProps = (state) => {
     return {
-        // Note shoppingList is the slice of the store defined by ShoppingCart reducer 
         username: state.user[USERNAME],
         password: state.user[PASSWORD],
         loggedInFlag: state.user[LOGGED_IN_FLAG],

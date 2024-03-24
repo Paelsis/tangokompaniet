@@ -29,7 +29,7 @@ const GetMap = ({language, list, groupByDef, viewFields, open, handleOpen, handl
                         edit={edit} 
                         toggleEdit={toggleEdit}
                         language={language} />
-                     :
+                    :
                         null
                     }
                 </div>    
