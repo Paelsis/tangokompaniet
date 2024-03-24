@@ -31,7 +31,7 @@ UNION
 SELECT distinct scheduleId as scheduleId from `tbl_course`
 UNION
 SELECT distinct scheduleId as scheduleId from `tbl_workshop`
-order by scheduleId
+order by scheduleId;
 
 create or replace view v_course as
 SELECT 
