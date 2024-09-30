@@ -11,8 +11,8 @@ const RELEASE_LINK='/copyPackageTemplate'
 const PRODUCT_TYPE='festival'
 
 const COLUMNS=[
-    {label:'Name (shown to customer)', name:'name',  type:'textarea', placeholder:'Name in english', required:true},    
-    {label:'Shortname', name:'packageId',  type:'text', placeholder:'Ex: PACKAGE_1', unique:true, required:true, },    
+    {label:'Name (shown to customer)', name:'name',  type:'textarea', placeholder:'Name in english', required:true, maxlength:100},    
+    {label:'Shortname', name:'packageId',  type:'text', placeholder:'Ex: PACKAGE_1', unique:true, required:true, maxlength:30},    
     {label:'Nbr of WS in pack', name:'wsCount',  type:'number', placeholder:'Ex: 5'},    
     {label:'Minutes of WS in pack', name:'minutes',  type:'number', placeholder:450},    
     {label:'Product type', name:'productType',  type:'select', tableName:'tbl_package_product_type', selectKey:'productType', selectValue:'nameEN', required:true},    

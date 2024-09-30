@@ -7,7 +7,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import tkColors from 'Settings/tkColors';
 import {setLanguage, LANGUAGE_SV} from 'redux/actions/actionsLanguage' 
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import { withBreakpoints } from 'react-breakpoints'
 import config, {TEACHER_IMAGE_DIR} from 'Settings/config';
 import withListFromStore from 'Components/Table/withListFromStore'
@@ -15,9 +15,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 
 
-const imageUrl=config[process.env.NODE_ENV].apiBaseUrl + TEACHER_IMAGE_DIR
+const imageUrl=process.env.REACT_APP_API_BASE_URL + TEACHER_IMAGE_DIR
 
-const SHOP_IMAGES_URL=config[process.env.NODE_ENV].apiBaseUrl + TEACHER_IMAGE_DIR
+const SHOP_IMAGES_URL=process.env.REACT_APP_API_BASE_URL + TEACHER_IMAGE_DIR
 
 // const menuIcon = <IconMenu />;
 // const whaffleIcon = <IconWaffle />;
@@ -90,9 +90,9 @@ const Teacher = (props) => {
                                 <a href={'tel:' + teacher.phone}><PhoneIphoneIcon style={{cursor:'pointer'}}/></a>
                             </Tooltip>
                     :null}
-                    <TextShow url={'/getTexts'} groupId={'Teacher'} textId={teacher.shortName} language={language}>
+                    <EditText url={'/getTexts'} groupId={'Teacher'} textId={teacher.shortName} language={language}>
                             {teacher.text}
-                    </TextShow>    
+                    </EditText>    
                 </text>  
             </div>
         :

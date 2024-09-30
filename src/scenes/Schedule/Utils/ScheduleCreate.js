@@ -38,7 +38,7 @@ const DELETE_ACTION="DELETE_ACTION"
 const DELETE_PRODUCTION_ACTION="DELETE_PRODUCTION_ACTION"
 const TRUNCATE_PRODUCTION_ACTION="TRUNCATE_PRODUCTION_ACTION"
 const DROPDOWN_ACTION="DROPDOWN_ACTION"
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 const styles={
     root:{
@@ -195,7 +195,7 @@ export default class ScheduleCreate extends Component {
     
 
     handleSaveTemplate(templateName, handleReply) {
-        if ((this.state.year === undefined || this.state.eventType === undefined) && !!this.props.dontSelectEventTypeAndYear) {
+        if ((this.state.year === undefined || this.state.eventType === undefined) && !this.props.dontSelectEventTypeAndYear) {
             alert('WARNING: Please choose eventType and year')
             return false
         } else {
@@ -208,7 +208,7 @@ export default class ScheduleCreate extends Component {
             }    
 
             const inserted=this.props?this.props.list.filter(it=>it.templateName === this.state.templateName).map(obj=>({...obj, ...addObj, id:undefined})):undefined
-
+            // alert(JSON.stringify(inserted))
             if (!this.uniqueCheck(this.props.columns, inserted)) { 
                 alert('WARNING: Unique check failed')
                 return false
@@ -346,14 +346,21 @@ export default class ScheduleCreate extends Component {
     }
 
     saveTemplateAs() {
-        let newTemplateName = prompt("Save template as:");
+        const eventType = this.state.eventType?this.state.eventType:''; 
+        const year = new Date().getFullYear();
+        const templateName = (eventType?eventType + '_' + year:'')
+        
+
+        let newTemplateName = prompt("Save template as:", templateName);
         while (this.props.list.find(it => newTemplateName === it.templateName)!==undefined) {
-            newTemplateName = prompt("Template " + newTemplateName + " already exists. Please use another name:");
+            newTemplateName = prompt("Template " + newTemplateName + " already exists. Please use another name:", eventType + '_<year>');
             if (newTemplateName === undefined) {
                 break
             }
         }    
-        this.handleSaveTemplate(newTemplateName, this.handleReply)    
+        if (newTemplateName) {
+            this.handleSaveTemplate(newTemplateName, this.handleReply)    
+        }    
     } 
     
     saveTemplateAsAndRelease() {
@@ -364,7 +371,9 @@ export default class ScheduleCreate extends Component {
                 break
             }
         }    
-        this.handleSaveAndRelease(newTemplateName, this.handleReply)    
+        if (newTemplateName) {
+            this.handleSaveAndRelease(newTemplateName, this.handleReply)    
+        }    
     } 
 
     setAction(action) {
@@ -557,6 +566,7 @@ export default class ScheduleCreate extends Component {
                     <div style={{color:tkColors.Purple.Light}}>
                         {this.renderSelectTemplateName()}
                     </div>
+                    <h1>{this.state.year}</h1>
                     <div style={{color:tkColors.Purple.Light}}>
                         {dontSelectEventTypeAndYear?null:this.setEventTypeAndYear()}
                     </div>

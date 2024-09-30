@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from 'Settings/config';
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL
 
 export const postImageNames = (url, username, password, products, handleList) => {
     // console.log('function:postImageNames products', products);

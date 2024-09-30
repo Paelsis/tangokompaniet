@@ -5,7 +5,7 @@ import config from 'Settings/config'
 import {USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 
 
-const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/updateProductId';
+const url=process.env.REACT_APP_API_BASE_URL + '/admin/updateProductId';
 
 const UpdateProductId = (props) => {
     const {username, password, fromProductId, handleResult} = props

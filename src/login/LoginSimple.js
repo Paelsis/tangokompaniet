@@ -5,7 +5,7 @@ import tkColors from 'Settings/tkColors'
 import config from 'Settings/config';
 import {setUser, LOGGED_IN_FLAG, USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 
-const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/tkcolumns?tableName=tbl_event_def';
+const url=process.env.REACT_APP_API_BASE_URL + '/admin/tkcolumns?tableName=tbl_event_def';
 const TEXTS={
     ONLY:{
         SV:'OBS ! ENBART FÖR ADMINISTRATÖRER AV DENNA SAJT',

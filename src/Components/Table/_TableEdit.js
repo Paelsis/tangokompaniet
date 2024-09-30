@@ -205,7 +205,7 @@ class _TableEdit extends Component {
 
   handlePost = (crud) => { 
       // Post the updated data to url
-      let url=config[process.env.NODE_ENV].apiBaseUrl +'/admin/crud'
+      let url=process.env.REACT_APP_API_BASE_URL +'/admin/crud'
       postCrud(url, this.props.username, this.props.password, this.props.table, crud, 
         list=>{
           this.setListAfterCRUD(list)

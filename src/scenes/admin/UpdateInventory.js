@@ -10,7 +10,7 @@ export default class UpdateInventory extends React.Component {
     }
 
     sell = (id, size, increment) => {
-        let url=config[process.env.NODE_ENV].apiBaseUrl +'/postSell';
+        let url=process.env.REACT_APP_API_BASE_URL +'/postSell';
         const keys={['id']:id, ['productId']:'NOT USED'};
         const data={['size']:size, ['increment']:increment};
         postSell(url,

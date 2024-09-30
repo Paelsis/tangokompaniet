@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux'
-import {LANGUAGE_ES, LANGUAGE_EN} from 'redux/actions/actionsLanguage'
+import {LANGUAGE_EN} from 'redux/actions/actionsLanguage'
+import {isEmail} from '../functions/functions'
+
 import Button from 'Components/Button'
 
 const TEXTS={
@@ -13,7 +15,7 @@ const TEXTS={
 
 
 const DEV_TEST_OBJECT1= {
-    role:'LEADER',
+    // role:'LEADER',
     firstName: 'Per Eskilson',
     lastName: 'Eskilson',
     email: 'paelsis@hotmail.com',
@@ -23,8 +25,9 @@ const DEV_TEST_OBJECT1= {
     firstNamePartner:'Therese',
     lastNamePartner:'Clarhed',
     emailPartner:'therese_clarhed@hotmail.com',
+    role:'LEADER', 
     newsletter: true,
-    food:'MEAT',
+    food:'NO FOOD',
     allergies:'none',
     comment:'Friends'
 }
@@ -33,11 +36,11 @@ const DEV_TEST_OBJECT = {
 }
 
 
+
 const formTemplate = ({language, globalStyle, schedule, fields, handleSubmit}) => {
-    //const [value, setValue] = useState({})
     const development = process.env.NODE_ENV === 'development'
-    
-    const [value, setValue] = useState(development?DEV_TEST_OBJECT:{})
+    const [value, setValue] = useState(development?DEV_TEST_OBJECT1:{})
+        
     const handleChangeRadioOrCheck = e => {
         // Cannot remove haveParter when imbalance for the choosen role
         let newValue = {...value, [e.target.name]:e.target.type==='checkbox'?e.target.checked?e.target.checked:undefined:e.target.value}
@@ -51,13 +54,30 @@ const formTemplate = ({language, globalStyle, schedule, fields, handleSubmit}) =
         let newValue = {...value, [e.target.name]:e.target.type==='checkbox'?e.target.checked?e.target.checked:undefined:e.target.value}
         setValue(newValue)
     }            
+    const isHidden = fld => (fld.hiddenIf?value[fld.hiddenIf]?true:false:false) || (fld.notHiddenIf?value[fld.notHiddenIf]?false:true:false)
+    const isValidFld = fld => {
+        if (isHidden(fld)) {
+            return true
+        } else if (fld.required && !value[fld.name]) {
+            return false
+        } else {    
+            switch (fld.type) {
+                case 'email': return value?value[fld.name]?isEmail(value[fld.name]):true:true
+                default: return true
+            }        
+        }    
+    }
+    const buttonDisabled = fields.find(fld => !isValidFld(fld))?true:false
+
     const disabledFunc = avaStatus => (avaStatus === 'CC') || 
         (value.role === 'LEADER' && ['CC', 'CL', 'OF', 'OB'].includes(avaStatus)) ||
         //(value.role === 'LEADER' && ['IL'].includes(avaStatus) && value.havePartner?false:true) ||
         (value.role === 'FOLLOWER' && ['CC', 'CF', 'OL', 'OB'].includes(avaStatus)) ||
         //(value.role === 'FOLLOWER' && ['IF'].includes(avaStatus) && value.havePartner?false:true) ||
         (value.role === 'BOTH' && ['CC', 'CB', 'OL', 'OF'].includes(avaStatus)) 
-    const disabled = disabledFunc(schedule?schedule.avaStatus:'AV')
+
+    const disabled = disabledFunc(schedule?schedule.avaStatus:'AV') 
+
     const renderField = fld => {
         const show = fld.hiddenIf?value[fld.hiddenIf]?false:true:true && fld.notHiddenIf?value[fld.notHiddenIf]?true:false:true
         const radioValues = fld['radioValues' + language]?fld['radioValues' + language].split(',').map(it=>it.trim()):fld.values?fld.values:undefined
@@ -79,7 +99,14 @@ const formTemplate = ({language, globalStyle, schedule, fields, handleSubmit}) =
                             <br/>
                             {fld.names.map(name =>
                                 <>
-                                    {name}&nbsp;<input keytype={'checkbox'} name={name} checked={value[fld.name]?true:false} required={fld.required} onChange={handleChangeRadioOrCheck}/>
+                                    {name}&nbsp;
+                                    <input 
+                                        keytype={'checkbox'} 
+                                        name={name} 
+                                        checked={value[fld.name]?true:false} 
+                                        required={fld.required} 
+                                        onChange={handleChangeRadioOrCheck}
+                                    />
                                 </>
                             )}
                         </p> 
@@ -91,7 +118,15 @@ const formTemplate = ({language, globalStyle, schedule, fields, handleSubmit}) =
                             {label}&nbsp;{fld.required==1?<sup style={{color:'red'}}>*</sup>:null}<br/>
                             {radioValues?radioValues.map(val =>
                                 <>
-                                <input type={fld.type} value={val} name={fld.name} checked={val===value[fld.name]} onChange={handleChangeRadioOrCheck}/>&nbsp;{val}
+                                    <input 
+                                        type={fld.type} 
+                                        value={val} 
+                                        name={fld.name} 
+                                        required={fld.required} 
+                                        checked={val===value[fld.name]} 
+                                        onChange={handleChangeRadioOrCheck}
+                                    />
+                                    &nbsp;{val}
                                 </>
                             ):[]}
                         </p> 
@@ -105,14 +140,27 @@ const formTemplate = ({language, globalStyle, schedule, fields, handleSubmit}) =
                                 cols={fld.cols?fld.cols:30}
                                 rows={fld.rows?fld.rows:fld.numberOfRows?fld.NumberOfRows:6}
                                 maxLength={fld.maxLength?fld.maxLength:300}
-                                value={value[fld.name]} disabled={disabled} name={fld.name} onChange={handleChange} required={fld.required} />
+                                name={fld.name} 
+                                value={value[fld.name]} 
+                                disabled={disabled} 
+                                onChange={handleChange} 
+                                required={fld.required} 
+                            />
                         </p>
                     )    
                 default:
                     return(
                         <p>
                             {label}&nbsp;{fld.required==1?<sup style={{color:'red'}}>*</sup>:null}&nbsp;<br/>
-                            <input type={fld.type} value={value[fld.name]} disabled={disabled} name={fld.name} style={fld.style}  onChange={handleChange} required={fld.required} />
+                            <input 
+                                type={fld.type} 
+                                value={value[fld.name]} 
+                                disabled={disabled} 
+                                required={fld.required} 
+                                name={fld.name} 
+                                style={fld.style}  
+                                onChange={handleChange} 
+                            />
                         </p>
                     )
             }
@@ -121,17 +169,21 @@ const formTemplate = ({language, globalStyle, schedule, fields, handleSubmit}) =
         }    
     
     }
-    
+    const validateForm = () =>{
+        let x = document.forms["myForm"]["fname"].value;
+        if (x == "") {
+          alert("Name must be filled out");
+          return false;
+        }
+      } 
     
 
     return(
-        <form onSubmit={e=>handleSubmit(e, value)}>
+        <form onSubmit={e=>handleSubmit(e, value)} >
             {fields.map(fld => renderField(fld))}     
-            {disabled?null:
-                <Button type="submit" variant="outlined" disabled={disabled} className="button" style={{color:globalStyle.color, borderColor:globalStyle.color}}>
-                    {TEXTS.BUTTON[language]}
-                </Button>
-            }
+            <Button type="submit" variant="outlined" className="button" style={{color:globalStyle.color, borderColor:globalStyle.color}}>
+                {TEXTS.BUTTON[language]}
+            </Button>
         </form>
     )
 }

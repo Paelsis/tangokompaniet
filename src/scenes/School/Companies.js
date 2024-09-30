@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect } from 'react-redux'
 import tkColors from 'Settings/tkColors'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import YouTube from 'Components/YouTube'
  
 
@@ -66,9 +66,9 @@ const url='https://www.youtube.com/embed/mTFErnNA1tA'
 // More components
 const Companies = (props) => (
   <div style={styles.page}>
-    <TextShow url={'/getTexts'} groupId={'Companies'} textId={'Text'}>
+    <EditText url={'/getTexts'} groupId={'Companies'} textId={'Text'}>
       <_StartText />
-    </TextShow>  
+    </EditText>  
     <YouTube url={url} width={'100%'} height={'56vw'}/>
   </div>
 );

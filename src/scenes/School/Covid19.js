@@ -1,5 +1,5 @@
 import React from 'react'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import Background from 'images/covid19.jpg'
 
 
@@ -38,7 +38,7 @@ const styles = {
 
 const Covid19 = () => 
     <div style={styles.container}>
-      <TextShow url={'/getTexts'} style={styles.text} groupId={'Covid19'} textId={'Column1'} />
+      <EditText url={'/getTexts'} style={styles.text} groupId={'Covid19'} textId={'Column1'} />
       <div style={styles.image} />
     </div>
 

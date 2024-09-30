@@ -23,7 +23,7 @@ export default class InventoryFetch extends React.Component {
         
         // const url='http://slimserver.local:8080/classes'
         let environment = process.env.NODE_ENV;
-        const url=config[process.env.NODE_ENV].apiBaseUrl + '/inventory'
+        const url=process.env.REACT_APP_API_BASE_URL + '/inventory'
         // console.log('process.env.NODE_ENV =' +  environment);
         // console.log('URL =' +  url);
         

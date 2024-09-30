@@ -20,7 +20,7 @@ const _course = (item) => {
         item.startTime + ' ' +
         item.teachers + ' ' +
         item.debitable?item.price + ' SEK':null +    
-        item.payForPartner?' Note: PAYING FOR TWO':null;
+        item.payForPartner?' Note: Paying for two':null;
     return course
 }
 

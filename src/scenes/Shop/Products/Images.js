@@ -7,7 +7,7 @@ import InventoryImage from './InventoryImage'
 import postImageName from 'functions/postImageName'
 import ProductFilterNew, {FilterList} from 'scenes/Shop/ProductFilterNew'
 
-const SHOP_IMAGES_URL=config[process.env.NODE_ENV].apiBaseUrl + SHOP_IMAGE_DIR
+const SHOP_IMAGES_URL=process.env.REACT_APP_API_BASE_URL + SHOP_IMAGE_DIR
 
 const styles = {
   root:{

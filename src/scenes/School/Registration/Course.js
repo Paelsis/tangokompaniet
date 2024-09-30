@@ -8,9 +8,9 @@ import { tkColors } from 'Settings/tkColors'
 import groupBy from 'functions/groupBy'
 import { COURSE_TYPE } from 'Settings/Const'
 import ScheduleSingleCourse from 'scenes/Schedule/ScheduleSingleCourse';
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import config from 'Settings/config';
-const imageUrl = config[process.env.NODE_ENV].apiBaseUrl + '/images/show/'
+const imageUrl = process.env.REACT_APP_API_BASE_URL + '/images/show/'
 const img = imageUrl + 'DanielAnnaShow.png'
 
 
@@ -194,7 +194,7 @@ class Course extends React.Component {
         return (
             <div style={styles.body}>
                 <h1 style={styles.header}>{TEXTS.COURSES[this.props.language]}</h1>
-                <TextShow url={'/getTexts'} groupId={'Course'} textId={'TopText'} language={this.props.language} />
+                <EditText url={'/getTexts'} groupId={'Course'} textId={'TopText'} language={this.props.language} />
                 <img
                     src={img}
                     width={'80%'}
@@ -218,7 +218,7 @@ class Course extends React.Component {
                         <h2 style={{ textAlign: 'center', paddingLeft:20}}> 
                             {TEXTS.LENGTH[language] + ':' + courseLength + ' ' + TEXTS.PRICE[language] + ':' + price}
                         </h2>
-                        <TextShow url={'/getTexts'} groupId={'Course'} textId={courseDef.textId?courseDef.textId:'TopText'} language={language} />
+                        <EditText url={'/getTexts'} groupId={'Course'} textId={courseDef.textId?courseDef.textId:'TopText'} language={language} />
                     </>
                 :
                     <h2 style={{color:'red'}}>Course with courseId = {this.state.openCourseId} not found in course defintions</h2>
@@ -234,7 +234,7 @@ class Course extends React.Component {
                 <div style={styles.header}>
                     <h1 style={{ textAlign: 'center' }}>{COURSE_TYPE[courseType]?COURSE_TYPE[courseType][language]:'Unknown course type ...'}</h1>
                 </div>
-                <TextShow url={'/getTexts'} groupId={'Course'} textId={courseType} language={language} />
+                <EditText url={'/getTexts'} groupId={'Course'} textId={courseType} language={language} />
             </>    
         )
     }

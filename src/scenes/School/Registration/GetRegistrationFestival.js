@@ -53,8 +53,8 @@ const GROUP_BY_DEF_ARR=[
     },    
 ] 
 
-const VIEW_FIELDS=['orderId', 'handled', 'firstName', 'lastName', 'address', 'email', 'phone','productList', 'productListPartner',  'firstNamePartner', 'lastNamePartner', 'emailPartner', 'emailPartnerAlert', 'workshopPartners', 'helper', 'comment', 'creaTimestamp'];
-const VIEW_FIELDS_EXPAND=['orderId', 'handled', 'firstName', 'lastName', 'address', 'email', 'phone','productList', 'productListPartner',  'firstNamePartner', 'lastNamePartner', 'emailPartner', 'emailPartnerAlert', 'workshopPartners', 'helper', 'comment', 'creaTimestamp'];
+const VIEW_FIELDS=['orderId', 'handled', 'role', 'firstName', 'lastName', 'address', 'email', 'phone','productList', 'productListPartner',  'firstNamePartner', 'lastNamePartner', 'emailPartner', 'emailPartnerAlert', 'workshopPartners', 'helper', 'comment', 'creaTimestamp'];
+const VIEW_FIELDS_EXPAND=['orderId', 'handled', 'role', 'firstName', 'lastName', 'address', 'email', 'phone','productList', 'productListPartner',  'firstNamePartner', 'lastNamePartner', 'emailPartner', 'emailPartnerAlert', 'workshopPartners', 'helper', 'comment', 'creaTimestamp'];
 const UPDATE_FIELDS=['handled', 'firstName', 'lastName',  'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'helper'];
 const UPDATE_VIEW=['handled', 'firstName', 'lastName', 'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'helper'];
 

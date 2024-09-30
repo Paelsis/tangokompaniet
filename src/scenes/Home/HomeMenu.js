@@ -11,7 +11,7 @@ import {EVENT_TYPE} from 'Settings/Const'
 import fetchList from 'functions/fetchList'
 import config from 'Settings/config';
 import { eventsModTitle } from '../Calendar/calendarUtil';
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const SCHEDULE_EVENT_URL = apiBaseUrl + "/scheduleEvent"
 
 

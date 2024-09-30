@@ -2,7 +2,7 @@ import React from 'react'
 import { withBreakpoints } from 'react-breakpoints'
 import { connect } from 'react-redux'
 import {setList} from 'redux/actions/actionsTeacher'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import withListFromStore from 'Components/Table/withListFromStore'
 import {setGlobalStyle} from 'redux/actions/actionsStyle'
 import tkColors from 'Settings/tkColors'
@@ -12,7 +12,7 @@ import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import config, {TEACHER_IMAGE_DIR} from 'Settings/config';
 
 
-const imageUrl=config[process.env.NODE_ENV].apiBaseUrl + TEACHER_IMAGE_DIR
+const imageUrl=process.env.REACT_APP_API_BASE_URL + TEACHER_IMAGE_DIR
 
 
 const TEXTS = {
@@ -104,7 +104,7 @@ const styles = {
     }
 }
 
-const MyText = ({language}) => <TextShow url={'/getTexts'} groupId={'Studio'} textId={'Text'} language={language} />
+const MyText = ({language}) => <EditText url={'/getTexts'} groupId={'Studio'} textId={'Text'} language={language} />
 
 const Contact = ({teacher}) =>
     <div>

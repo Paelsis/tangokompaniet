@@ -43,7 +43,7 @@ const withMultipleListsFromStore = (WrappedComponent) => {
             let username=this.props.username?this.props.username:'';
             let password=this.props.password?this.props.password:'';
             try {
-                let urlComplete=config[process.env.NODE_ENV].apiBaseUrl + url;
+                let urlComplete=process.env.REACT_APP_API_BASE_URL + url;
                 fetchList(username, password, urlComplete, (records) => {
                     // console.log('(withMultiple ...) Number of found records:', records.length)
                     if (typeof this.props.setLists[index] !== undefined) {

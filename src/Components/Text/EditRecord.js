@@ -41,8 +41,8 @@ const MyText = (htmlText) => (
 )
 */
 
-const TextEdit = props => {
-    const value = props.value
+const EditRecord = props => {
+    const {username, password, tableName, value, groupId, textId, addFlag, setList, language, editor, style, children} = props
     const record = props.list.find(it => it.groupId.toUpperCase() === props.groupId.toUpperCase() && it.textId.toUpperCase() === props.textId.toUpperCase() && it.language === props.language);
     const onCommit = value => {
         let crud = {action:false};
@@ -54,48 +54,47 @@ const TextEdit = props => {
                 updated:[{...record, ['textBody']:value }],
                 deleted:[],
             }
-        } else if (props.addFlag) {
+        } else if (addFlag) {
             crud = {
                 action:true,
-                inserted:[{['groupId']:props.groupId, ['textId']:props.textId, ['textBody']:value, ['language']:props.language}],
+                inserted:[{['groupId']:groupId, ['textId']:textId, ['textBody']:value, ['language']:language}],
                 updated:[],
                 deleted:[],
             }
         } else {
-            alert('WARNING: The text for groupId:' + props.groupId.toUpperCase()  + ' textId:' + props.textId.toUpperCase() + 'was not found in DB')
+            alert('WARNING: The text for groupId:' + groupId.toUpperCase()  + ' textId:' + textId.toUpperCase() + 'was not found in DB')
         }      
 
         // Post the updated data to url
         if (crud.action) {
-            let url=config[process.env.NODE_ENV].apiBaseUrl +'/admin/crud'
+            let url=process.env.REACT_APP_API_BASE_URL +'/admin/crud'
             postCrud(url, 
-                props.username, 
-                props.password, 
-                props.tableName?props.tableName:TBL_TEXT, 
+                username, 
+                password, 
+                tableName?tableName:TBL_TEXT, 
                 crud, 
-                list=>props.setList(list));
+                list=>setList(list));
 
         }    
     }
-    const noValueYet=props.language===LANGUAGE_SV?'Ingen text på svenska ännu ! (Byt språk till EN och se om texten finns där)'
-        :props.language===LANGUAGE_ES?'Aún no traducio !'
-        :'No translation to english yet';
+    const noValueYet=language===LANGUAGE_SV?'Ingen text för groupId = ' + groupId + ' textId = ' + textId + ' language = ' + language
+        :'Text missing for groupId = ' + groupId + ' textId = ' + textId + ' language = ' + language
     return(
         <>
             {value?
                 <div>
-                    <TextAndHtmlEditor editor={props.editor} value={value} onCommit={value => onCommit(value)} />
+                    <TextAndHtmlEditor editor={editor} value={value} onCommit={value => onCommit(value)} />
                 </div>
             :
                 <div>
-                    {props.children?
+                    {children?
                         <div>
-                            <div>{props.children}</div>   
-                            <TextAndHtmlEditor editor={props.editor} value={reactToString(props.children)} onCommit={value => onCommit(value)} />
+                            <div>{children}</div>   
+                            <TextAndHtmlEditor editor={editor} value={reactToString(children)} onCommit={value => onCommit(value)} />
                         </div>    
                     :    
-                        <div style={props.style}>
-                            <TextAndHtmlEditor  editor={props.editor} value={noValueYet} onCommit={value => onCommit(value)} />
+                        <div style={style}>
+                            <TextAndHtmlEditor  editor={editor} value={noValueYet} onCommit={value => onCommit(value)} />
                         </div>
                     }    
                 </div>
@@ -109,7 +108,6 @@ const mapStateToProps = state => {
     return {
         username: state.user.username,
         password: state.user.password,
-        language: state.language,
         list: state.text.list,
     }
 }    
@@ -124,5 +122,5 @@ const mapDispatchToProps = dispatch => {
 export default  connect( 
     mapStateToProps,
     mapDispatchToProps,
-)(withListFromStore(TextEdit))    
+)(withListFromStore(EditRecord))    
 

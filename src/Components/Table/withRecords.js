@@ -104,7 +104,7 @@ const withRecords = (WrappedComponent) => {
             const table=this.props.tableUpdate
             const id = row.id
             if (id) {
-                const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/updateRow'
+                const url=process.env.REACT_APP_API_BASE_URL + '/admin/updateRow'
                 postUpdTable(url, table, this.props.username, this.props.password, id, row, this.handleReply)
             } else {
                 alert('updateRow: The row for updating table ' + table + ' does not contain required field id, row:' + JSON.stringify(row))
@@ -113,14 +113,14 @@ const withRecords = (WrappedComponent) => {
 
         addRow(row)
         {
-            const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/addRow'
+            const url=process.env.REACT_APP_API_BASE_URL + '/admin/addRow'
             const table=this.props.tableUpdate
             postUpdTable(url, table, this.props.username, this.props.password, undefined, row, this.handleReply)
         }
 
         replaceRow(row)
         {
-            const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/replaceRow'
+            const url=process.env.REACT_APP_API_BASE_URL + '/admin/replaceRow'
             
             const data = {
                 table:this.props.tableUpdate?this.props.tableUpdate:this.props.tableName?this.props.tableName:this.props.table?this.props.table:'Unkonwn table', 
@@ -132,7 +132,7 @@ const withRecords = (WrappedComponent) => {
 
         deleteRow(id)
         {
-            const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/deleteRow'
+            const url=process.env.REACT_APP_API_BASE_URL + '/admin/deleteRow'
             const data = {
                 table:this.props.tableUpdate?this.props.tableUpdate:this.props.tableName?this.props.tableName:this.props.table?this.props.table:'Unkonwn table', 
                 id
@@ -147,7 +147,7 @@ const withRecords = (WrappedComponent) => {
         updateList(list)
         {
             const urlUpdate = this.props.urlUpdate?this.props.urlUpdate:'/admin/updateRowsInPresence'
-            const url = config[process.env.NODE_ENV].apiBaseUrl + urlUpdate
+            const url = process.env.REACT_APP_API_BASE_URL + urlUpdate
             const table=this.props.tableUpdate
             postUpdTableAll(url, table, this.props.username, this.props.password, list, this.handleReplyUpdateList)
         }
@@ -162,10 +162,10 @@ const withRecords = (WrappedComponent) => {
         findUrl(propsUrl) {
             let urlActive=null;
             if (propsUrl) {
-                urlActive=config[process.env.NODE_ENV].apiBaseUrl + propsUrl;
+                urlActive=process.env.REACT_APP_API_BASE_URL + propsUrl;
             } else if (typeof this.props.location !== "undefined") {    
                 let {url}=this.props.location.state?this.props.location.state:{url:'No url in location state'};
-                urlActive=config[process.env.NODE_ENV].apiBaseUrl + url;
+                urlActive=process.env.REACT_APP_API_BASE_URL + url;
             } else {
                 // console.log('ERROR: Function \"withRecords\" did not find any url in props or in this.props.location.state'); 
             }   

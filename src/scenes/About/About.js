@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {tkColors} from 'Settings/tkColors'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import Background from 'images/under-construction-1.png';
 
 // This component takles 2 props (groupId and TextId) and will return ta lists of the textBody from tbl_text in the database 
@@ -33,9 +33,9 @@ const TEXT_MISSING = {
 
 const Comp = ({groupId, textId, language}) => (
     <div style={styles.root}>        
-            <TextShow style={styles.text} url={'/getTexts'} groupId={groupId} textId={textId}> 
+            <EditText style={styles.text} url={'/getTexts'} groupId={groupId} textId={textId}> 
             {TEXT_MISSING[language]}
-            </TextShow>  
+            </EditText>  
     </div>
 );
 

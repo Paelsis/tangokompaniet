@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import tkColors from 'Settings/tkColors';
 import withListFromStore from 'Components/Table/withListFromStore'
-import TextEdit from './TextEdit'
+import EditRecord from './EditRecord'
 import {setTextList} from 'redux/actions/actionsText'
 import {LANGUAGE_EN, LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 import CircularProgressTerminate from 'Components/CircularProgressTerminate'
@@ -91,7 +91,7 @@ const PropsChildrenText = (props) => (
             <CircularProgressTerminate text={TEXTS.NO_TRANSLATION[props.language]  + ' (groupId=' + props.groupId + ', textId =' +  props.textId + ')'} />
 )
 
-const TextShow = (props) => {
+const EditText = (props) => {
     const {loggedInFlag, list, language, style} = props;  
     let recordKeys = getRecordKeys(props);
 
@@ -111,8 +111,8 @@ const TextShow = (props) => {
         return(
             <div style={style?style:styles.root}>
                 {loggedInFlag?
-                    !rec?<TextEdit record={null} value={null} addFlag={true} {...props} />
-                    :<TextEdit record={rec} value={rec.textBody} key={rec.id} {...props} />
+                    !rec?<EditRecord record={null} value={null} addFlag={true} {...props} />
+                    :<EditRecord record={rec} value={rec.textBody} key={rec.id} {...props} />
                  :!rec?<PropsChildrenText {...props} groupId={groupId} textId={textId} language={language} />
                  :<div style={style?style:styles.root} dangerouslySetInnerHTML={{__html: rec.textBody}} />      
                 }    
@@ -147,4 +147,4 @@ const mapDispatchToProps = (dispatch) => {
 export default  connect( 
     mapStateToProps,
     mapDispatchToProps,
-) (withListFromStore(TextShow, true));    
+) (withListFromStore(EditText, true));    

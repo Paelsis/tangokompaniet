@@ -26,7 +26,7 @@ const EVENT_PRODUCT_TYPE={
 }
 
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const FORM_FIELDS_URL = apiBaseUrl + "/formFields"
 const SCHEDULE_EVENT_URL = apiBaseUrl + "/scheduleEvent"
 const SCHEDULE_WORKSHOP_URL = apiBaseUrl + '/scheduleWorkshop?language=EN'
@@ -75,11 +75,16 @@ let styles = {
         clear:'both',
         fontWeight:600,
     },
+    table:{
+        paddingTop:20,
+
+    },
     schema:color => ({
         display:'inline-block',
         //clear:'both',
-        marginTop:10,
-        marginBottom:10,
+        marginTop:50,
+        marginBottom:50,
+        paddingTop:50, 
         paddingLeft:30,
         paddingRight:30,
         paddingBottom:30,
@@ -90,6 +95,7 @@ let styles = {
     }),
     workshops:color => ({
         clear:'both',
+        paddingTop:20, 
         marginTop:10,
         marginBottom:10,
         borderTop:'2px solid ' + color,
@@ -100,10 +106,12 @@ let styles = {
     },
     forms: color => ({
         borderTop:'2px solid ' + color,
+        paddingTop:40, 
     }),
     table: {
         flex:1,
         marginTop:20,
+        paddingTop:50,
     },
     thead: {
         fontSize:'small', 
@@ -180,7 +188,7 @@ let styles = {
 
 };
 
-class Schedule extends Component {
+class ScheduleEvent extends Component {
     constructor() {
         super();
         this.state = {
@@ -198,12 +206,13 @@ class Schedule extends Component {
             status:STATUS.MISSING,
             avaStatus:'AV',
             avaStatusText:undefined,
+            templateName:undefined, 
+            year:undefined, 
             dateRange:undefined,
             openRegDate:undefined,
             openRegTime:undefined,
             startDate:undefined, 
             startTime:undefined, 
-            year:undefined, 
             emailResponsible:undefined,
             imageUrl:undefined,
             replyImage:undefined,
@@ -242,7 +251,7 @@ class Schedule extends Component {
             result =>
             {
                 const schedule = Array.isArray(result)?result[0]:result
-                // console.log(SCHEDULE_EVENT_URL, ' schedule:', schedule)
+                // alert(JSON.stringify(schedule))
                 if (schedule) {
                     this.setState({
                         name:schedule.name,
@@ -252,12 +261,13 @@ class Schedule extends Component {
                         mailStatus:'',
                         mailSubject:'', 
                         mailBody:'',
+                        year:schedule.year, 
+                        templateName:schedule.templateName, 
                         dateRange:schedule.dateRange, 
                         openRegDate:schedule.openRegDate, 
                         openRegTime:schedule.openRegTime, 
                         startDate:schedule.startDate, 
                         startTime:schedule.startTime, 
-                        year:schedule.year, 
                         includePaymentInfo:schedule.includePaymentInfo, 
                         emailResponsible:schedule.emailResponsible,
                         replyImage:schedule.replyImage,
@@ -377,15 +387,14 @@ class Schedule extends Component {
     toggleProduct(e, product) {
         let productList = []
         let workshopPartners = []
-        const productId = e.target.name
         // alert('checked=' + e.target.checked + 'name: ' + e.target.name)
         if (e.target.checked===true) {
             /* Add entry if it does not exists */
-            productList = [...this.state.productList, {...product, productId}]
+            productList = [...this.state.productList, product]
             workshopPartners = this.state.workshopPartners
         } else {
             /* Remove entry if it exists */
-            productList = this.state.productList.filter(it => it.productId !== e.target.name)
+            productList = this.state.productList.filter(it => it.productId !== product.productId)
             productList = productList?productList:[]
             workshopPartners = this.state.workshopPartners
             delete(workshopPartners[e.target.name])
@@ -417,6 +426,9 @@ class Schedule extends Component {
             {this.state.productList.map(pr => <p><small>{JSON.stringify(pr, null, 4)}</small></p>)}
         </div>
     )}
+
+
+
     renderPackages() {
         return(
         this.state.packageList.length > 0?   
@@ -430,7 +442,7 @@ class Schedule extends Component {
                         {this.state.packageList.map(pkg => 
                             <tr style={styles.name(this.state.color)}>
                             <td> 
-                                <input type="checkbox" name={pkg.packageId} onChange={e=>this.toggleProduct(e, pkg)}/>
+                                <input type="checkbox" name={pkg.name} onChange={e=>this.toggleProduct(e, pkg)}/>
                             </td>    
                             <td >
                                 {pkg.name} 
@@ -444,13 +456,17 @@ class Schedule extends Component {
             null    
         )
     }
+
+    compareTime(a, b) {
+        return a.startTime.localeCompare(b.startTime)
+    }
     
     renderWorkshopsByDay(workshops) {
         return(
-            <table style={{...styles.table}}>
-                <RenderEventRegHeader startDate={workshops[0].startDate} dayOfWeek={workshops[0].dayOfWeek} language = {this.props.language} />
+            <table>
+                <RenderEventRegHeader startDate={workshops[0].startDateWs} dayOfWeek={workshops[0].dayOfWeek} language = {this.props.language} />
                 <tbody style={styles.tbody}>
-                    {workshops.filter(it=>it.active != 0).map(ws => 
+                    {workshops.sort(this.compareTime).filter(it=>it.active != 0).map(ws => 
                         <RenderEventRegLine 
                             event={ws} 
                             checked={this.state.productList.find(pr => ws.workshopId === pr.productId)}
@@ -466,14 +482,23 @@ class Schedule extends Component {
         )
     } 
 
+    compareDateFunc(a,b) {
+        let ret = 0
+        ret = a.localeCompare(b)   
+        if (ret !==0) {
+            return ret
+        }
+        return 0 
+    }    
+
 
     // Render all workshops for one scheduleKey
     renderWorkshopsBySchedule(list) {
-        let dayMap = groupBy(list, it => it.daysUntilStart)
-        let days = Array.from(dayMap.keys()).sort((a,b)=> a.startTime - b.startTime)
+        let dayMap = groupBy(list, it => it.startDate)
+        let days = Array.from(dayMap.keys())
         return (
         <div style={styles.workshops()}>    
-                {days.map(day => (
+                {days.sort(this.compareDateFunc).map(day => (
                     this.renderWorkshopsByDay(dayMap.get(day))
                 ))}
         </div>
@@ -552,7 +577,7 @@ class Schedule extends Component {
             alert("WARNING. Please select a total of " +  minWsMinutes + " minutes of workshops for your chosen package/s. Currently you have selected only " + sumWsMinutes + " minutes of workshop/s." )
             return false;
         }
-
+        // alert('REG_EXTENDED' + JSON.stringify(regExtended))
         postData(CREATE_REG_URL, '', '', regExtended, this.handleReply);
     }
 
@@ -571,10 +596,10 @@ class Schedule extends Component {
                     alert('Plaese fill in partners first name for workshop' + workshopId)
                     ret = false
                 } else if (workshopPartners.lastNamePartner === undefined) {
-                    alert('Plaese fill in partners last name for workshop' + workshopId)
+                    alert('Please fill in partners last name for workshop' + workshopId)
                     ret = false
                 } else if (workshopPartners.emailPartner === undefined) {
-                    alert('Plaese fill in partners email for workshop' + workshopId)
+                    alert('Please fill in partners email for workshop' + workshopId)
                     ret = false
                 }
             })
@@ -594,17 +619,26 @@ class Schedule extends Component {
 
     extendedProductList(reg) {
         return this.state.productList.map(pr => {
-            const productType = pr.productType?pr.productType:undefined
-            const product = productType?productType.indexOf('WORKSHOP') >= 0?pr.workshopId:pr.name:pr.name
+            const eventType = this.props.eventType
+            const productType = pr.productType?pr.productType:'UNKOWN'
+            const productId = pr.productId?pr.productId:'UNKNOWN'
+            const year = this.state.year?this.state.year:new Date().getFullYear()  
+            const templateName = this.state.templateName?this.state.templateName:eventType + '_' + year
+            const product = pr.workshopId?pr.workshopId:pr.packageId?pr.packageId:'Unknown product'
+            const name = pr.name?pr.name:'Unknown name'
             const workshopPartners = this.state.workshopPartners[pr.productId]
             const firstNamePartner=workshopPartners?workshopPartners.firstNamePartner:undefined
             const lastNamePartner=workshopPartners?workshopPartners.lastNamePartner:undefined
             const emailPartner=workshopPartners?workshopPartners.emailPartner:undefined
             return (
                 {
-                    eventType:this.props.eventType, 
+                    eventType:eventType, 
                     dateRange:this.state.dateRange,
+                    templateName,
+                    year,
+                    name, 
                     product, 
+                    productId, 
                     productType, 
                     firstName:reg.firstName,
                     lastName:reg.lastName,
@@ -620,10 +654,14 @@ class Schedule extends Component {
     }
 
     regExtended(reg) {
+        const eventType = this.props.eventType 
+        const year = this.state.year?this.state.year:new Date().getFullYear()  
+        const templateName = eventType + '_' + year
         return ({
             ...reg, 
-            eventType:this.props.eventType, 
-            year:this.state.year?this.state.year:'9999', 
+            eventType,
+            year,
+            templateName,
             dateRange:this.state.dateRange?this.state.dateRange:'NoDateRange', 
             emailResponsible:this.state.emailResponsible?this.state.emailResponsible:'No email respoinsible', 
             imageUrl:this.state.imageUrl,
@@ -648,7 +686,7 @@ class Schedule extends Component {
         }
         
         const regExtended = this.regExtended(reg)
-
+        // alert('regExtended:' +  JSON.stringify(regExtended))
         this.handleRegistration(regExtended)
     }
 
@@ -668,7 +706,7 @@ class Schedule extends Component {
 
         // let formFields=this.props.formFields.filter(it=>this.state.multiplePartners?it.name.includes('Partner')?false:true:true) 
         return(
-            <div style={{color}}>
+            <div style={{color, marginTop:20}}>
                 {this.state.status===undefined?
                     <h2>There is no schedule defined for eventType = {this.state.eventType}</h2>
                 :this.state.status===STATUS.NOT_OPEN_YET?
@@ -696,10 +734,6 @@ class Schedule extends Component {
                                     <div style={styles.workshops(color)}>
 
                                         <h3 style={{width:'100%', textAlign:'center'}}>Workshops and milongas</h3>
-                                        <label>
-                                        I have different dance partners for the different workshops   
-                                        <input type="checkbox" checked={this.state.multiplePartners} onChange={e => this.setState({multiplePartners:e.target.checked?true:false})} />
-                                        </label>
                                         {scheduleKeys.map(scheduleKey =>this.renderWorkshopsBySchedule(schemaMap.get(scheduleKey)))}
                                     </div>
                                 :
@@ -708,6 +742,7 @@ class Schedule extends Component {
                                 {this.state.packageList.length > 0 || scheduleKeys.length > 0?     
                                     <div style={styles.forms(this.state.color)}>
                                         <h3 style={{width:'100%', textAlign:'center'}}>Personal information</h3>
+                                        <br/>
                                         {this.state.avaStatusText?<h2>{this.state.avaStatusText}</h2>:<h3>Open</h3>}
                                         <FormTemplate schedule={{avaStatus:this.state.avaStatus}} fields={this.state.formFields} handleSubmit={this.handleSubmit}/>
                                     </div>
@@ -736,7 +771,7 @@ class Schedule extends Component {
                             <div style={{...styles.text, fontWeight:300, fontSize:14}}>{TEXTS.CANCEL[this.props.language]}</div>
                             {this.state.orderId?this.state.amount?<QrCode price={this.state.amount} message={this.state.eventType + '-' + this.state.dateRange.substring(0,7) + '-' + this.state.orderId} color={color} />:null:null}
                         </div>
-                        {this.state.mailStatus === 'ERROR'?
+                        {(this.state.mailStatus === 'ERROR' || process.env.NODE_ENV !== 'production')?
                             <div style={{color:'red', border:'5px solid red'}}>
                                 {this.state.mailSubject?<h4>Mail subject: {this.state.mailSubject}</h4>:null}
                                 {this.state.mailBody?<><h4>Mail body:</h4><div style={{color:'red'}} dangerouslySetInnerHTML={{__html: this.state.mailBody}} /></>:null}
@@ -780,4 +815,4 @@ const mapStateToProps = (state) => {
 
 export default connect( 
     mapStateToProps
-) (withRouter(Schedule));    
+) (withRouter(ScheduleEvent));    

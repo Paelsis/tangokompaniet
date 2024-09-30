@@ -13,7 +13,7 @@ const withSelectedData = (WrappedComponent) => {
     }
 
     componentDidMount () {
-      let url=config[process.env.NODE_ENV].apiBaseUrl + this.props.url?this.props.url:this.props.xxx;
+      let url=process.env.REACT_APP_API_BASE_URL + this.props.url?this.props.url:this.props.xxx;
       this.fetchFromDatabase(url)
       // console.log('componentDidMount (datafeched from DB for url:' + url); 
     }  
@@ -21,7 +21,7 @@ const withSelectedData = (WrappedComponent) => {
 
     componentWillReceiveProps(nextProps) {
       if (this.props.url !== nextProps.url) {
-        let url=config[process.env.NODE_ENV].apiBaseUrl + nextProps.url;
+        let url=process.env.REACT_APP_API_BASE_URL + nextProps.url;
         // console.log('component Table recieved props'); 
         this.fetchFromDatabase(url)
       }   

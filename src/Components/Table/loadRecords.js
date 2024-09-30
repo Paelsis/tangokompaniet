@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import fetchList from 'functions/fetchList';
 import config from 'Settings/config' 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 const styles = {
     table:{

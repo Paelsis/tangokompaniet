@@ -1,6 +1,6 @@
 import React from 'react';
 import tkColors from 'Settings/tkColors'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 
 const styles = {
   root:{
@@ -447,9 +447,9 @@ const TableB = () =>
 </table>
 
 const _OldBody = () =>
-<TextShow url={'/getTexts'} groupId={'Vocabulary'} textId={'Text'}>
+<EditText url={'/getTexts'} groupId={'Vocabulary'} textId={'Text'}>
   <tables />
-</TextShow>  
+</EditText>  
 
 const Body = () =>
 <>

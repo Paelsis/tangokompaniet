@@ -47,8 +47,8 @@ const withCombinedRecords = (WrappedComponent) => {
 
         // Fetchlists from database
         fetch2FromDatabase(propsUrl1, propsUrl2, handleLists) {
-            let url1 = config[process.env.NODE_ENV].apiBaseUrl + propsUrl1
-            let url2 = config[process.env.NODE_ENV].apiBaseUrl + propsUrl2
+            let url1 = process.env.REACT_APP_API_BASE_URL + propsUrl1
+            let url2 = process.env.REACT_APP_API_BASE_URL + propsUrl2
             try {
                 let username=this.props.username?this.props.username:'';
                 let password=this.props.password?this.props.password:'';

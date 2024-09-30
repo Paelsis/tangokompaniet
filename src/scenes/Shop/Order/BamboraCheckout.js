@@ -6,7 +6,7 @@ import tkColors from 'Settings/tkColors'
 import postPaymentCheckout from './postPaymentCheckout'
 import {LANGUAGE_EN, LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const postUrl = apiBaseUrl + "/paymentCheckout"
 const getUrl = apiBaseUrl + "/getPaymentCheckout"
 

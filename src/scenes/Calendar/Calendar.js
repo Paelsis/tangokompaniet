@@ -30,7 +30,7 @@ import {
 } from 'react-big-calendar'
 import { getFormValues } from 'redux-form';
 
-const URL_REGISTRATION_COUNT=config[process.env.NODE_ENV].apiBaseUrl + '/getRegistrationCount?maxName=maxRegistrantsInside';
+const URL_REGISTRATION_COUNT=process.env.REACT_APP_API_BASE_URL + '/getRegistrationCount?maxName=maxRegistrantsInside';
 const colorDark='#81185B';
 const colorLight='#8a973b';
 

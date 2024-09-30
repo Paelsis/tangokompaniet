@@ -8,7 +8,7 @@ import EmailIcon from '@material-ui/icons/Email'
 import Tooltip from '@material-ui/core/Tooltip'
 
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const imageUrl=apiBaseUrl + SHOP_IMAGE_DIR;
 
 const Alert = (msg) => {

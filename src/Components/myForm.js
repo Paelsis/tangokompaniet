@@ -3,7 +3,7 @@ import  {Component } from 'react'
 
 import FormTemplate from 'Components/formTemplate';
 //import config from 'Settings/config' 
-//const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+//const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 const fields = [
     {

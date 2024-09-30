@@ -213,6 +213,7 @@ class ScheduleEdit extends Component {
               value={li[col.name]?li[col.name]:''} 
               placeholder={col.placeholder?col.placeholder:''} 
               onChange={e=>this.props.handleChangeId(e, li.id)}
+              maxlength={col.maxlength}
               />
         :
             <input 
@@ -224,6 +225,7 @@ class ScheduleEdit extends Component {
               selected={col.selected}
               placeholder={col.placeholder?col.placeholder:col.name} 
               onChange={(e)=>this.props.handleChangeId(e, li.id)}
+              maxlength={col.maxlength}
             />
         }    
     </td>
@@ -287,10 +289,10 @@ class ScheduleEdit extends Component {
                   name={col.name} 
                   cols={25} 
                   rows={3} 
-                  maxLength={300}
                   value={this.state.record[col.name]?this.state.record[col.name]:''} 
                   required={col.required}
                   onChange={this.onChange}
+                  maxLength={col.maxlength}
                   />
               :
                 <input 
@@ -303,6 +305,7 @@ class ScheduleEdit extends Component {
                   placeholder={col.placeholder?col.placeholder:col.name} 
                   required={col.required}
                   onChange={this.onChange}
+                  maxLength={col.maxLength}
                 />
             }    
             </td>

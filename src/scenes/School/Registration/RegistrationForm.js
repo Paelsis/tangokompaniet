@@ -12,7 +12,7 @@ import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 import {BOOKING_STATUS, CLOSED, AVA_STATUS, DANCE_SITE, PRODUCT_TYPE} from 'Settings/Const'
 import Button from 'Components/Button'
 import Weekdays from 'Settings/Weekdays';
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import QrCode from 'Components/QrCode'
 
 const LINK_TO_COURSE='/scheduleCourse'
@@ -233,6 +233,10 @@ const TEXTS = {
         ES:'Currently there is an imbalance with a surprise of followers, so registration is right now only open for couples or leaders',
         EN:'Currently there is an imbalance with a surprise of followers, so registration is right now only open for couples or leaders',
     },
+    PAY_FOR_PARTNER:{
+      SV:'Jag önskar betala även för min danspartner',
+      EN:'I also want to pay for my dance-partner'
+    }
 }
 const required = (value, allValues, props) => value ? undefined: TEXTS.REQUIRED[props.language]
 
@@ -363,7 +367,7 @@ const renderCheckbox = ({ input, label, meta: {touched,error} }) =>
     label={label}
     checked={input.value}
     onCheck={input.onChange}
-    labelStyle={{fontWeight:input.checked?'bold':200, color:input.value?tkColors.Purple.Light:tkColors.color}}
+    labelStyle={{fontWeight:input.checked?'bold':400, color:input.value?tkColors.Purple.Light:tkColors.color}}
     />
     {touched && error &&<span style={styles.error}>{'   ' + error}</span>}
   </div>
@@ -382,7 +386,7 @@ const renderTextArea = ({ input, label, placeholder, maxLength, type, meta: { to
 
 const renderGenderRadioButtons = ({input, language, meta: { touched, error }}) => {
   // console.log('input',input) 
-  const style = value => ({color:input.value == value?tkColors.Purple.Light:tkColors.color, fontWeight:input.value == value?'bold':200})
+  const style = value => ({color:input.value == value?tkColors.Purple.Light:tkColors.color, fontWeight:input.value == value?'bold':400})
   return(
   <div>  
   {(input.value === undefined)?<span>{TEXTS.SELECT_DANCE_ROLE[language]}</span>:TEXTS.DANCE_ROLE[language]}
@@ -516,7 +520,7 @@ const payForPartner = (language) =>
 
       
 
-let RegistrationForm = (props) => {
+let RegistrationForm = props => {
   const {error, handleSubmit, pristine, submitting, language, havePartner, leader, danceSite, reg, handlePutInCart, handleRegisterNow, handleGoBack, globalStyle} = props
   const color = globalStyle.color
   const viewProperties = viewProps (reg.avaStatus, language)
@@ -560,7 +564,12 @@ let RegistrationForm = (props) => {
 
   const mustHavePartner = reg?reg.mustHavePartner?true:reg.courseType === 'AV'?true:false:false
   const mustHavePhonePartner = reg?reg.mustHavePhonePartner?true:false:false
-  const registerObject = values => ({...values, leader:values.leader==1?1:0, danceSite:danceSiteDefault, newsletter:values.newsletter?1:0, linkTo})
+  const registerObject = values => ({...values, 
+      leader:values.leader==1?1:values.leader==2?2:values.leader==0?0:undefined, 
+      payForPartner:values.payForPartner==1?1:undefined, 
+      newsletter:values.newsletter?1:0, 
+      danceSite:danceSiteDefault, 
+      linkTo})
   const closedText = avaStatus === AVA_STATUS.CL?TEXTS.COURSE_FULL_LEADER[language]
     :avaStatus === AVA_STATUS.CF?TEXTS.COURSE_FULL_FOLLOWER[language]
     :avaStatus === AVA_STATUS.CC?TEXTS.COURSE_FULL[language]
@@ -661,9 +670,15 @@ let RegistrationForm = (props) => {
                   <div>
                     <i>
                       {TEXTS.FILL_IN_PARTNERS_NAME[language]}
-                      {reg.noEmailPartner===true?<h2>{TEXTS.PARTNER_MUST_REGISTER_SEPARATELY[language]}</h2>:null}
+                      {(reg.noEmailPartner===true || reg.payForPartner === false)?<h2>{TEXTS.PARTNER_MUST_REGISTER_SEPARATELY[language]}</h2>:null}
                     </i>  
                     <p />
+                    <Field name="payForPartner" 
+                      label={TEXTS.PAY_FOR_PARTNER[language]}
+                      type='checkbox' 
+                      component={renderCheckbox} 
+                    />
+
                     <Field name="firstNamePartner" 
                       label={TEXTS.FIRST_NAME_PARTNER[language]}
                       type='text'
@@ -710,7 +725,7 @@ let RegistrationForm = (props) => {
                   maxLength={160}
                 />
                 <p />
-                {productType === PRODUCT_TYPE.COURSE?<TextShow style={styles.legal} url={'/getTexts'} groupId={'REGISTRATION'} textId={'LEGAL'} language={language}></TextShow>:null}
+                {productType === PRODUCT_TYPE.COURSE?<EditText style={styles.legal} url={'/getTexts'} groupId={'REGISTRATION'} textId={'LEGAL'} language={language}></EditText>:null}
                 <p />
                 {error &&<strong>{error}</strong>}
                 <p />

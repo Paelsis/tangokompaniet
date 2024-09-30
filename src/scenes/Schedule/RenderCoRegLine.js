@@ -2,6 +2,7 @@ import React from 'react';
 import Weekdays from 'Settings/Weekdays';
 import RegistrationButton from '../School/Registration/RegistrationButton'
 import ExpandTextDialog from 'Components/ExpandTextDialog';
+import Tooltip from '@material-ui/core/Tooltip';
 import {LANGUAGE_SV, LANGUAGE_ES, LANGUAGE_EN} from 'redux/actions/actionsLanguage'
 
 const ZOOM_URL = 'https://zoom.us/join'
@@ -75,21 +76,25 @@ export default ({course, color, language}) => {
                     <td>{weekend?' ':range}</td>
                 </>
             }
-            <td>
-                <a style={styles.anchor} href={course.urlLocation} >{course.city?course.city:'   '}</a>
-                &nbsp;
-                {course.online==="1"?<a href={ZOOM_URL} style={styles.tdDiamond}>&#9830;</a>:null}
-            </td>
+            <Tooltip title={course.siteName + ', ' + course.address + ', ' + course.city}>
+                <td>
+                    <a style={styles.anchor} href={course.urlLocation} >{course.city?course.city:'   '}</a>
+                    &nbsp;
+                    {course.online==="1"?<a href={ZOOM_URL} style={styles.tdDiamond}>&#9830;</a>:null}
+                </td>
+            </Tooltip>
             <DateTd  course={course} language={language} />
-            <td>
-                <ExpandTextDialog
-                        shortText={course.teachersShort}
-                        title={course['name' + language] + ' (' + course.city + ' ' + Weekdays[language][course.dayOfWeek-1] + ' ' + course.startTime + ')'}
-                        style={styles.tr}
-                >
-                    {renderExpandedAddress(course)}
-                </ExpandTextDialog>     
-            </td>  
+            <Tooltip title={course.teachers}>
+                <td>
+                    <ExpandTextDialog
+                            shortText={course.teachersShort}
+                            title={course['name' + language] + ' (' + course.city + ' ' + Weekdays[language][course.dayOfWeek-1] + ' ' + course.startTime + ')'}
+                            style={styles.tr}
+                    >
+                        {renderExpandedAddress(course)}
+                    </ExpandTextDialog>     
+                </td>  
+            </Tooltip>
             <td><RegistrationButton style={styles.button} reg={course} /></td>          
         </tr>
 

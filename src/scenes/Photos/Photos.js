@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {connect } from 'react-redux'
 import withRecords from 'Components/Table/withRecords'
 import {setLanguage} from 'redux/actions/actionsLanguage'; 
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import config from 'Settings/config';
 import fetchList from 'functions/fetchList';
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 
 // const _Photos = ({list, url, match:{params:{subdir}}}) => {   

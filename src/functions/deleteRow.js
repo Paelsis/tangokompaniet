@@ -3,7 +3,7 @@ import {store} from 'index.js'
 import config from 'Settings/config';
 import postPayload from 'functions/postPayload'
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const url = apiBaseUrl + '/admin/deleteRow'
 
 // deleteRow

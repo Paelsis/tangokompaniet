@@ -5,7 +5,7 @@ import config from 'Settings/config'
 import withRecords from 'Components/Table/withRecords'
 import CircularProgress from 'Components/CircularProgress'
 
-const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/scheduleChange'
+const url=process.env.REACT_APP_API_BASE_URL + '/admin/scheduleChange'
 
 const styles = {
     root:{

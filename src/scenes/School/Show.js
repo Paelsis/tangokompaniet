@@ -1,5 +1,5 @@
 import React from 'react';
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import tkColors from 'Settings/tkColors'
 import YouTube from 'Components/YouTube'
 import config, {TEACHER_IMAGE_DIR} from 'Settings/config';
@@ -70,7 +70,7 @@ const TEXTS={
 const url="https://www.youtube.com/embed/Fuv2ISU_LTw"
 
 /*
-const path=config[process.env.NODE_ENV].apiBaseUrl + TEACHER_IMAGE_DIR 
+const path=process.env.REACT_APP_API_BASE_URL + TEACHER_IMAGE_DIR 
 const img=path + '/' + 'DanielAnnaShow.png'
 const Image = () => 
   <img style={{display:'inline'}} src={image} alt="DanielAnnaShow.jpg" />
@@ -85,7 +85,7 @@ const _StartText = ({language}) =>
 
 const Show = () => 
   <div style={styles.root}>
-    <TextShow style={styles.text} url={'/getTexts'} groupId={'Show'} textId={'Text'} />
+    <EditText style={styles.text} url={'/getTexts'} groupId={'Show'} textId={'Text'} />
     <YouTube url={url} width={'100%'} height={'60vh'}/>
   </div>
 

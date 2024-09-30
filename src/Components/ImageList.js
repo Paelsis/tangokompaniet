@@ -1,12 +1,8 @@
 import React, {Component} from 'react'
-import config from 'Settings/config' 
-import postPayload from 'functions/postPayload' 
 import axios from 'axios'
 import statusMessage, {STATUS_OK, STATUS_WARNING, STATUS_ERROR} from 'functions/statusMessage'
-import TextEdit from './Text/TextEdit'
-import TextShow from 'Components/Text/TextShow'
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const styles={
   button1:{
     background: 'transparent',

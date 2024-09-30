@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 import {tkColors} from 'Settings/tkColors'
 import CustomerForm from './CustomerForm'
 import {PAYMENT_METHOD, PAYMENT_NUMBER} from 'Settings/Const'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import Button from 'Components/Button'
 import postData from 'functions/postData'
 import postPaymentRequest from 'functions/postPaymentRequest'
@@ -14,7 +14,7 @@ import { resetItemList } from 'redux/actions/actionsShop'
 import { isMobileDevice } from 'Settings/Utils'
 import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const CREATE_ORDER_URL = apiBaseUrl + '/createOrder';
 const PAYMENT_REQUEST_BAMBORA_URL = apiBaseUrl + "/paymentRequestBambora"
 const PAYMENT_REQUEST_SWISH_URL = apiBaseUrl + "/paymentRequestSwish"
@@ -338,9 +338,9 @@ class Order extends Component {
     return (
       orderId?
         <div  style={styles.payment}>
-          <TextShow url={'/getTexts'} groupId={'Order'} textId={'BGgiroReply'} language={this.props.language}>
+          <EditText url={'/getTexts'} groupId={'Order'} textId={'BGgiroReply'} language={this.props.language}>
           {TEXTS.PAYMENT.BG[this.props.language]}&nbsp;&#9825;
-          </TextShow>
+          </EditText>
           <br /><br /><b>{TEXTS.ORDER_ID[this.props.language] + ': ' + orderId}</b> 
           <br /><br /><b>{TEXTS.TOTAL_TO_PAY[this.props.language] + ': ' + amount + ' ' + currency}</b>    
           <br /><br /> 
@@ -364,9 +364,9 @@ class Order extends Component {
     return (
       orderId?
         <div  style={styles.payment}>
-          <TextShow url={'/getTexts'} groupId={'Order'} textId={'BGgiroReply'} language={language}>
+          <EditText url={'/getTexts'} groupId={'Order'} textId={'BGgiroReply'} language={language}>
           {TEXTS.PAYMENT.OTHER[this.props.language]}&nbsp;&#9825;
-          </TextShow>
+          </EditText>
           <div><b>{TEXTS.ORDER_ID[language] + ': ' + orderId}</b></div> 
           <p />
           <div><b>{TEXTS.TALK_TO[language]}</b></div>    
@@ -391,9 +391,9 @@ class Order extends Component {
     return (
       orderId?
         <div style={styles.payment}>
-          <TextShow url={'/getTexts'} groupId={'Order'} textId={'SwishOpen'} language={this.props.language}>
+          <EditText url={'/getTexts'} groupId={'Order'} textId={'SwishOpen'} language={this.props.language}>
             {TEXTS.OPEN.SWISH[this.props.language]}&nbsp;&#9825;
-          </TextShow>  
+          </EditText>  
             <br /><br /><b>{TEXTS.ORDER_ID[this.props.language] + ': ' + orderId}</b>
             <br /><br /><b>{TEXTS.TOTAL_TO_PAY[this.props.language] + ': ' +  amount + ' ' + currency}</b>    
           <br /><br />  
@@ -417,9 +417,9 @@ class Order extends Component {
     return (
       orderId?
         <div style={styles.payment}>
-          <TextShow url={'/getTexts'} groupId={'Order'} textId={'SwishReply'} language={this.props.language}>
+          <EditText url={'/getTexts'} groupId={'Order'} textId={'SwishReply'} language={this.props.language}>
             {TEXTS.PAYMENT.SWISH[this.props.language]}&nbsp;&#9825;
-          </TextShow>  
+          </EditText>  
             <br /><br /><b>{TEXTS.ORDER_ID[this.props.language] + ': ' + orderId}</b>
             <br /><br /><b>{TEXTS.TOTAL_TO_PAY[this.props.language] + ': ' +  amount + ' ' + currency}</b>    
           <br /><br />  

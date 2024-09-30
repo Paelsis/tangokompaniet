@@ -4,7 +4,7 @@ import withRecords from 'Components/Table/withRecords'
 import {Link} from 'react-router-dom'
 import Avatar from 'material-ui/Avatar';
 import { withBreakpoints } from 'react-breakpoints'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import tkColors from 'Settings/tkColors';
 import config, {TEACHER_IMAGE_DIR} from 'Settings/config' 
 import Tooltip from '@material-ui/core/Tooltip';
@@ -15,7 +15,7 @@ import {USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 
 import CircularProgressTerminate from 'Components/CircularProgressTerminate';
 
-const imageUrl=config[process.env.NODE_ENV].apiBaseUrl + TEACHER_IMAGE_DIR
+const imageUrl=process.env.REACT_APP_API_BASE_URL + TEACHER_IMAGE_DIR
 
 const styles=
 {
@@ -133,13 +133,13 @@ const _FullPageView = (teachers, language, currentBreakpoint, breakpoints) => {
               :
                 null
               }
-              <TextShow 
+              <EditText 
                   url={'/getTexts'} 
                   style={styles.text}
                   groupId={'Teacher'} textId={teacher.shortName} 
               >
                   {teacher.text}
-              </TextShow>    
+              </EditText>    
             </div>
           </span>
         ))}

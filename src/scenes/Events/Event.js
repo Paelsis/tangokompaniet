@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import Menu from './Menu'
-import TextShow from 'Components/Text/TextShow';
+import EditText from 'Components/Text/EditText';
 import {BannerWithHeader} from 'Settings/tkBanner'
 import {setGlobalStyle} from 'redux/actions/actionsStyle'
 import tkColors, {defaultGradientBackground} from 'Settings/tkColors'
@@ -88,7 +88,7 @@ class _Event extends Component {
               {menuList?<Menu menuList={menuList} openIndex={this.state.openIndex} handleClick={this.handleClick} style={menuStyle} />:'No menuList'}
             </div>
             <div style={styles.text}>
-             <TextShow url={'/getTexts'} groupId={groupId} textId={obj.label?obj.label:'None'} style={{color:this.props.style.color}} />
+             <EditText url={'/getTexts'} groupId={groupId} textId={obj.label?obj.label:'None'} style={{color:this.props.style.color}} />
             </div>
             {obj.registrationComponent?
               <div style={styles.component}>

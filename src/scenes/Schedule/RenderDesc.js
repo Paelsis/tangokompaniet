@@ -1,65 +1,58 @@
 import React, {useState} from 'react';
-import TextShow from 'Components/Text/TextShow';
-import Button from 'Components/Button';
-import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
+import EditText from 'Components/Text/EditText';
+import IconButton from '@material-ui/core/IconButton'
+//import {LANGUAGE_SV} from 'redux/actions/actionsLanguage'
+// import Button from '@material-ui/core/Button'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import Tooltip from '@material-ui/core/Tooltip';
 
-const background = courseType => {
-        switch (courseType) {
-            case 'GK':return 'linear-gradient(45deg, #81185B 0%,  #330a41 100%)'
-            case 'FK':return 'linear-gradient(45deg, #81185B 0%,  #330a41 100%)'
-            case 'HK':return 'linear-gradient(45deg, blue 0%,  #330a41 100%)'
-            case 'TE':return 'linear-gradient(45deg, red 0%,  #330a41 100%)'
-            case 'XX':return 'linear-gradient(45deg, orange 0%,  #330a41 100%)'
-        }    
+const TEXT = {
+    TOOLTIP:{
+        EN:'Back to previous page',
+        SV:'Backa till föregående sida'
     }
-    
-const boxColor = courseType => {
-switch (courseType) {
-        case 'GK':return '#81185B'
-        case 'FK':return '#81185B'
-        case 'HK':return 'blue'
-        case 'TE':return 'red'
-        case 'XX':return 'orange'
-}    
 }
 
-    
-
-const styles = {
-    container:{
-        marginLeft:'auto',
-        margihRight:'auto',
-        display:'flex', 
-        flexDirection:'column'
-    },
-    text:{
-        textAlign:'left',
-        marginLeft:'auto',
-        marginRight:'auto',
-    },
-    button:{
-        size:'small',
-        marginLeft:'auto',
-        marginRight:'auto',
-    },
-};
-// RenderText
-export default ({textId, language, setTextId}) => {
+const RenderDesc = ({groupId, language, textId, setTextId, backButton}) => {
         return (
-                <div className='column is-full columns is-narrow is-centered'>
-                        <div className='column is-2'>
-                            <Button variant="outlined" onClick={()=>setTextId(undefined)}>
-                                    {language===LANGUAGE_SV?'Gå tillbaka'
-                                    :language===LANGUAGE_ES?'Para volver, haga clic.'
-                                    :'Go back'}
-                            </Button>    
-                        </div>
-                        <div className='column is-6'>
-                            <TextShow url={'/getTexts'} style={styles.text} groupId={'Course'} textId={textId} language={language}>
-                            <h4>Enter text for groupId={'Course'} and textId={textId} ...</h4>
-                            </TextShow>
-                        </div>
-                </div>
-        ) 
+            <div style={{margin:'auto', width:1000, maxWidth:'85%'}}>
+                {textId?
+                    <>
+                    {backButton?
+                        <div style={{textAlign:'left'}}>
+                            <IconButton onClick={()=>setTextId(undefined)}>
+                                <ArrowBackIosIcon />
+                            </IconButton>
+                        </div>                
+                    :
+                        null
+                    }    
+
+                    <div>
+                                <EditText url={'/getTexts'} 
+                                    groupId={groupId?groupId:'Variable groupId is missing in call to component RenderText'} 
+                                    textId={textId} 
+                                    language={language}
+                                    style={{maxWidht:800}}>
+                                </EditText>
+                    </div>            
+
+                    {backButton?
+                            <div style={{textAlign:'left'}}>
+                                    <IconButton onClick={()=>setTextId(undefined)}>
+                                        <Tooltip title={TEXT.TOOLTIP[language]}>
+                                            <ArrowBackIosIcon />
+                                        </Tooltip>
+                                    </IconButton>
+                            </div>
+                    :
+                        null    
+                    }    
+                    </>
+                :null}    
+            </div>
+        )
 }
+
+export default RenderDesc
     

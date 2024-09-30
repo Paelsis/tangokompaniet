@@ -4,14 +4,13 @@ import Weekdays from 'Settings/Weekdays';
 import { light } from '@material-ui/core/styles/createPalette';
 
 const TEXTS = {
-    price:{SV:'Pris', EN:'Price', ES:'Precio'},
-    description:{SV:'Beskrivning', EN:'Description', ES:'Información'},
-    NAME:{SV:'Workshop', EN: 'Workshop', ES:'Taller'},
-    TIME:{SV:'Startid', EN: 'Start time', ES:'Hora de inicio'},
-    CITY:{SV:'Stad', EN: 'City', ES:'Ciudad'},
-    ONLINE:{SV:'ONL', EN: 'ONL', ES:'ONL'},
-    RESPONSIBLE:{SV:'Lärare', EN: 'Teacher', ES:'Profesor'},
-    REGISTER:{SV:'Välj', EN: 'Select', ES:'Marca'},
+    price:{SV:'Pris', EN:'Price'},
+    description:{SV:'Beskrivning', EN:'Description'}, 
+    NAME:{SV:'Workshop', EN: 'Workshop'},
+    TIME:{SV:'Starar', EN: 'Starts'},
+    CITY:{SV:'Stad', EN: 'City', },
+    RESPONSIBLE:{SV:'Lärare', EN: 'Teacher'},
+    REGISTER:{SV:'Välj', EN: 'Select'},
 }
 
 const styles = {
@@ -24,6 +23,7 @@ const styles = {
         verticalAlign:'center',
         fontSize: 'small',
         fontWeight:'300',
+        padding:2,
     },
     normal: {
         verticalAlign:'center',
@@ -51,14 +51,14 @@ const _renderHeader = (nm, startDate, dayOfWeek, color, language) => {
             <th style={styles.thin}>{TEXTS.NAME[language]}</th>
             <th style={styles.thin}>{TEXTS.TIME[language]}</th>
             <th style={styles.thin}>{TEXTS.CITY[language]}</th>
-            <th style={styles.thin}>{TEXTS.ONLINE[language]}</th>
+            <th style={styles.thin}></th>
             <th style={styles.thin}>{TEXTS.RESPONSIBLE[language]}</th>
         </tr>
     </thead>    
     )    
 }     
 
-const RenderEventHeader = ({language, name, startDate, dayOfWeek,  style}) => {
+const RenderEventRegHeader = ({language, name, startDate, dayOfWeek,  style}) => {
     return(_renderHeader(name, startDate, dayOfWeek, style.color, language));
 }
 
@@ -68,4 +68,4 @@ const mapStateToProps = (state) => {
     }
 }    
 
-export default connect(mapStateToProps)(RenderEventHeader);    
+export default connect(mapStateToProps)(RenderEventRegHeader);    

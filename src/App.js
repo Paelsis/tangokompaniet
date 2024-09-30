@@ -18,6 +18,7 @@ import indigo from '@material-ui/core/colors/indigo'
 import LoadRecords from 'Components/Table/loadRecords'
 import MyForm from 'Components/myForm'
 import withListFromStore from 'Components/Table/withListFromStore'
+import Copyright from 'Components/Copyright'
 import trackPathForAnalytics from './functions/trackPathForAnalytics';
 
 // Login
@@ -85,7 +86,8 @@ import Order from 'scenes/Shop/Order/Order'
 import Editor from 'scenes/Editor/Editor'
 
 // Payment
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
+import MailText from 'scenes/Mails/MailText'
 import InputText from 'Components/Text/InputText'
 import ThankYou from 'scenes/Payment/ThankYou'
 import Admin from 'scenes/admin/Admin'
@@ -106,7 +108,7 @@ import {setList} from 'redux/actions/actionsEventSchedule'
 
 import config from 'Settings/config';
 import fetchList from './functions/fetchList';
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const SCHEDULE_EVENT_URL = apiBaseUrl + "/scheduleEvent"
 
 const colorDark='#81185B';
@@ -213,6 +215,15 @@ const styles ={
       marginRight: 'auto',
       textAlign:'center',
     },
+    copyright: {
+      display:'block',
+      position:'relative',
+      width:'100vw',
+      clear:'both',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      textAlign:'center',
+    },
     text:{
       padding:'2%'
     }, 
@@ -265,6 +276,7 @@ const App = props => {
   const [open, setOpen]=useState(false)
   const [info, setInfo]=useState(false)
   const [newsList, setNewsList]=useState([])
+  const currentYear = new Date().getFullYear()
 
   const toggleMenuOpen = () => {
     setOpen(!open)
@@ -274,11 +286,12 @@ const App = props => {
   }
 	
   useEffect(()=> {
-    document.title = process.env.NODE_ENV==='production'?'Tangokompaniet'
-    :process.env.NODE_ENV==='development'?'Development'
-    :process.env.NODE_ENV==='daniel'?'Daniel'
-    :process.env.NODE_ENV==='admin'?'Admin'
-    :'TK'
+    document.title = process.env.REACT_APP_ENVIRONMENT==='production'?'Tangokompaniet'
+    :process.env.REACT_APP_ENVIRONMENT==='development'?'Development'
+    :process.env.REACT_APP_ENVIRONMENT==='daniel'?'Daniel'
+    :process.env.REACT_APP_ENVIRONMENT==='admin'?'Admin'
+    :process.env.REACT_APP_ENVIRONMENT==='test'?'Test'
+    :'Unknown'
 
     props.setUser(USERNAME, localStorage.getItem(USERNAME))
     props.setUser(PASSWORD, localStorage.getItem(PASSWORD))
@@ -318,13 +331,13 @@ const App = props => {
                           <Route path="/loadRecords/:url*" element={<LoadRecords/>}/>
                           <Route path="/about" element={<About/>}/>
                           <Route path="/help" element={<Help/>}/>
-                          <Route path="/course/:courseType/:courseId" element={<Course/>}/>
-                          <Route path="/course/:courseType" element={<Course/>}/>
+                          <Route path="/course/:isBeginner/:courseId" element={<Course/>}/>
+                          <Route path="/course/:isBeginner" element={<Course/>}/>
                           <Route path="/course" element={<Course/>}/>
                           <Route path="/scheduleChange" element={<ScheduleChange/>}/>
                           <Route path="/scheduleSingleCourse" element={<ScheduleSingleCourse/>}/>
                           <Route path="/scheduleCourse" element={<ScheduleCourse/>}/>
-                          <Route path="/scheduleBeginner" element={<ScheduleCourse courseId='GK1' />}/>
+                          <Route path="/scheduleBeginner" element={<ScheduleCourse isBeginner={true} />}/>
                           <Route path='/scheduleEvent/:eventType' element={<ScheduleEvent/>} />
                           <Route path='/scheduleEvent' element={<ScheduleEvent/>} />
                           <Route path="/contactlist" element={<ContactList/>}/>
@@ -350,7 +363,7 @@ const App = props => {
                           <Route path="/inventoryfetch" element={<InventoryFetch/>}/>
                           <Route exact path="/editor" element={<Editor/>}/>
                           <Route exact path="/eventheader" element={<EventHeader/>}/>
-                          <Route exact path="/text" element={<TextShow/>} />
+                          <Route exact path="/text" element={<EditText/>} />
                           <Route path="/inputText/:text" element={<InputText/>} />
                           <Route path="/inputText" element={<InputText/>} />
                           <Route exact path="/thankyou" element={<ThankYou/>} />
@@ -378,6 +391,7 @@ const App = props => {
                           <Route path="/signout" element={<Signout/>}/>
                           <Route path="/firebaseSignup" element={<FirebaseSignup/>}/>
                           <Route path="/firebaseResetPassword" element={<FirebaseResetPassword/>}/>
+                          <Route path="/mailText" element={<MailText />}/>
                           <Route path="*" element={<PageNotFound />} />0
                       </Routes>
                       </FirebaseAuth>  
@@ -386,12 +400,16 @@ const App = props => {
                         <LanguageButton />
                     </div>
                     <StatusLine />   
+                    <div style={styles.copyright}>
+                        <Copyright company='Tangokompaniet' startYear={2010} style={{color:props.style.color}} />
+                    </div>
                 </div>
                 </ReactBreakpoints>
                 </V0MuiThemeProvider>
             </MuiThemeProvider>
         </BrowserRouter>
     );
+
 }
 
 // Map the dispatch to onMyClick
@@ -400,7 +418,8 @@ const mapStateToProps = state => {
   return {
     language: state.language, 
     list: state.eventSchedule.list,
-    url:'/scheduleEvent'
+    url:'/scheduleEvent',
+    style:state.style,
   }
 }
 

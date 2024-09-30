@@ -6,7 +6,7 @@ import InventoryInv from './InventoryInv'
 import tkColors from 'Settings/tkColors'
 import postInventory from './postInventory'
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL
 
 const styles = {
     button:{

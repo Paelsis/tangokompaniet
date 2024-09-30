@@ -30,7 +30,7 @@ const discountMultiple = (list) => {
              minPrice=Math.min(minPrice, price);
              numberOfCourses++;
 
-             if (li.payForPartner) {
+             if (li.payForPartner==1) {
                  minPricePartner=Math.min(minPricePartner, price);
                  numberOfCoursesPartner++;
              }
@@ -56,12 +56,12 @@ const discountBasicCourse1and2 = (list) => {
         if (li.productType==='course' && debitable(li)) {
             if ((li.courseType='GR') && (li.templateId.includes('GK1'))) {
                 course1 = true;
-                if (li.payForPartner) {
+                if (li.payForPartner==1) {
                     course1Partner = true;  
                 }    
             } else if ((li.courseType='GR') && (li.templateId.includes('GK2'))) {
                 course2 = true;
-                if (li.payForPartner) {
+                if (li.payForPartner==1) {
                     course2Partner = true;  
                 }    
             } 
@@ -84,7 +84,7 @@ const summationPrice = (list) => {
     let sumPrice=0;
     list.forEach(li => {
         if (debitable(li)) {
-            let price = (li.price?li.price:li.priceGroupPrice?li.priceGroupPrice:0) * (li.payForPartner?2:1);
+            let price = (li.price?li.price:li.priceGroupPrice?li.priceGroupPrice:0) * (li.payForPartner==1?2:1);
             sumPrice += Number(price)
         }    
     })

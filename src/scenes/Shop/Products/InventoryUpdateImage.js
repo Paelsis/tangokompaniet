@@ -4,7 +4,7 @@ import config from 'Settings/config';
 import InventoryImage from './InventoryImage'
 import tkColors from 'Settings/tkColors'
 import postImageNames from 'functions/postImageName'
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL
 
 const styles = {
     button:{

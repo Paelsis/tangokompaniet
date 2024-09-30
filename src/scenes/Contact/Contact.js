@@ -81,9 +81,9 @@ const Contact = () => (
 <td style={styles.td(true)}>SWEDSESS</td>
 </tr>
 <tr style={styles.tr}>
-<td style={styles.td(true)}>Kontohavare</td>
+<td style={styles.td(true)}>Kontoinnehavare</td>
 <td style={styles.td(true)}>Daniel Carlsson, Tangokompaniet,<br />
-Gasverksgatan 3, 211 29 Malmö</td>
+Södra Promenaden 25 C, 211 38 Malmö (flyttar den 2/10-2024)</td>
 </tr>
 <tr style={styles.tr}>
 <td style={styles.td(true)}>Bank</td>

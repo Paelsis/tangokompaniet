@@ -66,7 +66,7 @@ export default class TableAdd extends Component {
     }
 
   componentDidMount () {
-    const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/tkcolumns?tableName=' + this.props.table;
+    const url=process.env.REACT_APP_API_BASE_URL + '/admin/tkcolumns?tableName=' + this.props.table;
     // console.log('component TableAdd mounted url=', url); 
     this.fetchFromDatabase(url)
   }  
@@ -74,7 +74,7 @@ export default class TableAdd extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.table !== nextProps.table) {
-      const url=config[process.env.NODE_ENV].apiBaseUrl + '/admin/tkcolumns?tableName=' + nextProps.table;
+      const url=process.env.REACT_APP_API_BASE_URL + '/admin/tkcolumns?tableName=' + nextProps.table;
       this.fetchFromDatabase(url)
       // console.log('component TableAdd recieved props url=', url); 
     }   

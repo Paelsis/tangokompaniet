@@ -1,5 +1,5 @@
 import React from 'react';
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import ContactList from 'scenes/Contact/ContactList'
 
 const styles = {
@@ -26,10 +26,10 @@ const styles = {
 const PrivateLessons = () => 
   <div style={styles.root}>
     <div style={styles.container}>
-      <TextShow url={'/getTexts'} style={styles.text} groupId={'PrivateLessons'} textId={'General'} />
-      <TextShow url={'/getTexts'} style={styles.text} groupId={'PrivateLessons'} textId={'Prices'} />
+      <EditText url={'/getTexts'} style={styles.text} groupId={'PrivateLessons'} textId={'General'} />
+      <EditText url={'/getTexts'} style={styles.text} groupId={'PrivateLessons'} textId={'Prices'} />
     </div>
-    <TextShow url={'/getTexts'} style={styles.heading} groupId={'PrivateLessons'} textId={'Teachers'} />
+    <EditText url={'/getTexts'} style={styles.heading} groupId={'PrivateLessons'} textId={'Teachers'} />
     <ContactList privateLessons={true} />
   </div>        
 

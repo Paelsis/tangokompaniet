@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import tkColors from 'Settings/tkColors';
 import withListFromStore from 'Components/Table/withListFromStore'
-import TextEdit from './TextEdit'
+import EditRecord from './EditRecord'
 import {setTextList} from 'redux/actions/actionsText'
 import {LANGUAGE_EN, LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 import CircularProgressTerminate from 'Components/CircularProgressTerminate'
@@ -11,7 +11,7 @@ import {store} from 'index.js'
 import fetchList from 'functions/fetchList'
 import config from 'Settings/config';
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 
 
@@ -83,16 +83,18 @@ const PropsChildrenText = (props) => (
 
 
 
-const Func = (props) => {
-    const {loggedInFlag, list, language, style} = props;  
+const Func = props => {
+    const {loggedInFlag, list, language, style, overruleLanguage} = props;  
     let recordKeys = getRecordKeys(props);
+    const lan = overruleLanguage?overruleLanguage:language
+
 
     if (recordKeys) {
         const {groupId, textId} = recordKeys;
-        let rec = _lookupTextRecord(list, groupId, textId, language);
+        let rec = _lookupTextRecord(list, groupId, textId, lan);
        
-        if (!loggedInFlag) {
-            const languages=[LANGUAGE_EN, LANGUAGE_SV, LANGUAGE_ES]
+        if (!loggedInFlag && !overruleLanguage) {
+            const languages=[LANGUAGE_EN, LANGUAGE_SV]
             let i=0
             while (languages[i] && rec === undefined) {
                 rec = _lookupTextRecord(list, groupId, textId, languages[i]);
@@ -101,21 +103,21 @@ const Func = (props) => {
         } 
 
         return(
-            <div  style={style?style:styles.root} >
+            <div style={style?style:styles.root} >
                 {rec?
-                    loggedInFlag?<TextEdit record={rec} value={rec.textBody} key={rec.id} {...props} />
+                    loggedInFlag?<EditRecord record={rec} value={rec.textBody} key={rec.id} {...props} language={lan} />
                     :<div dangerouslySetInnerHTML={{__html: rec.textBody}} />      
    
                 :   
-                    loggedInFlag?<TextEdit value={undefined} record={undefined} addFlag={true} {...props} />
-                    :<PropsChildrenText {...props} groupId={groupId} textId={textId} language={language} />
+                    loggedInFlag?<EditRecord value={undefined} record={undefined} addFlag={true} {...props} language={lan} />
+                    :<PropsChildrenText {...props} groupId={groupId} textId={textId} language={lan} />
                 }        
            </div>           
         )                 
     } else {
         return (
             <div style={style?style:styles.root} >
-                <PropsChildrenText {...props} />
+                <PropsChildrenText language={lan} {...props}  />
             </div>
         )
     } 

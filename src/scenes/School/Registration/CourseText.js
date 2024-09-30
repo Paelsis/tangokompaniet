@@ -1,9 +1,9 @@
 import React from 'react';
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 
 let CourseText = (props) => {
     return (
-        <TextShow url={'/getTexts'} {...props} />
+        <EditText url={'/getTexts'} {...props} />
     )
 
 }

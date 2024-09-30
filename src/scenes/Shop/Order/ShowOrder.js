@@ -8,7 +8,7 @@ import {tkColors} from 'Settings/tkColors'
 import Item from '../Item';
 import {LANGUAGE_EN, LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 
-let url=config[process.env.NODE_ENV].apiBaseUrl + '/postOrder';
+let url=process.env.REACT_APP_API_BASE_URL + '/postOrder';
 
 let styles = {
   root:{

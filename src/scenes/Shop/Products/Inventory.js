@@ -36,7 +36,7 @@ const productDefault = {
 
 
 
-const imageUrl=config[process.env.NODE_ENV].apiBaseUrl + SHOP_IMAGE_DIR
+const imageUrl=process.env.REACT_APP_API_BASE_URL + SHOP_IMAGE_DIR
 
 
 const styles = {

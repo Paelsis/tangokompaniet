@@ -3,7 +3,7 @@ import { withBreakpoints } from 'react-breakpoints'
 import { connect } from 'react-redux'
 import { setScheduleList } from 'redux/actions/actionsSchedule'
 import tkColors from 'Settings/tkColors';
-import TextShow from 'Components/Text/TextShow';
+import EditText from 'Components/Text/EditText';
 import withListFromStore from 'Components/Table/withListFromStore';
 import groupBy from 'functions/groupBy';
 import RenderCoRegHeader from './RenderCoRegHeader'
@@ -110,9 +110,9 @@ class ScheduleSingleCourse extends Component {
             <div style={styles.root}>                    
                 {this.state.toggleText?
                     <div>                    
-                        <TextShow url={'/getTexts'} groupId={'Course'} textId={this.state.textId}>
+                        <EditText url={'/getTexts'} groupId={'Course'} textId={this.state.textId}>
                             <h4>Enter text for {this.state.textId} ...</h4>
-                        </TextShow>
+                        </EditText>
                         <button className="button" onClick={() => this.setState({toggleText:!this.state.toggleText})}>Back</button>
                     </div>
                 :

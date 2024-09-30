@@ -9,7 +9,7 @@ import AddAPhoto from 'material-ui/svg-icons/image/add-a-photo';
 const addAPhoto = <AddAPhoto color={'green'} style={{width:35, height:35, padding:0, border:0}}/>;
 
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 const styles={
   buttonContainer:{

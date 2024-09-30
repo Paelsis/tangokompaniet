@@ -99,7 +99,7 @@ export default class TableUpdate extends Component {
   }    
 
   componentDidMount () {
-    let url=config[process.env.NODE_ENV].apiBaseUrl + this.props.url;
+    let url=process.env.REACT_APP_API_BASE_URL + this.props.url;
 
     // If there the records already are included in call, use this (no need to read new ones)
     if (this.props.list?true:false) {
@@ -115,7 +115,7 @@ export default class TableUpdate extends Component {
     // If url or records props modified, then rerender
     if ((this.props.url !== nextProps.url) && nextProps.records?false:true) {
       // Load records from DB via URL
-      let url=config[process.env.NODE_ENV].apiBaseUrl + nextProps.url;
+      let url=process.env.REACT_APP_API_BASE_URL + nextProps.url;
       // // console.log('TableUpdate: new url or new records'); 
       this.fetchFromDatabase(url)
     } else {

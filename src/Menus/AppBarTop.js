@@ -189,7 +189,7 @@ const helpText=  {
 
         
 
-
+// AppBarTop
 const AppBarTop = props => {
     const {language, loggedInFlag, background,  breakpoints, currentBreakpoint} = props
     const geDesktop = breakpoints[currentBreakpoint] >= breakpoints.desktop
@@ -208,9 +208,13 @@ const AppBarTop = props => {
         <Link 
           style={{textDecoration:'none'}} 
           to={'/home'}
-        >  
+        > 
           <img src={imageSnirkel} style={styles.snirkel}/>
-          <img src={imageTk} style={styles.tkLogo(hover)} />
+          {process.env.REACT_APP_ENVIRONMENT === 'production'?
+              <img src={imageTk} style={styles.tkLogo(hover)} />
+          :
+            <h1 style = {{paddingLeft:200, paddingTop:12, display:'block'}}>{process.env.REACT_APP_ENVIRONMENT.toUpperCase()}</h1>
+          }    
           <div style={styles.goHomeText(hover)}>{TEXTS.GO_HOME[language]}</div>
         </Link>
       </span>

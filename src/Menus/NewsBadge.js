@@ -6,7 +6,7 @@ import fetchList from 'functions/fetchList';
 import {tkColors} from 'Settings/tkColors'
 import config from 'Settings/config';
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const iconColorOpen='orange' //tkColors.Purple.Light;
 const textColorOpen=tkColors.background
 const iconColorClosed=tkColors.Purple.Dark

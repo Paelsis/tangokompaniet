@@ -13,7 +13,7 @@ import fetchList from 'functions/fetchList'
 import withRouter from 'functions/withRouter'
 import Button from 'Components/Button'
 import {setGlobalStyle} from 'redux/actions/actionsStyle'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import QrCode from 'Components/QrCode'
 import moment from 'moment-with-locales-es6'
 import { checkPropTypes } from 'prop-types';
@@ -24,65 +24,53 @@ const TEXTS={
     GO_BACK:{
         SV:'Gå tillbaka',
         EN:'Go back',
-        ES:'Regresar',
     },
-    REGISTRATION_READY: (reg) => {
+    REGISTRATION_READY: reg => {
         if (reg.firstNamePartner?reg.firstNamePartner.length > 0:false) {
             return({
-                SV:'Tack för att du anmält dig till kursen '
+                SV:'Tack för att du anmält dig ' + (reg.payForPartner?' och din danspartner ':'') + 'till kursen '
                     + (reg.nameSV?reg.nameSV:reg.title) + ' i ' + reg.city  + ' som startar ' + reg.startDate + ' klockan ' + reg.startTime
-                    + '. Din partner måste göra en egen anmälan.',
+                    + (reg.payForPartner?'Då du betalar för båda behöver din partner inte göra någon egen anmälan':'. Din partner måste göra sin egen anmälan.'),
                 EN:'Thank you for registering for the course  '  
                     + (reg.nameEN?reg.nameEN:reg.title) + ' in ' + reg.city + ' starting ' + reg.startDate + ' at ' + reg.startTime
-                    + '. Your partner must do a separate registration.',
-                ES:'Gracias por registrarte en el curso '  
-                    + (reg.nameEN?reg.nameEN:reg.title) + ' in ' + reg.city + ' starting ' + reg.startDate + ' at ' + reg.startTime
-                    + '. Su pareha debe hacer un registro por separadodo.'
+                    + (reg.payForPartner?'Since you pay for both your partner does not have to make a separate registration':'. Your partner must do a separate registration.'),
             })
         } else {   
             return({
-                SV:'Tack för att du anmält dig till ' + (reg.nameSV?reg.nameSV:reg.title) + ' i ' + reg.city + ' som startar ' + reg.startDate + ' klockan ' + reg.startTime,
+                SV:'Tack för att du anmält dig till ' + (reg.nameSV?reg.nameSV:reg.Duss) + ' i ' + reg.city + ' som startar ' + reg.startDate + ' klockan ' + reg.startTime,
                 EN:'Thank you for registering for the course '  + (reg.nameEN?reg.nameEN:reg.title) + ' in ' + reg.city + ' starting ' + reg.startDate + ' at ' + reg.startTime,
-                ES:'Gracias por registrarte en el curso '  + (reg.nameES?reg.nameES:reg.title) + ' en ' + reg.city + ' eso comienza ' + reg.startDate + ' a las ' + reg.startTime,
             })
         }    
     },
     CANCEL: {
         SV:'Du kan cancellera denna dansanmälan i länken som du fått i ditt svarsmail', 
         EN:'You can cancel this registration with the link you have recieved in your reply mail',
-        ES:'Puede cancelar este registro con el enlace que ha recibido en su correo de respuest',
     },
     LEGAL: {
         SV:`Vänligen kontrollera din mailbox (och spam-mailbox) så att du fått din registrering bekräftad. 
         Om så ej skett vänligen kontakta tangokompaniet på mail eller telefon.`,
-        EN:`Por favor revise su buzón para confirmar su registro.
-        De lo contrario, comuníquese con la compañía de tango por correo o teléfono.`,
-        ES:`Please check your mailbox (and span mailbox) to confirm that you registration is confirmed.
+        EN:`Please check your mailbox (and span mailbox) to confirm that you registration is confirmed.
         If you got no mail check your spam mailboxn la compañía de tango por correo o teléfono.`
     },
     THANKS: {
         SV:`Tack för att du anmält dig på kurs hos Tangokompaniet`, 
         EN:`Thank you for signing up for a course at Tangokompaniet`,
-        ES:`Su Gracias por inscribirte a un curso en Tangokompaniet`,
     }, 
     ORDER_ID: (orderId) => ({
         SV:`Din registrering har ordernummer:` + orderId, 
         EN:`Your registration has order number:` + orderId,
-        ES:`Su número de pedido es:` + orderId,
     }), 
     ANGE_ORDER_ID: {
         SV:`Ange ordernumret i meddelande fältet när du betalar via Internet (SWISH nummer: 123 173 30 05)`, 
         EN:`Enter the order number in the message field when paying via the Internet (SWISH number: 123 173 30 05)`,
-        ES:`Ingrese número en el campo del mensaje cuando pague a través de Internet (SWISH numero: 123 173 30 05)`,
     }, 
     NO_SUCH_COURSE: productId => ({
         SV:'Kurs med productId ' + productId + ' existerar inte i nuvarande schema', 
         EN:'This productId '  + productId + ' is not found for any course in the schedule',
-        ES:'This productId ' + productId + ' is not found for any course in the schedule',
     })
 }
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const CREATE_REG_URL = apiBaseUrl + '/createRegistration';
 const POST_FORM_URL = apiBaseUrl + '/postForm';
  
@@ -282,8 +270,8 @@ class Registration extends React.Component {
                                 <div style={styles.text}>{TEXTS.ORDER_ID(this.state.orderId)[language]}</div>
                                 <div style={styles.text}>{TEXTS.ANGE_ORDER_ID[language]}</div>
                                 <div style={{...styles.text, fontWeight:'bold', fontSize:20, color:'darkOrange'}}>{TEXTS.CANCEL[language]}</div>
-                                <TextShow style={styles.text} url={'/getTexts'} groupId={'REGISTRATION'} textId={'IF_NO_MAIL'} language={language} />
-                                {productType === PRODUCT_TYPE.COURSE?<TextShow style={styles.text} url={'/getTexts'} groupId={'REGISTRATION'} textId={'LEGAL'} language={language} />:null}    
+                                <EditText style={styles.text} url={'/getTexts'} groupId={'REGISTRATION'} textId={'IF_NO_MAIL'} language={language} />
+                                {productType === PRODUCT_TYPE.COURSE?<EditText style={styles.text} url={'/getTexts'} groupId={'REGISTRATION'} textId={'LEGAL'} language={language} />:null}    
                             </div>
                             {this.state.orderId?<QrCode price={undefined} message={message} />:null}
                             <Button 
@@ -294,7 +282,7 @@ class Registration extends React.Component {
                             </Button>      
                             {process.env.NODE_ENV==='development'?
                                 <div>
-                                    <h1>Mail body</h1>
+                                    <h1>Mail till kund</h1>
                                     <div dangerouslySetInnerHTML={{__html: JSON.stringify(this.state.mailBody)}} />
                                 </div>    
                             :null}    

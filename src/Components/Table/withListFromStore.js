@@ -40,10 +40,10 @@ const withListFromStore = (WrappedComponent, loadOnce) => {
         findUrl(propsUrl) {
             let urlActive=null;
             if (propsUrl) {
-                urlActive=config[process.env.NODE_ENV].apiBaseUrl + propsUrl;
+                urlActive=process.env.REACT_APP_API_BASE_URL + propsUrl;
             } else if (typeof this.props.location != "undefined") {    
                 let {url}=this.props.location.state?this.props.location.state:{url:'No url in location state'};
-                urlActive=config[process.env.NODE_ENV].apiBaseUrl + url;
+                urlActive=process.env.REACT_APP_API_BASE_URL + url;
             } else {
                 // console.log('ERROR: Function \"withListFromStore\" did not find any url in props or in this.props.location.state'); 
             }   

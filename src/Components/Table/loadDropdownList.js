@@ -2,7 +2,7 @@ import fetchList from 'functions/fetchList';
 import config from 'Settings/config';
 import groupBy from 'functions/groupBy';
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 export function loadDropdownList(username, password, tableName, selectKey, selectValue, func) {
     fetchList(

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import { connect } from 'react-redux'
 import postData from 'functions/postData'
 import fetchList from 'functions/fetchList'
@@ -9,7 +9,7 @@ import config from 'Settings/config';
 import {EVENT_TYPE} from 'Settings/Const'
 import QrCode from 'Components/QrCode'
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 //const imageUrlFunc = replyImage => apiBaseUrl + '/' + replyImage
 const imageUrlFunc = replyImage => replyImage.toLowerCase().indexOf('http')!==-1?replyImage
@@ -177,7 +177,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
                         <h2 >Your registration to Malmö Tangomarathon {schedule.dateRange} was successful</h2>
                         <div style={{...styles.text, fontWeight:'bold', fontSize:20, color:'darkOrange'}}>{TEXTS.CANCEL[language]}</div>
                         <h3 >Please check your mailbox (or spam mailbox) for confirmation of your registration.</h3>
-                        <TextShow style={styles.legal(globalStyle.color)} url={'/getTexts'} groupId={eventType} textId={'LEGAL'} language={language}></TextShow>
+                        <EditText style={styles.legal(globalStyle.color)} url={'/getTexts'} groupId={eventType} textId={'LEGAL'} language={language}></EditText>
                         {schedule.includePaymentInfo?
                         <QrCode price={schedule.amount} message={eventType  + '-' +  schedule.dateRange.substring(0, 7) + '-' + data.orderId} color={globalStyle.color} />
                         :null}
@@ -185,7 +185,7 @@ const ScheduleMarathon = ({language, globalStyle}) => {
                     {data.mailStatus === 'ERROR'?
                             <div style={{color:'red', border:'5px solid red'}}>
                                 {data.mailSubject?<h4>Mail subject: {data.mailSubject}</h4>:null}
-                                {data.mailBody?<><h4>Mail body:</h4><div style={{color:'red'}} dangerouslySetInnerHTML={{__html: data.mailBody}} /></>:null}
+                                {data.mailBody?<><h4>Mail till kund:</h4><div style={{color:'red'}} dangerouslySetInnerHTML={{__html: data.mailBody}} /></>:null}
                             </div>    
                     :null}    
                 </>

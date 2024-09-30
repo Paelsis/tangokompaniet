@@ -2,13 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux'
 import tkColors, {linearGradient} from 'Settings/tkColors';
 import {setGlobalStyle} from 'redux/actions/actionsStyle'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import { withBreakpoints } from 'react-breakpoints'
 import ColoredImage from 'Components/ColoredImage'
 import deepOrange from '@material-ui/core/colors/deepOrange'
 import deepPurple from '@material-ui/core/colors/deepPurple'
+import darkBlue from '@material-ui/core/colors/blue'
 import CalendarToday from 'scenes/Calendar/CalendarToday'
-import { lookupTextBody } from '../../Components/Text/TextShow';
+import { lookupTextBody } from '../../Components/Text/EditText';
 
 
 //const imgHome=require('images/homepage/annaAndMartin.png');
@@ -91,11 +92,11 @@ class _Home extends React.Component {
   }
 
   componentDidMount() {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.REACT_APP_ENVIRONMENT === 'development') {
       const background = linearGradient(deepPurple[900], deepPurple[200]); 
       this.props.setColors(deepPurple[900], background)
-    } else if (process.env.NODE_ENV === 'production' && process.env.REACT_APP_ENVIRONMENT === 'test') {
-      const background = linearGradient(deepOrange[900], deepOrange[200]); 
+    } else if (process.env.REACT_APP_ENVIRONMENT !== 'production') {
+      const background = linearGradient(darkBlue[900], darkBlue[200]); 
       this.props.setColors(deepOrange[900], background)
     } 
     const {breakpoints, currentBreakpoint} = this.props
@@ -121,7 +122,7 @@ class _Home extends React.Component {
     const wide = false;
     return(
       <section style={styles.section}>
-        <TextShow style={styles.textDesktop} url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} /> 
+        <EditText style={styles.textDesktop} url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} /> 
         <div style={{...styles.container(height), top:0, transition:this.state.hover?'2.0s ease':null}} 
             onMouseOver={this.handleMouseOver} 
             onMouseLeave={this.handleMouseLeave}
@@ -164,7 +165,7 @@ class _Home extends React.Component {
             link={'/home'}
           >
               <CalendarToday style={styles.overlayText(this.state.hover)} fontSize='large' noButton />
-              <TextShow style={styles.overlayText(!this.state.hover)} url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} />
+              <EditText style={styles.overlayText(!this.state.hover)} url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} />
           </ColoredImage>
         </div>  
     )
@@ -174,7 +175,7 @@ class _Home extends React.Component {
   renderMobile() {
     return(
       <div onMouseOver={this.handleMouseOver} onMouseLeave={this.handleMouseLeave}>
-        <TextShow url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} /> 
+        <EditText url={'/getTexts'} groupId={'Home'} textId={'HomeText'} language={this.props.language} /> 
         <div style={styles.text} >
             <div>
                 <CalendarToday />

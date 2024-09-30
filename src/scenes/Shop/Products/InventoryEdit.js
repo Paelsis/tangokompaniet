@@ -9,8 +9,8 @@ import fetchList from 'functions/fetchList';
 import postInventory from './postInventory'
 
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl
-const invUrl=config[process.env.NODE_ENV].apiBaseUrl + '/getInventory';
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL
+const invUrl=process.env.REACT_APP_API_BASE_URL + '/getInventory';
 
 let invCount=0;
 

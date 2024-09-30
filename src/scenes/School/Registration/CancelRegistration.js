@@ -6,7 +6,7 @@ import Button from 'Components/Button'
 import config from 'Settings/config';
 
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 const CANCEL_URL = apiBaseUrl + '/cancelRegistration';
 
 
@@ -36,6 +36,7 @@ const CancelRegistration = () => {
     const [message, setMessage] = useState(undefined)
     const [color, setColor] = useState('teal')
     const [mailBody, setMailBody] = useState('No mail body') 
+    const [ignore, setIgnore] = useState()
     const params = useParams();
     const token = params?params.token:undefined
     const tableName = params?params.tableName:'tbl_registration'
@@ -47,14 +48,28 @@ const CancelRegistration = () => {
     }
 
     useEffect(()=>{
-        const values = {token, tableName}
-        postData(CANCEL_URL, '', '', values, handleReply);
+        //eslint-disable-next-line
+        if (!confirm("Are you sure you want to cancel you registration to Tangokompaniet (y/n) ?")) {
+            const values = {token, tableName}
+            postData(CANCEL_URL, '', '', values, handleReply);
+        } else {
+           // Ignore cancellation 
+           ignore = true;  
+        }   
     }, [token, tableName])
 
+
+
     return(
-        token===undefined?
+        ignore?
             <div style={{width:'90vw', marginLeft:'auto', marginRight:'auto', textAlign:'center'}}>
-                <h1>{"No token given in url (Use link: https://www.tangokompaniet.com/cancelRegistration/<token>)"}</h1>
+                <h1>{"Din cancellering genomfördes inte."}</h1>
+                <h3>{"Your cancellation was ignored"}</h3>
+            </div>
+        :token===undefined?
+            <div style={{width:'90vw', marginLeft:'auto', marginRight:'auto', textAlign:'center'}}>
+                <h1>{"VARNINN: Ingen token skickad (Use link: https://www.tangokompaniet.com/cancelRegistration/<token>)"}</h1>
+                <h3>{"WARNINGE: No token given in url (Use link: https://www.tangokompaniet.com/cancelRegistration/<token>)"}</h3>
             </div>
         :message===undefined?
             <div style={{width:'90vw', marginLeft:'auto', marginRight:'auto', textAlign:'center', color}}>
@@ -62,11 +77,10 @@ const CancelRegistration = () => {
             </div>
         :    
             <div style={{width:'90vw', marginLeft:'auto', marginRight:'auto', textAlign:'center', color}}>
-
                 <h1>{message}</h1>
                 {process.env.NODE_ENV==='development'?
                     <div>
-                        <h1>Mail body</h1>
+                        <h1>Mail send to customer (sometimes 2)</h1>
                         <div dangerouslySetInnerHTML={{__html: JSON.stringify(mailBody)}} />
                     </div>    
                 :null}    

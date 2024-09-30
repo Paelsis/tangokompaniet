@@ -5,7 +5,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import SaveIcon from '@material-ui/icons/Save';
 import tkColors from 'Settings/tkColors';
 
-const RichTextEditor = props => {
+// RichTextEditor
+export default props => {
   const [value, setValue] = useState(ReactRte.createValueFromString(props.value, 'html'))
   const [edit, setEdit] = useState(props.edit?props.edit:false)
 
@@ -45,4 +46,3 @@ export const Edit = props => {
   )
 }
 
-export default RichTextEditor

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Button from 'Components/Button'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import Background from 'images/covid19.jpg'
 
 const TEXTS = {
@@ -51,7 +51,7 @@ const InfoBox = ({history}) => {
     const navigate = useNavigate()
     return(
     <div style={styles.container}>
-      <TextShow url={'/getTexts'} style={styles.text} groupId={'Info'} textId={'Box'} />
+      <EditText url={'/getTexts'} style={styles.text} groupId={'Info'} textId={'Box'} />
       <div style={styles.image} />
       <Button 
         variant="outlined"

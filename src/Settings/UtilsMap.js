@@ -11,7 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import deleteRow from 'functions/deleteRow'
 import EmailIcon from '@material-ui/icons/Email';
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import {TBL_TEACHER_NOTE} from 'Settings/Const'
 import moment from 'moment-with-locales-es6';
 import {serverFetchData} from 'functions/serverFetch'
@@ -20,7 +20,7 @@ import {replaceRow} from 'functions/tableUtils'
 import {acceptKeys} from 'Settings/Utils'
 
 
-const apiBaseUrl=config[process.env.NODE_ENV].apiBaseUrl;
+const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
 
 const TEXTS = {
     'DOWNLOAD_XLS_LABEL':{

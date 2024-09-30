@@ -66,7 +66,7 @@ import Editor from 'scenes/Editor/Editor'
 // Payment
 import OkPayPal from 'scenes/Payment/OkPayPal'
 import ErrorPayPal from 'scenes/Payment/ErrorPayPal'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 import ThankYou from 'scenes/Payment/ThankYou'
 import Admin from 'scenes/Admin/Admin'
 import Exception404 from 'Router/Exception404'
@@ -266,7 +266,7 @@ class Wrapper extends Component {
                           <Route path="/inventoryfetch" component={InventoryFetch}/>
                           <Route exact path="/editor" component={Editor}/>
                           <Route exact path="/eventheader" component={EventHeader}/>
-                          <Route exact path="/text" component={TextShow} />
+                          <Route exact path="/text" component={EditText} />
                           <Route exact path="/thankyou" component={ThankYou} />
                           <Route exact path="/admin" component={Admin} />
                           <Route exact path='/errorPaypal' component={ErrorPayPal} />

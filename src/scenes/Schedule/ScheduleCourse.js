@@ -8,7 +8,8 @@ import groupBy from 'functions/groupBy';
 import CircularProgressTerminate from 'Components/CircularProgressTerminate'
 import RenderSchema from './RenderSchema'
 import RenderDesc from './RenderDesc'
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
+import IconButton from '@material-ui/core/IconButton'
 
 
 const TEXTS = {
@@ -21,14 +22,7 @@ const TEXTS = {
 
 
 const styles = {
-    root:{
-        width:'100vw',
-    },
-    desc:{
-        marginLeft:'auto', marginRight:'auto'
-    },
     schema:{
-        margin:'auto', marginRight:'auto',
     },
     th:{
         textAlign:'center',
@@ -89,43 +83,35 @@ const RenderSchema = ({courses, withBorder, language, color}) => {
 }
 */
 const ScheduleCourse = props => {
-    const {list, language, style, color, courseId} = props
-    const [textId, setTextId] = useState()
+    const {list, language, color, isBeginner} = props
+    const [textId, setTextId] = useState(undefined)
 
-    let schemaMap = groupBy(list.sort((a,b) => a.productId - b.productId), it => it.eventType+it.year)
+    let schemaMap = groupBy(list.filter(it=>isBeginner?it.isBeginner:true).sort((a,b) => a.productId - b.productId), it => it.eventType+it.year)
     let scheduleIds = [...schemaMap.keys() ]
     const withBorder = scheduleIds.length > 1
-    const adjStyle=style.globalBackground?{background:props.style.globalBackground}:styles.root
     return(
-        <div style={styles.root}>
-            {textId?
-                <div style={styles.desc}>
-                    <RenderDesc textId={textId} setTextId={setTextId} />
+        <>
+            {(isBeginner && !textId)?
+                <RenderDesc language={language} groupId='Course' textId='BEGINNER' setTextId={setTextId} />
+            :null}    
+            {list.length === 0?
+                <h1>No courses</h1>
+            :textId?
+                <RenderDesc language={language} groupId='Course' textId={textId} setTextId={setTextId} backButton={true}/>
+            :
+                <div>
+                    {scheduleIds.map(scheduleId =>  
+                        <RenderSchema 
+                            courses={schemaMap.get(scheduleId)} 
+                            withBorder={withBorder} 
+                            language={language} 
+                            color={color}
+                            setTextId={id =>setTextId(id)}
+                        />
+                    )}
                 </div>
-            :    
-                <div style={styles.schema}>
-                    {courseId?
-                        <TextShow url={'/getTexts'} style={styles.text} groupId={'Schema'} textId={courseId} language={language} />
-                    :
-                        null
-                    }   
-                    {list.length > 0?
-                        scheduleIds.map(scheduleId =>  
-                            <RenderSchema 
-                                courses={schemaMap.get(scheduleId)} 
-                                withBorder={withBorder} 
-                                language={language} 
-                                color={color}
-                                courseId={courseId}
-                                setTextId={id =>setTextId(id)}
-                            />
-                        )
-                    :
-                        <CircularProgressTerminate text={TEXTS.NO_SCHEMA[language]} />
-                    }
-                </div>
-            }    
-        </div>
+            }
+        </>
     )
 }
 

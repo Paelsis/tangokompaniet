@@ -1,5 +1,5 @@
 import React from 'react';
-import TextShow from 'Components/Text/TextShow'
+import EditText from 'Components/Text/EditText'
 
 const styles={
         root:{
@@ -11,6 +11,6 @@ const styles={
 
 export default () =>  
 <div style={styles.root}>
-    <TextShow style={styles.root} url={'/getTexts'} groupId={'Weekly'} textId={'Text'}/> 
+    <EditText style={styles.root} url={'/getTexts'} groupId={'Weekly'} textId={'Text'}/> 
 </div>
       
