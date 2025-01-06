@@ -4,6 +4,8 @@ import {CourseLength} from 'Settings/Weekdays'
 import Button from 'Components/Button';
 import tkColors from 'Settings/tkColors'
 
+const TEXT_COLOR = tkColors.background
+
 const TEXTS = {
     length:{
         SV:'Längd',
@@ -23,53 +25,34 @@ const TEXTS = {
 }
 
 const styles = {
-    root:{
-        fontSize:14,
-        textAlign:'center',
-    },
-    divCourse:{
-        border:'0.01px solid',
-        marginBottom:30,
-    },
-    table: {
-        paddingTop:10,
-    },
-    tbody: {
-     //   border:2, 
-     //   cellpadding:20,
-    },
-    tdTitle: {
-        padding:5, 
-    },
-    th: {
-        paddingLeft: 7,
-        paddingRight: 7,
-        height:12,
-        fontSize:12,
-        fontWeight: 'lighter',
-    },
-    td: {
-        verticalAlign:'top',
-        padding: 7,
-        minWidth:28,
-    },
-    trTitle: {
+    tr: {
         height:20,
         textAlign:'center',
-        fontSize:20,
+        fontSize:18,
         padding: 7,
     },
-    trTitleSubtext: {
+    trSubtext: {
+        height:20,
+        textAlign:'center',
+        fontSize:18,
+        padding: 7,
+    },
+    th: {
+        padding:5, 
+        fontWeight:400,
+        color:TEXT_COLOR,
+    },
+    thSubtext: {
         height:20,
         textAlign:'center',
         fontSize:16,
         verticalAlign:'top',
         padding: 7,
+        color:TEXT_COLOR,
     },
-    tr: {
-        height:20,
-        verticalAlign:'top',
-        padding: 5,
+    tiny:{
+        color:'yellow',
+        fontSize:10,
     },
     button:{
         color:tkColors.background,
@@ -87,41 +70,43 @@ const descButton = (course, language, handleClick) =>
     </td>   
 
 const _renderHeaderSmall = (course, handleClick, language) => 
-<tbody>
-    <tr style={styles.trTitle}>
-        <td colSpan={4} style={styles.tdTitle}>
-            {course['name' + language]} 
-        </td>
+<thead>
+    <tr style={styles.tr}>
+        <th colSpan={6} style={styles.th}>
+            {course['name' + language]}&nbsp;
+            <small style={styles.tiny}>{['GK', 'FK', 'HK', 'TE'].includes(course.courseType)?'':'Unknown course type ' + course.courseType}</small>
+        </th>
         {descButton(course, language, handleClick) }
     </tr>    
-    <tr style={styles.trTitleSubtext}>
-        <td colSpan={2} style={styles.tdTitle}>
+    <tr style={styles.trSubtext}>
+        <th colSpan={3} style={styles.th}>
             {TEXTS.price[language]}&nbsp;{course.price}&nbsp;{'SEK'} 
-        </td>
-        <td colSpan={2} style={styles.tdTitle}>
+        </th>
+        <th colSpan={3} style={styles.th}>
             {TEXTS.length[language]}:{course['courseLength' + language]?course['courseLength' + language]:null}
-        </td>
-        <td/>
+        </th>
+        <th/>
     </tr>    
-</tbody>
+</thead>
 
 const _renderHeaderLarge = (course, handleClick, language) => 
-<tbody>
-    <tr style={styles.trTitle}>
-        <td colSpan={5} style={styles.tdTitle}>
-            {course['name' + language]} 
-        </td>
+<thead>
+    <tr style={styles.tr}>
+        <th colSpan={6} style={styles.th}>
+            {course['name' + language]} &nbsp;
+            <small style={styles.tiny}>{['GK', 'FK', 'HK', 'TK'].includes(course.courseType)?'':'Unknown course type ' + course.courseType}</small>
+        </th>
         {descButton(course, language, handleClick) }
     </tr>    
-    <tr style={styles.trTitleSubtext}>
-        <td colSpan={3} style={styles.tdTitleSubtext}>
+    <tr style={styles.trSubtext}>
+        <th colSpan={3} style={styles.th}>
             {TEXTS.price[language]}&nbsp;{course.price?course.price:''}&nbsp;{'SEK'} 
-        </td>
-        <td colSpan={3} style={styles.tdTitleSubtext}>
+        </th>
+        <th colSpan={3} style={styles.th}>
             {TEXTS.length[language]}:{course['courseLength' + language]?course['courseLength' + language]:null}
-        </td>
+        </th>
     </tr>    
-</tbody>
+</thead>
 
 
 const RenderCoHeader = props => {

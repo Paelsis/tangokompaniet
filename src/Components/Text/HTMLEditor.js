@@ -4,13 +4,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import SaveIcon from '@material-ui/icons/Save';
 import tkColors from 'Settings/tkColors';
 
-const HTMLEditor = (props) => {
+const HTMLEditor = props => {
     const [value, setValue] = useState(props.value)
     const [edit, setEdit] = useState(props.edit?props.edit:false)
   
     const handleSave = () => {
       setEdit(props.edit?props.edit:false);
-      props.onCommit(value);
+      props.setValue(value);
     }
   
     const toggleEdit = () => setEdit(props.edit?props.edit:!edit)

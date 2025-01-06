@@ -621,6 +621,7 @@ let RegistrationForm = props => {
                 <p />
                 <Field name="firstName" 
                   label={TEXTS.FIRST_NAME[language]}
+                  autoFocus={true}
                   type='text'
                   component={renderField} 
                   validate={[required, validname]}

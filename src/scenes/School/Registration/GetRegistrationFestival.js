@@ -53,9 +53,11 @@ const GROUP_BY_DEF_ARR=[
     },    
 ] 
 
-const VIEW_FIELDS=['orderId', 'handled', 'role', 'firstName', 'lastName', 'address', 'email', 'phone','productList', 'productListPartner',  'firstNamePartner', 'lastNamePartner', 'emailPartner', 'emailPartnerAlert', 'workshopPartners', 'helper', 'comment', 'creaTimestamp'];
-const VIEW_FIELDS_EXPAND=['orderId', 'handled', 'role', 'firstName', 'lastName', 'address', 'email', 'phone','productList', 'productListPartner',  'firstNamePartner', 'lastNamePartner', 'emailPartner', 'emailPartnerAlert', 'workshopPartners', 'helper', 'comment', 'creaTimestamp'];
-const UPDATE_FIELDS=['handled', 'firstName', 'lastName',  'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'helper'];
+const VIEW_FIELDS=['orderId', 'handled', 'role', 'firstName', 'lastName', 'email', 'helper', 'productList', 'firstNamePartner', 'comment'];
+const VIEW_FIELDS_EXPAND=
+                  ['orderId', 'handled', 'role', 'firstName', 'lastName', 'email', 'helper', 
+                    'phone', 'country', 'productList', 'productListPartner',  'firstNamePartner', 'lastNamePartner', 'emailPartner', 'emailPartnerAlert', 'partners', 'workshopPartners',  'comment', 'creaTimestamp'];
+const UPDATE_FIELDS=['handled', 'firstName', 'lastName',  'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'partners', 'helper'];
 const UPDATE_VIEW=['handled', 'firstName', 'lastName', 'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'helper'];
 
 const mapStateToProps = (state) => {

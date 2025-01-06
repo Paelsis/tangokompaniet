@@ -83,18 +83,18 @@ const EditRecord = props => {
         <>
             {value?
                 <div>
-                    <TextAndHtmlEditor editor={editor} value={value} onCommit={value => onCommit(value)} />
+                    <TextAndHtmlEditor editor={editor} value={value} setValue={value => onCommit(value)} />
                 </div>
             :
                 <div>
                     {children?
                         <div>
                             <div>{children}</div>   
-                            <TextAndHtmlEditor editor={editor} value={reactToString(children)} onCommit={value => onCommit(value)} />
+                            <TextAndHtmlEditor editor={editor} value={reactToString(children)} setValue={value => onCommit(value)} />
                         </div>    
                     :    
                         <div style={style}>
-                            <TextAndHtmlEditor  editor={editor} value={noValueYet} onCommit={value => onCommit(value)} />
+                            <TextAndHtmlEditor  editor={editor} value={noValueYet} setValue={value => onCommit(value)} />
                         </div>
                     }    
                 </div>

@@ -21,13 +21,14 @@ const DEV_TEST_OBJECT1= {
     email: 'paelsis@hotmail.com',
     phone: '0733789747',
     address: 'Plönegatan 8',
+    country: 'Sweden',
     havePartner: true,
     firstNamePartner:'Therese',
     lastNamePartner:'Clarhed',
     emailPartner:'therese_clarhed@hotmail.com',
     role:'LEADER', 
     newsletter: true,
-    food:'NO FOOD',
+    food:'ALL FOOD',
     allergies:'none',
     comment:'Friends'
 }
@@ -44,7 +45,9 @@ const formTemplate = ({language, globalStyle, schedule, fields, handleSubmit}) =
     const handleChangeRadioOrCheck = e => {
         // Cannot remove haveParter when imbalance for the choosen role
         let newValue = {...value, [e.target.name]:e.target.type==='checkbox'?e.target.checked?e.target.checked:undefined:e.target.value}
+        // NOTE: Force to have partner if status IL YYYYYYYYYYYY
         if ((schedule.avaStatus === 'IL' && newValue.role === 'LEADER') || (schedule.avaStatus === 'IF' && newValue.role === 'FOLLOWER')) {
+            alert('WARNING: Due to gender imbalance you will be enforced to register as a couple, i.e. I have a partner field will atomatically be checked.')
             newValue = {...newValue, havePartner:true}
         } 
         setValue(newValue)

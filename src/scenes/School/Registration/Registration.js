@@ -15,6 +15,7 @@ import Button from 'Components/Button'
 import {setGlobalStyle} from 'redux/actions/actionsStyle'
 import EditText from 'Components/Text/EditText'
 import QrCode from 'Components/QrCode'
+import {PAYMENT_TK} from "Settings/Const"
 import moment from 'moment-with-locales-es6'
 import { checkPropTypes } from 'prop-types';
 
@@ -61,8 +62,8 @@ const TEXTS={
         EN:`Your registration has order number:` + orderId,
     }), 
     ANGE_ORDER_ID: {
-        SV:`Ange ordernumret i meddelande fältet när du betalar via Internet (SWISH nummer: 123 173 30 05)`, 
-        EN:`Enter the order number in the message field when paying via the Internet (SWISH number: 123 173 30 05)`,
+        SV:`Ange ordernumret i meddelande fältet när du betalar via Internet (SWISH nummer: ` + PAYMENT_TK.SWISH + `)`, 
+        EN:`Enter the order number in the message field when paying via the Internet (SWISH nummer: ` + PAYMENT_TK.SWISH + `)`,
     }, 
     NO_SUCH_COURSE: productId => ({
         SV:'Kurs med productId ' + productId + ' existerar inte i nuvarande schema', 

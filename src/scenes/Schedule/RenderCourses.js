@@ -11,6 +11,7 @@ const background = courseType => {
             case 'HK':return 'linear-gradient(45deg, blue 0%,  #330a41 100%)'
             case 'TE':return 'linear-gradient(45deg, red 0%,  #330a41 100%)'
             case 'XX':return 'linear-gradient(45deg, orange 0%,  #330a41 100%)'
+            default:return 'linear-gradient(45deg, darkBlue 0%,  black 100%)'
         }    
     }
     
@@ -21,6 +22,7 @@ switch (courseType) {
         case 'HK':return 'blue'
         case 'TE':return 'red'
         case 'XX':return 'orange'
+        default:return tkColors.background
 }    
 }
 
@@ -32,7 +34,7 @@ const styles = {
             height:'min-content',
             margin:4,
             background: background(courseType),
-            color:'#f6d8e6',
+            color:'silver',
             //border:'0.001px solid',
             boxShadow:'0 13px 27px -5px ' + boxColor(courseType),
     
@@ -45,7 +47,7 @@ const styles = {
                 verticalAlign:'middle',
                 padding:2,
                 fontSize:12,
-                color:'white',
+                color:tkColors.background,
         }
 };
     

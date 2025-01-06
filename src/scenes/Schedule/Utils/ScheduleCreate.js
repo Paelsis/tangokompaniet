@@ -22,8 +22,8 @@ import PublishIconOutlined from '@material-ui/icons/PublishOutlined';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import FallbackIcon from '@material-ui/icons/Undo';
 import DeleteIconOutlined from '@material-ui/icons/DeleteOutlined';
-import DeleteIcon from '@material-ui/icons/Delete';
-import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
+import DeleteSweepIconOutlined from '@material-ui/icons/DeleteSweepOutlined';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Tooltip from '@material-ui/core/Tooltip';
 import {EVENT_TYPE, SELECTION_MENU_TYPE} from 'Settings/Const';
 // import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -247,7 +247,7 @@ export default class ScheduleCreate extends Component {
 
     handleDeleteTemplate(templateName) {
         //eslint-disable-next-line
-        if (!confirm("Are you sure you want to delete template " + templateName + " (y/n) ?")) {
+        if (!confirm("Are you sure you want to delete template completely " + templateName + " (y/n) ?")) {
             this.setState({action:UNSET_ACTION, templateName:undefined, eventType:'', year:''})
             return
         } 
@@ -547,17 +547,17 @@ export default class ScheduleCreate extends Component {
                         null
                 }
 
-                &nbsp;&nbsp;&nbsp;&nbsp;    
-                &nbsp;
-                <Tooltip title={<h4 style={styles.tooltip}>Remove template</h4>} style={styles.tooltip}>
-                    <DeleteIconOutlined style={buttonStyle} onClick={()=>this.setAction(DELETE_ACTION)}/>
-                </Tooltip>&nbsp;
-                <Tooltip title={<h4 style={styles.tooltip}>Remove single template from production</h4>} style={styles.tooltip}>
-                    <DeleteIcon style={buttonStyle} onClick={()=>this.setAction(DELETE_PRODUCTION_ACTION)}/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Tooltip title={<h4 style={styles.tooltip}>Remove one template from production</h4>} style={styles.tooltip}>
+                    <DeleteIconOutlined style={buttonStyle} onClick={()=>this.setAction(DELETE_PRODUCTION_ACTION)}/>
                 </Tooltip>
                 <Tooltip title={<h4 style={styles.tooltip}>Remove all templates from production</h4>} style={styles.tooltip}>
-                    <DeleteSweepIcon style={buttonStyle} onClick={()=>this.handleTruncateTemplatesFromProduction()}/>
+                    <DeleteSweepIconOutlined style={buttonStyle} onClick={()=>this.handleTruncateTemplatesFromProduction()}/>
                 </Tooltip>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Tooltip title={<h4 style={styles.tooltip}>Remove template completely</h4>} style={styles.tooltip}>
+                    <DeleteForeverIcon size='large' style={{color:'red'}} onClick={()=>this.setAction(DELETE_ACTION)}/>
+                </Tooltip>&nbsp;
 
                 {this.state.dbSuccess?<h4 style={{color:this.state.buttonColor}}>{this.state.successText}</h4>:null}
                 <div style={{marginBottom:10}} />

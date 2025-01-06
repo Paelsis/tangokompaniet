@@ -37,10 +37,10 @@ const IMAGES=[
       backgroundColor:'#8a973b', 
       opacity:0.6, 
       link:'/scheduleBeginner', 
-      title:{EN:'BEGINNERS', SV:'GRUNDKURS', ES:'BEGINNERS'},
-      helpText:{SV:'Grundkurs för nybörjarei Tango',
-                EN:'Start dance tango, courses for beginners',
-                ES:'Start dance tango, courses for beginners',
+      title:{EN:'BEGINNERS', SV:'GRUNDKURS'},
+      helpText:{
+        SV:'Grundkurs för nybörjarei Tango',
+        EN:'Start dance tango, courses for beginners',
       },
     },
     {img:imgs.dance, 
@@ -49,10 +49,10 @@ const IMAGES=[
       backgroundColor:'#81185B', 
       opacity:0.6, 
       link:undefined, 
-      title:{EN:'DANCE', SV:'DANSA', ES:'DANZA'},
-      helpText:{SV:'Kursanmälan, Social Dans, Privatlektioner, Företag, Lärare',
-                EN:'Courses, Registrations, Social dancing, Private lessons, Copmainies, Teachers', 
-                ES:'Cursos, Registro, Baile social, Lecciones, Acuredo de negocios, Maestro'
+      title:{EN:'DANCE', SV:'DANSA'},
+      helpText:{
+        SV:'Kursanmälan, Social Dans, Privatlektioner, Företag, Lärare',
+        EN:'Courses, Registrations, Social dancing, Private lessons, Copmainies, Teachers', 
       },
     },
     {img:imgs.calendar, 
@@ -61,10 +61,10 @@ const IMAGES=[
       open:false,
       opacity:0.6, 
       link:'/calendar', 
-      title:{EN:'CALENDAR', SV:'KALENDER', ES:'CALENDARIO'},
-      helpText:{  SV:'Kalender med aktiviteter', 
-                  EN:'Calendar with acitivities',
-                  ES:'Calendario para Tangokompaniet'
+      title:{EN:'CALENDAR', SV:'KALENDER'},
+      helpText:{  
+        SV:'Kalender med aktiviteter', 
+        EN:'Calendar with acitivities',
       }, 
     },
     {img:imgs.shoes, 
@@ -73,10 +73,10 @@ const IMAGES=[
       backgroundColor:'#81185B', 
       opacity:0.6, 
       link:'/shop', 
-      title:{EN:'SHOE STORE', SV:'SKOAFFÄR', ES:'ZAPATERIA'},
-      helpText:{EN:'Shoe store / Shoe showroom', 
-                SV:'Skoaffär / Showroom',
-                ES:'Zapatos / Sala de exposoción'
+      title:{EN:'SHOE STORE', SV:'SKOAFFÄR'},
+      helpText:{
+        EN:'Shoe store / Shoe showroom', 
+        SV:'Skoaffär / Showroom',
       }, 
     },
     {img:imgs.studio, 
@@ -85,10 +85,10 @@ const IMAGES=[
       backgroundColor:'#8a973b', 
       opacity:0.6, 
       link:'/studio', 
-      title:{EN:'RENT LOCAL', SV:'HYR LOKAL', ES:'ALQUILAR LOCAL'},
-      helpText:{EN:'Party room for rent', 
-                SV:'Festlokal för uthyrning',
-                ES:'Habitacion en alquiler'
+      title:{EN:'VENUE RENTAL', SV:'HYR LOKAL'},
+      helpText:{
+        EN:'Party room for rent', 
+        SV:'Festlokal för uthyrning',
       }, 
     },
     {img:imgs.summer, 
@@ -96,10 +96,10 @@ const IMAGES=[
       open:false,
       backgroundColor:tkColors.Summer.Light, 
       opacity:0.6, 
-      title:{EN:'SUMMER', SV:'SOMMAR', ES:'SUMMER'},
-      helpText:{EN:'Summer festival', 
-                SV:'Sommarfestival',
-                ES:'Summer festival'
+      title:{EN:'SUMMER', SV:'SOMMAR'},
+      helpText:{
+        EN:'Summer festival', 
+        SV:'Sommarfestival',
       }, 
     },
     {img:imgs.festivalito, 
@@ -107,16 +107,19 @@ const IMAGES=[
       open:false,
       backgroundColor:tkColors.Festivalito.Light, 
       opacity:0.6, 
-      title:{EN:'FESTIVALITO', SV:'FESTIVALITO', ES:'FESTIVALITO'},
-      helpText:{EN:'FESTIVALITO', SV:'FESTIVALITO', ES:'FESTIVALITO'},
+      title:{EN:'FESTIVALITO', SV:'FESTIVALITO'},
+      helpText:{
+        EN:'FESTIVALITO',
+        SV:'FESTIVALITO'
+      },
     }, 
     {img:imgs.easter, 
       eventType:EVENT_TYPE.EASTER,
       open:false,
       backgroundColor:tkColors.Easter.Light, 
       opacity:0.6, 
-      title:{EN:'EASTER FESTIVAL', SV:'PÅSKFESTIVAL', ES:'EASTER FESTIVAL'},
-      helpText:{EN:'EASTER FESTIVAL', SV:'PÅSKFESTIVAL', ES:'EASTER FESTIVAL'},
+      title:{EN:'EASTER FESTIVAL', SV:'PÅSKFESTIVAL'},
+      helpText:{EN:'EASTER FESTIVAL', SV:'PÅSKFESTIVAL'},
     },
     {img:imgs.default, 
       eventType:EVENT_TYPE.WEEKEND,
@@ -125,7 +128,6 @@ const IMAGES=[
       opacity:0.6, 
       helpText:{EN:'Course during one or multiple weekends', 
                 SV:'Kurs som pågår under en eller flera helger',
-                ES:'Curso durante uno o varios fines de semana'
       }, 
     },
     {img:imgs.default, 
@@ -135,7 +137,6 @@ const IMAGES=[
       opacity:0.6, 
       helpText:{EN:'', 
                 SV:'',
-                ES:''
       }, 
     },
     {img:imgs.default, 
@@ -145,7 +146,6 @@ const IMAGES=[
       opacity:0.6, 
       helpText:{EN:'', 
                 SV:'',
-                ES:''
       }, 
     }, 
     {img:imgs.default, 
@@ -155,7 +155,6 @@ const IMAGES=[
       opacity:0.6, 
       helpText:{EN:'', 
                 SV:'',
-                ES:''
       }, 
     }, 
     /*
@@ -408,7 +407,6 @@ const mapStateToProps = state => {
     list: state.eventSchedule.list,
   }
 }
-
 
 export default connect(mapStateToProps)(withBreakpoints(HomeMenu))
 

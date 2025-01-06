@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import config from 'Settings/config';
 import GetMapMap from './GetMapMap'
-import {postUpdTable, postUpdTableAll} from 'functions/postUpdTable'
 import {acceptKeys} from 'Settings/Utils'
 
 let styles = {
@@ -54,8 +52,10 @@ export default class GetRegistrationMapMap extends Component {
             return
         }
         acceptRow={...acceptRow, id:row.id};
-        this.props.edit[row.id]?this.props.updateRow(acceptRow):// console.log('Do nothing in database');
-        this.props.toggleEdit(row.id)
+        if (this.props.edit[row.id]) {
+            this.props.updateRow(acceptRow)
+            this.props.toggleEdit(row.id)
+        } 
     }
 
     toggleEdit(row) {

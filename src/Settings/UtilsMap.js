@@ -79,6 +79,7 @@ let styles = {
         paddingRight:2, 
         maxWidth:300,
         overflowWrap:'normal',
+        wordBreak:'break-all'
     },
     msgButton:{
         backgroundColor:tkColors.background,
@@ -233,7 +234,7 @@ const handleDelete = (id, props, text) => {
 }    
 
 const editRowWithButton = (row, rowIndex, props) => {
-    const {viewFields, toggleEdit, toggleEditAndSave} = props
+    const {toggleEdit, toggleEditAndSave} = props
     const text = row.firstName + ' ' + row.lastName
     return (
         <tr key={rowIndex} style={_stylesTr(row)}>
@@ -300,7 +301,7 @@ export const View1 = props => {
                     buttonText="Download as XLS"
             />
             <Button variant='outlined'  onClick={()=>setExpand(!expand)}>          
-                Expand
+                {expand?'Collapse':'Expand'}
             </Button>
             <table id={'table-map-view-1'} style={styles.table}>
                 <tr>
@@ -430,7 +431,7 @@ export const View2 = props => {
                 if (list.find(it=>it.courseDate === courseDate)) {
                     lclList = list.filter(it=>it.courseDate===courseDate).map(it=>({...it, exist:true}))
                 } else {    
-                    // Use first date of the list since all are comming up on that date
+                    // Use first date of the list since all are coming up on that date
                     lclList = list.filter((it)=>it.courseDate === list[0].courseDate).map((it, idx)=>({...it, courseDate, present:0, id:idx, exist:false}));
                 }    
                 // alert(JSON.stringify(lclList))
@@ -545,6 +546,7 @@ export const View3 = props => {
                              cols={50} 
                              value={value.textBody?value.textBody:''} 
                              required placeholder={'Teachers note ...'} 
+                             autoFocus={true}
                              onChange={handleChange}
                         /> 
                     </div>

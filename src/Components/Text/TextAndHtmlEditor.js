@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import HTMLEditor from './HTMLEditor'
-import DraftEditor from './DraftEditor'
+import DraftTextEditor from './DraftTextEditor'
 import RichTextEditor from './RichTextEditor'
 import tkColors from 'Settings/tkColors';
 
@@ -70,7 +70,7 @@ const TextAndHtmlEditor = props => {
       {editor === HTML_EDITOR ?
         <HTMLEditor {...props} style={styles.htmlEditor} />
       :
-        <RichTextEditor {...props} style={styles.textEditor} edit={props.editor?true:props.edit}/>
+        <DraftTextEditor {...props} style={styles.textEditor} edit={props.editor?true:props.edit}/>
       }  
     </div>
   )  

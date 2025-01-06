@@ -15,15 +15,6 @@ export const COURSE_REJECT='COURSE_REJECT'
 export const COURSE_FULL='COURSE_FULL'
 export const COURSE_CLOSED='COURSE_CLOSED'
 
-export const CLOSED = {
-    LEADER:'LEADER',    
-    FOLLOWER:'FOLLOWER',    
-    BOTH:'BOTH',
-    BLANK:''
-}    
-    
-
-
 export const FILTER_TYPE_BRAND='FILTER_TYPE_BRAND'
 export const FILTER_TYPE_GENDER='FILTER_TYPE_GENDER'
 export const FILTER_TYPE_COLOR='FILTER_TYPE_COLOR'
@@ -31,17 +22,34 @@ export const FILTER_TYPE_SIZE='FILTER_TYPE_SIZE'
 export const FILTER_TYPE_TOE='FILTER_TYPE_TOE'
 export const FILTER_TYPE_HEEL='FILTER_TYPE_HEEL'
 
+
+
+export const CLOSED = {
+    LEADER:'LEADER',    
+    FOLLOWER:'FOLLOWER',    
+    BOTH:'BOTH',
+    BLANK:''
+}    
+
 export const SWISH_PREFIX='123'
 
-export const ROLE = {LEADER:'LEADER', FOLLOWER:'FOLLOWER', BOTH:'BOTH'}
-
+export const PAYMENT_TK={
+    ORG_NUMMER:process.env.REACT_APP_ORG_NUMMER,
+    SWISH:process.env.REACT_APP_SWISH,
+    SWISH_PAYEE:process.env.REACT_APP_SWISH_PAYEE,
+    BG:process.env.REACT_APP_BG,
+    IBAN:process.env.REACT_APP_IBAN,
+    BIC:process.env.REACT_APP_BIC
+}    
 
 export const PAYMENT_METHOD = {
     BG:'BG', 
     SWISH:'SWISH', 
     BAMBORA:'BAMBORA',
     OTHER:'OTHER',
+
 }
+export const ROLE = {LEADER:'LEADER', FOLLOWER:'FOLLOWER', BOTH:'BOTH'}
 
 
 export const AVA_STATUS = {
@@ -143,14 +151,6 @@ export const CASE_SHOPPINGCART='CASE_SHOPPINGCART'
 export const PAYMENT_METHOD_PAYPAL='PAYMENT_METHOD_PAYPAL'
 export const PAYMENT_METHOD_SWISH='PAYMENT_METHOD_SWISH'
 
-export const PAYMENT_NUMBER = {
-    SWISH:'123 173 30 05',
-    BG:'5532-8223',
-    IBAN:'SE59 8000 0821 4994 3833 6324', 
-    BIC:'SWEDSESS',
-}
-
-
 export const BRAND = [
     {
         id:1,
@@ -250,4 +250,8 @@ export const SOCIAL_ID={
     INNE:'INNE'
 }
 
+
+
 export const TBL_TEACHER_NOTE='tbl_teacher_note'
+
+export const DOMAIN_NAME=process.env.REACT_APP_DOMAIN_NAME

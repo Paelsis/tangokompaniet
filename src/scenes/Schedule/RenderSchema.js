@@ -10,6 +10,7 @@ const background = courseType => {
             case 'HK':return 'linear-gradient(45deg, blue 0%,  #330a41 100%)'
             case 'TE':return 'linear-gradient(45deg, red 0%,  #330a41 100%)'
             case 'XX':return 'linear-gradient(45deg, orange 0%,  #330a41 100%)'
+            default:return 'black'
         }    
     }
     
@@ -20,6 +21,7 @@ const boxColor = courseType => {
                 case 'HK':return 'blue'
                 case 'TE':return 'red'
                 case 'XX':return 'orange'
+                default:return 'pink'
         }    
 }
 

@@ -76,7 +76,7 @@ const FirebaseSignin = (props) => {
                 <label>
                 Login with email and password (only for administratiors of this site)<p/>
                 </label>
-                <input style={styles.input} name='email' type='email' placeholder='Email' />
+                <input autoFocus style={styles.input} name='email' type='email' placeholder='Email' />
                 <p/>
                 <input style={styles.input} name='password' type='password' placeholder='Password' />
                 <p/>

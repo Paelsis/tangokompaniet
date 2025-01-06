@@ -744,7 +744,8 @@ class ScheduleEvent extends Component {
                                         <h3 style={{width:'100%', textAlign:'center'}}>Personal information</h3>
                                         <br/>
                                         {this.state.avaStatusText?<h2>{this.state.avaStatusText}</h2>:<h3>Open</h3>}
-                                        <FormTemplate schedule={{avaStatus:this.state.avaStatus}} fields={this.state.formFields} handleSubmit={this.handleSubmit}/>
+                                        // Ava status for festivals on a whole does not make sence, therefore we set it to AV
+                                        <FormTemplate schedule={{avaStatus:'AV'}} fields={this.state.formFields} handleSubmit={this.handleSubmit}/>
                                     </div>
                                 :
                                     null    

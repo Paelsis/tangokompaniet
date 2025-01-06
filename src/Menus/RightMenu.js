@@ -8,6 +8,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import {LOGGED_IN_FLAG} from 'redux/actions/actionsUser'
 
 const firebaseEnabled = process.env.REACT_APP_FIREBASE_API_KEY !== undefined
+const newHref = window.location.href + '/admin'
 
 const menuItemsA = [
     {
@@ -51,19 +52,17 @@ const menuItemsA = [
     */ 
   ]  
   
-  const menuItemsB = (loggedInFlag) => {
+  const menuItemsB = loggedInFlag => {
     return([
       {link:'/signout', 
       environment:['development', 'test', 'production'],
       disabled:!loggedInFlag, 
       title:{
         ['SV']:'Logout',
-        ['ES']:'Logout', 
         ['EN']:'Logout'
       },
       helpText:{
         ['SV']:'Endast för Tangokompaniets personal',
-        ['ES']:'Solo para el personal de Tangokompaniet',
         ['EN']:'Only for staff at Tangokompaniet',
       },
       },
@@ -72,12 +71,10 @@ const menuItemsA = [
       environment:['development', 'test', 'production'],
         title:{
           ['SV']:'Logga på Admin',
-          ['ES']:'Signin', 
           ['EN']:'Signin'  
         },
         helpText:{
           ['SV']:'Logga på admin via Goggle',
-          ['ES']:'Signon via Google',
           ['EN']:'Signon via Google',
         },
       },
@@ -86,15 +83,26 @@ const menuItemsA = [
         environment:['development', 'test', 'production'],
         title:{
           ['SV']:'Admin',
-          ['ES']:'Administración', 
           ['EN']:'Admin'
         },
         helpText:{
-          ['SV']:'Endast för Tangokompaniets personal',
-          ['ES']:'Solo para el personal de Tangokompaniet',
-          ['EN']:'Only for staff at Tangokompaniet',
-        },
+          ['SV']:'Endast för administrtatörer',
+          ['EN']:'Only avaaiable for adminstrators',
       },
+      },
+      {func:()=>window.location.assign('https://admin.tangokompaniet.com'), 
+        disabled:!loggedInFlag && firebaseEnabled, 
+          environment:['development', 'test', 'production'],
+          title:{
+            ['SV']:'New Admin',
+            ['EN']:'New Admin'
+          },
+          helpText:{
+            ['SV']:'Endast för administrtatörer',
+            ['EN']:'Only avaiable for adminstrators',
+          },
+        },
+  
     ])
 }    
   
@@ -149,18 +157,17 @@ const RightMenu = (props) => {
 
         {menuItemsB(loggedInFlag).map((it, idx) => (
             it.disabled?null
-            :it.environment.includes(process.env.REACT_APP_ENVIRONMENT)? 
+            :it.environment.includes(process.env.REACT_APP_ENVIRONMENT)?
               it.link?      
-                <Link key={'B'+idx} to={it.link} style={{ textDecoration: 'none', display: 'block' }}>
-                    <MenuItem key={'B'+idx} onClick={handleClose}>{it.title[language]}</MenuItem>
-                </Link>
+              <Link key={'B'+idx} to={it.link} style={{ textDecoration: 'none', display: 'block' }}>
+                  <MenuItem key={'C'+idx} onClick={handleClose}>{it.title[language]}</MenuItem>
+              </Link>
               :it.func?
-                <MenuItem key={idx} onClick={()=>it.func()}>{it.title[language]}</MenuItem>
+                <Link key={'B'+idx} style={{ textDecoration: 'none', display: 'block' }}>
+                  <MenuItem key={'A'+idx} onClick={it.func}>{it.title[language]}</MenuItem>
+                </Link>
               :null  
-
-            : 
-                null
-    
+            :null
         ))}
       </Menu>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import tkColors from 'Settings/tkColors'
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
-
+import {PAYMENT_TK} from 'Settings/Const'
 
 const styles = {
   table: {
@@ -66,24 +66,24 @@ const Contact = () => (
 </tr>
 <tr style={styles.tr}>
 <td style={styles.td(true)}>Bankgiro:</td>
-<td style={styles.td(true)}>5532-8223</td>
+<td style={styles.td(true)}>{PAYMENT_TK.BG}</td>
 </tr>
 <tr style={styles.tr}>
 <td style={styles.td(true)}>Swish-nummer:</td>
-<td style={styles.td(true)}>123 173 30 05</td>
+<td style={styles.td(true)}>{PAYMENT_TK.SWISH}</td>
 </tr>
 <tr style={styles.tr}>
-<td style={styles.td(true)}>Iban</td>
-<td style={styles.td(true)}>SE59 8000 0821 4994 3833 6324</td>
+<td style={styles.td(true)}>IBAN</td>
+<td style={styles.td(true)}>{PAYMENT_TK.IBAN}</td>
 </tr>
 <tr style={styles.tr}>
 <td style={styles.td(true)}>Bankens BIC</td>
-<td style={styles.td(true)}>SWEDSESS</td>
+<td style={styles.td(true)}>{PAYMENT_TK.BIC}</td>
 </tr>
 <tr style={styles.tr}>
 <td style={styles.td(true)}>Kontoinnehavare</td>
-<td style={styles.td(true)}>Daniel Carlsson, Tangokompaniet,<br />
-Södra Promenaden 25 C, 211 38 Malmö (flyttar den 2/10-2024)</td>
+<td style={styles.td(true)}>Daniel Carlsson, Tangokompaniet Öresund AB,<br />
+Södra Promenaden 25 C, 211 38 Malmö</td>
 </tr>
 <tr style={styles.tr}>
 <td style={styles.td(true)}>Bank</td>
@@ -91,7 +91,7 @@ Södra Promenaden 25 C, 211 38 Malmö (flyttar den 2/10-2024)</td>
 </tr>
 <tr style={styles.tr}>
 <td style={styles.td(true)}>Org.nr:</td>
-<td style={styles.td(true)}>969666-1769</td>
+<td style={styles.td(true)}>{PAYMENT_TK.ORG_NUMMER}</td>
 </tr>
 <td></td>
 </tbody>

@@ -10,6 +10,8 @@ import RenderCoRegHeader from './RenderCoRegHeader'
 import RenderCoRegLine from './RenderCoRegLine'
 
 
+const TEXT_COLOR = tkColors.background
+
 const TEXTS = {
     REG_INFO: {
         SV:'Registera dig genom att trycka på knappen med texten "Kursanmälan"',
@@ -31,10 +33,9 @@ let styles = {
         maxWidth:700,
     },
     table: {
-        marginBottom:25,
-        padding:8,
         marginLeft:'auto',
         marginRight:'auto',
+        marginBottom:25,
         color:tkColors.Text.Light,
         background: 'linear-gradient(to bottom right, #81185B, #610a41)',
         boxShadow:'0 13px 27px -5px ' + tkColors.Purple.Light,
@@ -45,11 +46,11 @@ let styles = {
         textAlign:'center',
     },
     th: {
-        padding:2,
+        padding:8,
         textAlign:'center',
-        color:'white',
+        color:TEXT_COLOR,
         verticalAlign:'bottom',
-        fontSize:12,
+        fontSize:14,
     },
 };
 
@@ -80,9 +81,7 @@ class ScheduleSingleCourse extends Component {
                 <>
                    {courses?
                         <table style={styles.table} >
-                            <thead>
-                                <RenderCoRegHeader language = {this.props.language} weekend={weekend} style={styles.th} />
-                            </thead> 
+                            <RenderCoRegHeader language = {this.props.language} weekend={weekend} style={styles.th} />
                             <tbody>
                                 {courses.filter(it => it.active).sort((a,b)=>a.id - b.id).map((co, index) => 
                                     <RenderCoRegLine course={co} color={tkColors.background} language={this.props.language} />)
@@ -90,9 +89,7 @@ class ScheduleSingleCourse extends Component {
                             </tbody>
                         </table>
                     :  
-                        <table style={{...styles.table}} >
                             <h4 style={{textAlign:'center'}}>Please contact Tangokompaniet for info about schedule</h4>
-                        </table>    
                     }
                 </>    
         )

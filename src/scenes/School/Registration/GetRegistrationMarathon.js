@@ -59,8 +59,9 @@ const GROUP_BY_DEF_ARR=[
     },    
 ] 
 
-const VIEW_FIELDS=['orderId', 'handled', 'firstName', 'lastName', 'email', 'food', 'allergies', 'helper', 'agentCode', 'comment', 'creaTimestamp'];
-const VIEW_FIELDS_EXPAND=['orderId', 'handled', 'firstName', 'lastName',  'address', 'email', 'phone', 'food', 'allergies', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'helper', 'agentCode', 'comment', 'creaTimestamp'];
+const VIEW_FIELDS=['orderId', 'handled', 'firstName', 'lastName', 'email', 'country', 'food', 'allergies', 'helper', 'agentCode', 'comment', 'creaTimestamp'];
+const VIEW_FIELDS_EXPAND=
+                  ['orderId', 'handled', 'firstName', 'lastName', 'email', 'country', 'food', 'allergies', 'helper', 'agentCode', 'comment', 'address', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'creaTimestamp'];
 const UPDATE_FIELDS=['handled', 'firstName', 'lastName',  'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'helper', 'agentCode'];
 const UPDATE_VIEW=['handled', 'firstName', 'lastName', 'email', 'phone', 'firstNamePartner', 'lastNamePartner', 'emailPartner', 'helper', 'agentCode'];
 

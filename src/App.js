@@ -115,6 +115,11 @@ const colorDark='#81185B';
 const colorLight='#8a973b';
 
 
+
+
+
+
+
 const V0muiTheme = getMuiTheme({
     appBar: {
         color: tkColors.color,
@@ -384,6 +389,7 @@ const App = props => {
                           <Route path='/linkEaster' element={<a href='https://easter.tangokompaniet.com'/>}/>
                           <Route path='/linkSummer' element={<a href='https://summer.tangokompaniet.com'/>}/>
                           <Route path='/linkMarathon' element={<a href='https://tangomaraton.tangokompaniet.com'/>}/>
+                          <Route path='/linkNewadmin' element={<a href='https://admin.tangokompaniet.com'/>} />
                           <Route path='/Exception404' element={<Exception404/>} />
                           <Route path="/image/:subdir*" element={<ImageUpload/>}/>
                           <Route path="/images" element={<ImageUploadMultiple/>}/>
@@ -401,7 +407,7 @@ const App = props => {
                     </div>
                     <StatusLine />   
                     <div style={styles.copyright}>
-                        <Copyright company='Tangokompaniet' startYear={2010} style={{color:props.style.color}} />
+                        <Copyright company='Tangokompaniet Öresund AB' startYear={2010} style={{color:props.style.color}} />
                     </div>
                 </div>
                 </ReactBreakpoints>

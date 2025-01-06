@@ -49,7 +49,9 @@ export default ({course, color, language}) => {
     const weekend = course.courseType === 'HK'
     const adjColor = course.started?color:color    
     const styles={
-      tr:{color:adjColor},
+      tr:{
+        color:adjColor
+      },
       anchor:{
         verticalAlign:'middle',
         textDecoration: 'underline', 
@@ -58,7 +60,8 @@ export default ({course, color, language}) => {
         color:adjColor},
       button:{
         color:adjColor, 
-        borderColor:adjColor
+        borderColor:adjColor,
+        margin:8,
       },
       tdDiamond: {
         verticalAlign:'middle',

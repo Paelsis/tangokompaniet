@@ -19,7 +19,8 @@ import {LANGUAGE_SV} from 'redux/actions/actionsLanguage'
 import {setUser, LOGGED_IN_FLAG, USERNAME, PASSWORD} from 'redux/actions/actionsUser'
 import {AuthContext} from "login/FirebaseAuth"
 
-
+/*
+*/
 
 const TEXTS = {
     'EDIT_LABEL_OFF': {
@@ -69,11 +70,6 @@ const Admin = props => {
     const [table, setTable] = useState(undefined) 
     const [view, setView] = useState(undefined) 
     const [edit, setEdit] = useState(false) 
-    const menuList1 = regList.map(it => it['title' + props.language])
-    const menuList2 = scheduleList.map(it => it['title' + props.language])
-    const menuList3 = orderList.map(it => it['title' + props.language])
-    const menuList4 = tableList.map(it => it['title' + props.language])
-    const menuList5 = cameraList.map(it => it['title' + props.language])
     const color = props.globalStyle.color
     const {user} = useContext(AuthContext)
 
@@ -110,15 +106,18 @@ const Admin = props => {
         />          
     </>
 
+    
     const showTable = () =>
     <>
-        &nbsp;&nbsp;
-        <span style={{color, fontSize:18}}>{table['title' + props.language]}</span>
-        <Tooltip title={'Enter edit mode'}> 
+        {table.name==='tbl_products'?
+            <Tooltip title={'Enter edit mode'}> 
             <IconButton onClick={toggleEdit}>
                 <EditIcon style={{color}}/>
             </IconButton>
-        </Tooltip>    
+            </Tooltip>    
+        :null}
+        &nbsp;&nbsp;
+        <span style={{color, fontSize:18}}>{table['title' + props.language]}</span>
         <TableShow 
             table={table.name}
             username={props.username} 
@@ -157,7 +156,7 @@ const Admin = props => {
             view?
                 view.component
             :table?
-                table.name==='tbl_products'?productsView():tableEditOrShow()
+                table.name==='tbl_products'?productsView():showTable()
             :null               
         )
     }

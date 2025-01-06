@@ -4,6 +4,7 @@ import fetchList from 'functions/fetchList';
 import {postUpdTable, postUpdTableAll} from 'functions/postUpdTable'
 import postData from 'functions/postData'
 import config from 'Settings/config';
+import {extendedColumns} from 'Settings/Utils'
 
 
 var idNumber = 0;
@@ -51,6 +52,8 @@ const withRecords = (WrappedComponent) => {
             this.handleReplyUpdateList = this.handleReplyUpdateList.bind(this);
             this.handleFetchListReply = this.handleFetchListReply.bind(this);
         }
+
+
 
         componentDidMount () {
             // console.log('componentDidMount: withRecords this.props.url=', this.props.url?this.props.url:'nextProps.url not found'); 
@@ -105,7 +108,7 @@ const withRecords = (WrappedComponent) => {
             const id = row.id
             if (id) {
                 const url=process.env.REACT_APP_API_BASE_URL + '/admin/updateRow'
-                postUpdTable(url, table, this.props.username, this.props.password, id, row, this.handleReply)
+                postUpdTable(url, table, id, row, this.handleReply)
             } else {
                 alert('updateRow: The row for updating table ' + table + ' does not contain required field id, row:' + JSON.stringify(row))
             }    
@@ -115,7 +118,7 @@ const withRecords = (WrappedComponent) => {
         {
             const url=process.env.REACT_APP_API_BASE_URL + '/admin/addRow'
             const table=this.props.tableUpdate
-            postUpdTable(url, table, this.props.username, this.props.password, undefined, row, this.handleReply)
+            postUpdTable(url, table, undefined, row, this.handleReply)
         }
 
         replaceRow(row)
@@ -143,16 +146,14 @@ const withRecords = (WrappedComponent) => {
             } 
         }
 
-
         updateList(list)
         {
             const urlUpdate = this.props.urlUpdate?this.props.urlUpdate:'/admin/updateRowsInPresence'
             const url = process.env.REACT_APP_API_BASE_URL + urlUpdate
             const table=this.props.tableUpdate
-            postUpdTableAll(url, table, this.props.username, this.props.password, list, this.handleReplyUpdateList)
+            postUpdTableAll(url, table, list, this.handleReplyUpdateList)
         }
     
-
         sortStateListByKey(sortKey) {
                 const sortDirection=sortKey===this.state.sortKey?this.state.sortDirection===1?0:1:0
                 this.setState({list:this.sortListByKey(this.state.list, sortKey, sortDirection), sortKey, sortDirection}) 
@@ -224,12 +225,15 @@ const withRecords = (WrappedComponent) => {
 
         fetchColumns(tableName) {
             let url = this.findUrl("/admin/getColumns?tableName=" + tableName);
+            var regExp = /\(([^)]+)\)/;
+
             try {
                 let username=this.props.username?this.props.username:'';
                 let password=this.props.password?this.props.password:'';
                 fetchList(username, password, url, columns => {
-                    this.setState({columns});
+                    this.setState({columns:extendedColumns(columns)});
                 })
+
             } catch(e) {
                 this.setState({list:[]});
                 let errMessage = 'ERROR:' + e.message + ' ' + ' url=' + url;
@@ -354,32 +358,37 @@ const withRecords = (WrappedComponent) => {
         }
       
         render () {
-            return(<WrappedComponent 
-                list={this.state.list} 
-                columns={this.state.columns}
-                getList={this.getList} 
-                setList={(list)=>this.setList(list)} 
-                handleChangeId={this.handleChangeId} 
-                handleChangeIndex={this.handleChangeIndex} 
-                handleChangeValueById={this.handleChangeValueById} 
-                handleChangeValueByIndex={this.handleChangeValueByIndex} 
-                handleAdd={this.handleAdd}
-                handleCopyLine={this.handleCopyLine}
-                handleDeleteById={this.handleDeleteById}
-                replaceById={this.replaceById}
-                fetchListAgain={this.fetchListAgain}
-                updateRow={this.updateRow}
-                replaceRow={this.replaceRow}
-                deleteRow={this.deleteRow}
-                updateList={this.updateList}
-                sortStateListByKey={this.sortStateListByKey}
-                edit={this.state.edit}
-                toggleEdit={this.toggleEdit} 
-                toggleEditIds={this.toggleEditIds} 
-                {...this.props} 
-            />)    
-        }    
-    }  
+            return(
+                this.state.columns?
+                    <WrappedComponent 
+                        list={this.state.list} 
+                        columns={this.state.columns}
+                        getList={this.getList} 
+                        setList={(list)=>this.setList(list)} 
+                        handleChangeId={this.handleChangeId} 
+                        handleChangeIndex={this.handleChangeIndex} 
+                        handleChangeValueById={this.handleChangeValueById} 
+                        handleChangeValueByIndex={this.handleChangeValueByIndex} 
+                        handleAdd={this.handleAdd}
+                        handleCopyLine={this.handleCopyLine}
+                        handleDeleteById={this.handleDeleteById}
+                        replaceById={this.replaceById}
+                        fetchListAgain={this.fetchListAgain}
+                        updateRow={this.updateRow}
+                        replaceRow={this.replaceRow}
+                        deleteRow={this.deleteRow}
+                        updateList={this.updateList}
+                        sortStateListByKey={this.sortStateListByKey}
+                        edit={this.state.edit}
+                        toggleEdit={this.toggleEdit} 
+                        toggleEditIds={this.toggleEditIds} 
+                        {...this.props} 
+                    />    
+               :
+                    <h1>Nothing</h1>
+            )
+            
+        }  
+    }
 }
-
 export default withRecords;

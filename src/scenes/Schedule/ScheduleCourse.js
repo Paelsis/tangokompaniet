@@ -11,6 +11,7 @@ import RenderDesc from './RenderDesc'
 import EditText from 'Components/Text/EditText'
 import IconButton from '@material-ui/core/IconButton'
 
+const TEXT_COLOR = tkColors.background
 
 const TEXTS = {
     NO_SCHEMA: {
@@ -26,7 +27,7 @@ const styles = {
     },
     th:{
         textAlign:'center',
-        color:'white',
+        color:TEXT_COLOR,
         verticalAlign:'bottom',
         padding:2,
         minWidth:28,

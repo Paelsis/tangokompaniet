@@ -16,7 +16,7 @@ import GetTeacherNote from 'scenes/School/Registration/GetTeacherNote'
 import GetTeachersNoteNew from 'scenes/School/Registration/GetTeachersNoteNew'
 import GetPresence from 'scenes/School/Registration/GetPresence'
 import GetPresenceHistory from 'scenes/School/Registration/GetPresenceHistory'
-import GetPresenceHistoryNew from 'scenes/School/Registration/GetPresenceHistoryNew'
+import GetPresenceHistoryMatrix from 'scenes/School/Registration/GetPresenceHistoryMatrix'
 import GetAbsenceHistory from 'scenes/School/Registration/GetAbsenceHistory'
 import CreateCourse from 'scenes/Schedule/CreateCourse'
 import CreatePackage from 'scenes/Schedule/CreatePackage'
@@ -91,7 +91,7 @@ export const regList = [
     { 
         titleSV:'Närvaro - kryss-markeringar', 
         titleEN:'Presence - cross-marks',  
-        component:React.cloneElement(<GetPresenceHistoryNew />),
+        component:React.cloneElement(<GetPresenceHistoryMatrix />),
     },
     { 
         titleSV:'Frånvaro - tabell', 

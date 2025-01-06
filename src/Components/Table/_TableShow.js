@@ -15,7 +15,8 @@ const TEXTAREA_FIELDS=['textBody']
 
 const styles = {
     root:{
-        margin:'auto'
+        marginRight:'10px',
+        overflowX:'auto',
     },
     th: {
         color:tkColors.background,  
@@ -52,25 +53,84 @@ const Rte = ({value, handleSave}) => {
     )
 }
 
-const RenderEdit = ({record, handleChange, handleSave, handleCancel}) => {
+const RadioInput = ({name, value, radioValues, handleChange}) => {
+    const arr = radioValues.split(',')
+    return(
+        arr.map(it =>
+            <label>
+                <input 
+                    key={(it.value?it.value:it)}
+                    type='radio'
+                    value={it.value?it.value:it} 
+                    name={name} 
+                    checked={value?(value === (it.value?it.value:it)):undefined}
+                    onChange={handleChange}
+                />
+                &nbsp;<span>{it.value?it.value:it}</span>&nbsp;
+            </label>
+        )
+    )
+}
+
+
+
+const RenderRow = ({ky, value, columns, handleChange}) => {
+
+    let col = columns.find(col => ky === col.Field)
+    const {Comment, MaxLength, Type2, Min, Max, RadioValues} = col
+    return(
+        <tr style={{fontSize:18}}>
+        {ky === 'id'?
+            <td style={{opacity:0.5}} colSpan={3}>{ky}={value}</td>
+        :
+            <>
+                <Tooltip title = {Comment} >
+                    <td>{ky}</td>
+                </Tooltip>
+                <td>
+                    {Type2 === 'radio'?
+                        <RadioInput name={ky} value={value} radioValues={RadioValues} handleChange={handleChange} />
+                    :Type2 === 'textarea'?
+                        <textarea 
+                            style={styles.add} 
+                            rows={3} 
+                            columns={50} 
+                            name={ky} 
+                            value={value} 
+                            maxLength={MaxLength}
+                            onChange={handleChange}/>
+                    :
+                        <input 
+                            style={styles.add} 
+                            type={Type2} 
+                            min={Min} 
+                            max={Max} 
+                            name={ky} 
+                            maxLength={MaxLength} 
+                            value={value} 
+                            onChange={handleChange}
+                        />
+                    }    
+                </td>
+                <td style={{fontSize:12}}>{MaxLength?'Max length=' + MaxLength:''}</td>
+            </>
+        }
+        </tr>
+    )
+}
+
+
+
+
+
+const RenderEdit = ({record, columns, handleChange, handleSave, handleCancel}) => {
+    const entries = record?Object.entries(record):[]
     return(
         record?
             <div style={styles.root}>
-                {Object.entries(record).filter(it=>it[0] !== 'id' && it[0].indexOf('Timestamp') === -1).map(it=>
-                    <tr style={{fontSize:18}}>
-                            <>
-                            <td>{it[0]}</td>
-
-                            <td>
-                            {TEXTAREA_FIELDS.includes(it[0])?
-                                <textarea style={styles.add} rows={3} columns={50} name={it[0]} placeholder={it[0]} value = {it[1]} onChange={handleChange}/>
-                            :
-                                <input style={styles.add} type={'text'} name={it[0]} placeholder={it[0]} value = {it[1]} onChange={handleChange}/>
-                            }    
-                            </td>
-                            </>
-                    </tr>
-                )}       
+                {entries.map(it=>
+                    <RenderRow ky={it[0]} value={it[1]} columns={columns} handleChange={handleChange} />
+                )}
                 <td>
                     {record.id?
                         <Tooltip title={'Save'}>
@@ -129,28 +189,30 @@ const SearchValue = ({fld, search, setSearch}) => {
 }
 
 const RenderTable = ({list, filterList, handleEdit, handleDelete, search, setSearch, handleFilter, handleComment}) =>
-    <table style={{...styles.root, border:'1px solid lightGrey', margin:10}} >
+    <table style={{...styles.root, border:'1px solid lightGrey', margin:0}} >
         <tr style={{color:'white', backgroundColor:'black'}}>
+            <th colSpan={1} style={styles.th}/>
             {Object.keys(list[0]).filter(it=>it !=='id').map(it=>
                 <Tooltip title={handleComment(it)}>  
                     <HeaderValue list={list} fld={it?it:'No name'} comment={handleComment(it)}/>
                 </Tooltip>
             )}    
-            <th colSpan={2} style={styles.th}/>
+            <th colSpan={1} style={styles.th}/>
         </tr>
         <tr>
-            {Object.entries(list[0]).filter(it=>it[0]!=='id').map(it=><SearchValue fld={it?it[0]?it[0]:'No name':'No object'} search={search} setSearch={setSearch} />)}
             {<th><SearchIcon onClick={handleFilter} /></th>}
+            {Object.entries(list[0]).filter(it=>it[0]!=='id').map(it=><SearchValue fld={it?it[0]?it[0]:'No name':'No object'} search={search} setSearch={setSearch} />)}
+            <th colSpan={1} />
         </tr>
         <tbody>
             {filterList.map(row => 
                     <tr style={styles.tr(row.active)}>
+                        <td><EditIcon onClick={()=>handleEdit(row)} /></td>
                         {Object.entries(row).filter(it=>it[0]!=='id').map(it=>
                             <td style={styles.td}>
                                 <div dangerouslySetInnerHTML={{__html: it[1]}} />
                             </td>
                         )}       
-                        <td><EditIcon onClick={()=>handleEdit(row)} /></td>
                         <td><DeleteForeverIcon onClick={()=>handleDelete(row.id)} /></td>
                     </tr>            
                 )
@@ -199,7 +261,10 @@ export default ({table, list, setList, columns, style}) => {
 
 
     const handleDelete = id => {
-        deleteRow(table, id, handleDeleteReply)
+        //eslint-disable-next-line
+        if (confirm("Are you sure you want to delete this row with id = " + id + ' ?')) {
+            deleteRow(table, id, handleDeleteReply)
+        }    
     }
 
     const handleAddReply = data => {
@@ -208,10 +273,10 @@ export default ({table, list, setList, columns, style}) => {
                 setList(data.list) 
                 handleFilter(data.list)
             } else {
-                alert('Replace successful but the reply is missing value data.list, data:' + JSON.stringify(data))    
+                alert('Replace successful but the reply is missing value data.list, message:' + data.message)    
             }    
         } else {
-            alert('Failed to add row, result:' + JSON.stringify(data))    
+            alert('ERROR: Failed to add row\nmessage:\n' + data.message)    
         }
     }
 
@@ -220,7 +285,7 @@ export default ({table, list, setList, columns, style}) => {
             setList(data.list)
             handleFilter(data.list)
         } else {
-            alert('Failed to replace row, result:' + JSON.stringify(data))    
+            alert('Failed to replace row, message:' + data.message)    
         }
     }    
 
@@ -281,11 +346,12 @@ export default ({table, list, setList, columns, style}) => {
             {record?
                 <RenderEdit 
                     record={record} 
+                    columns={columns}
                     handleChange={handleChange} 
                     handleChangeRte={handleChangeRte} 
                     handleSave={handleSave} 
                     handleCancel={handleCancel}
-                    />
+                />
             :list.length > 0?
                 <>
                     <Tooltip title={'Add row'}>
@@ -297,10 +363,9 @@ export default ({table, list, setList, columns, style}) => {
                         search={search}
                         setSearch={setSearch}
                         handleFilter={()=>handleFilter(list)}
-                        handleEdit={row=>setRecord(row)} 
+                        handleEdit={rec=>setRecord(rec)} 
                         handleDelete={handleDelete} 
                         handleComment={handleComment} 
-
                     />
                 </>
             :null}

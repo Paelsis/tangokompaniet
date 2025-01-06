@@ -49,12 +49,12 @@ const CancelRegistration = () => {
 
     useEffect(()=>{
         //eslint-disable-next-line
-        if (!confirm("Are you sure you want to cancel you registration to Tangokompaniet (y/n) ?")) {
+        if (confirm("Are you sure you want to cancel you registration to Tangokompaniet (y/n) ?")) {
             const values = {token, tableName}
             postData(CANCEL_URL, '', '', values, handleReply);
         } else {
            // Ignore cancellation 
-           ignore = true;  
+           setIgnore(true);  
         }   
     }, [token, tableName])
 
@@ -64,12 +64,12 @@ const CancelRegistration = () => {
         ignore?
             <div style={{width:'90vw', marginLeft:'auto', marginRight:'auto', textAlign:'center'}}>
                 <h1>{"Din cancellering genomfördes inte."}</h1>
-                <h3>{"Your cancellation was ignored"}</h3>
+                <small>{"Your cancellation was ignored"}</small>
             </div>
         :token===undefined?
             <div style={{width:'90vw', marginLeft:'auto', marginRight:'auto', textAlign:'center'}}>
-                <h1>{"VARNINN: Ingen token skickad (Use link: https://www.tangokompaniet.com/cancelRegistration/<token>)"}</h1>
-                <h3>{"WARNINGE: No token given in url (Use link: https://www.tangokompaniet.com/cancelRegistration/<token>)"}</h3>
+                <h1>{"VARNING: Ingen token skickad (Use link: https://www.tangokompaniet.com/cancelRegistration/<token>)"}</h1>
+                <h3>{"WARNING: No token given in url (Use link: https://www.tangokompaniet.com/cancelRegistration/<token>)"}</h3>
             </div>
         :message===undefined?
             <div style={{width:'90vw', marginLeft:'auto', marginRight:'auto', textAlign:'center', color}}>
@@ -80,7 +80,7 @@ const CancelRegistration = () => {
                 <h1>{message}</h1>
                 {process.env.NODE_ENV==='development'?
                     <div>
-                        <h1>Mail send to customer (sometimes 2)</h1>
+                        <h1>DEVELOPMENT: The following mail was sent to Daniel on this cancellation </h1>
                         <div dangerouslySetInnerHTML={{__html: JSON.stringify(mailBody)}} />
                     </div>    
                 :null}    

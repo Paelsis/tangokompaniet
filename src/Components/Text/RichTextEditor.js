@@ -12,7 +12,7 @@ export default props => {
 
   const handleSave = () => {
       setEdit(props.edit?props.edit:false)
-      props.onCommit(value.toString('html'));
+      props.setValue(value.toString('html'));
   }
 
   const handleToggle = () => setEdit(props.edit?props.edit:!edit)
