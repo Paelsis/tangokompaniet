@@ -10,21 +10,17 @@ const TEXTS={
     ONLY:{
         SV:'OBS ! ENBART FÖR ADMINISTRATÖRER AV DENNA SAJT',
         EN:'NOTE! ONLY FOR ADMINISTRATORS OF THIS SITE',
-        ES:'NOTA! SOLO PARA ADMINSTRATORES DEL SITIO',
     },
     LOGIN:{
         SV:'Logga på med username och password',
-        ES:'Inicia sesión con ID de usario y contaseña',
         EN:'Signin with username and password',
     },
     LOGOUT:{
         SV:'Du är inloggad. Om du önskar logga ut tryck på knappen nedan.',
-        ES:'Estás conecatdo',
         EN:'You are logged in. If you want to logout, press button below',
     },
     ERROR:{
         SV:'Detta fält är obligatoriskt',
-        ES:'Estás conecatdo',
         EN:'This field is required',
     },
 }

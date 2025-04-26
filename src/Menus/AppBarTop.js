@@ -17,14 +17,12 @@ const imageCovid=imgCovid;
 
 const TEXTS = {
   GO_HOME:{
-    ['SV']:'Gå till startsidan',
-    ['ES']:'Ir a la página de inicio',
-    ['EN']:'Go to the homepage', 
+    SV:'Gå till startsidan',
+    EN:'Go to the homepage', 
   },
   SECONDARY_MENU:{
-    ['SV']:'Sekundär meny',
-    ['ES']:'Menú secundario',
-    ['EN']:'Secondary menu', 
+    SV:'Sekundär meny',
+    EN:'Secondary menu', 
   }
 }
 

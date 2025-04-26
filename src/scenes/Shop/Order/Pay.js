@@ -4,25 +4,18 @@ import PropTypes from 'prop-types';
 import {PAYMENT_METHOD} from 'Settings/Const'
 
 const TEXTS = {PAYMENT_ERROR:{SV:'Fel vid processing av ordern. Kontakta Tangokompaniet.',
-                              ES:'Something went wrong when processing the order. Plase contact TK',
                               EN:'Something went wrong when processing the order. Plase contact TK'},
                 UNCONTROLLED_ERROR:{SV:'Ett tekniskt problem har uppsått. Kontakta Tangokompaniet via mail eller telefon.',
-                              ES:'A technical error has occurred. Please contact TK',
                               EN:'A technical error has occurred. Please contact TK'},
                 PAYMENT_BANK:{SV:'Tangokompaniet har sänt dig ett mail med orderbekräftelse och betalningsinstruktioner för bankgiro.'  
                                + ' Tack för att du handlar hos Tangkompaniet',
-                              ES:'Tangokompaniet has sent you a mail with order confirmation and payment instructions for bank.' 
-                              + ' Thank you for shopping at Tangkompaniet',
                               EN:'Tangokompaniet has sent you a mail with order confirmation and payment instructions for bank.' 
                               + ' Thank you for shopping at Tangkompaniet'},
                 PAYMENT_SWISH:{SV:'Tangokompaniet har sänt dig ett mail med orderbekräftelse och betalningsinstruktioner för SWISH.'  
                                 + ' Tack för att du handlar hos Tangkompaniet',
-                               ES:'Tangokompaniet has sent you a mail with order confirmation and payment instructions for SWISH.' 
-                                + ' Thank you for shopping at Tangkompaniet',
                                EN:'Tangokompaniet has sent you a mail with order confirmation and payment instructions for SWISH.' 
                                 + ' Thank you for shopping at Tangkompaniet'},
                 GO_TO_HOME:   {SV:'Gå till Tangokompaniets startsida.',
-                               ES:'Go to start page',
                                EN:'Go to start page'},
             }                  
 

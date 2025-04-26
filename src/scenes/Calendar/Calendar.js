@@ -60,117 +60,94 @@ const styles = {
 const TEXTS = {
   CLOSE:{
       SV:'Stäng',
-      ES:'Cerrer',
       EN:'Close',
   },
   LOCATION:{
     SV:'Plats',
-    ES:'Locacion',
     EN:'Location',
   },
   REG:{
     SV:'Anmälan',
-    ES:'Registrar',
     EN:'Register',
   },
   WAITLIST:{
     SV:'Sätt mig/oss på väntelista',
-    ES:'Poner en lista de espera',
     EN:'Put me/us on waitlist',
   },
   CLASSES:{
     SV:'Lektioner',
-    ES:'Clases',
     EN:'Classes',
   },
   DANCE:{
     SV:'Dansa',
-    ES:'Bailar',
     EN:'Dance',
   },
   MALMO:{
-    SV:'Allt i Malmö',
-    ES:'All in Malmö',
-    EN:'All in Malmö',
+    SV:'Allt',
+    EN:'All',
   },
   DESC:{
       SV:'Info',
-      ES:'Info',
       EN:'Info',
   },
   MAX:{
       SV:'Max antal',
-      ES:'Max allowed',
       EN:'Max allowed',
   },
   REMAINING:{
     SV:'Återstående antal lediga platser',
-    ES:'Available count',
     EN:'Available count',
   }, 
   NO_REGISTRATIONS:{
     SV:'Ingen anmäld ännu',
-    ES:'No dancer has so far registered',
     EN:'No dancer has so far registered',
   },
   AVA_STATUS:{
     AV:{
       SV:'Platser kvar för både förare och följare.',
       EN:'Space available for both leaders and followers',
-      ES:'Space available for both leaders and followers',
     }, 
     CC:{
       SV:'Dansen är fullbokad. Kontakta Tangkompaniet för eventuella återbud.',
       EN:'No space available. Contact Tangokompaniet and check for cancellations',
-      ES:'No space available. Contact Tangokompaniet and check for cancellations',
     }, 
     CL:{
       SV:'Fullbokat för förare, bara platser kvar till följare',
       EN:'Fully booked for leaders, only space availabile for followers',
-      ES:'Fully booked for leaders, only space availabile for followers',
     }, 
     OL:{
       SV:'Tillfälligt överskott på förare (+3), vänta och se om fler följare bokar sig',
       EN:'Temporary overflow of leaders (3), wait and see if more followers books',
-      ES:'Temporary overflow of leaders (3), wait and see if more followers books',
     }, 
     CF:{
       SV:'Fullbokat för följare, bara platser kvar till förare',
       EN:'Fully booked for followers, only space availabile for leaders',
-      ES:'Fully booked for followers, only space availabile for leaders',
     },
     OF:{
       SV:'Tillfälligt överskott på följare (+3), vänta och se om fler förare bokar sig',
       EN:'Temporary overflow of followers (3), wait and see if more förare bookar sig',
-      ES:'Temporary overflow of followers (3), wait and see if more förare bookar sig',
     },
   },     
 }
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 class _Calendars extends Component {
   constructor() {
     super();
     this.state = {
-      calendarType:CALENDAR_TYPE.SOCIAL,
+      calendarType:CALENDAR_TYPE.ALL,
       name:CALENDAR.SOCIAL,
       fontSize:'large',
-      events:[],
+      eventsSocial:undefined,
+      eventsClasses:undefined,
+      events:undefined,
       open:false,
       event:{},
     };
     this.handleEvent = this.handleEvent.bind(this)
     this.handleClose = this.handleClose.bind(this)
   }
-
-  alltIMalmo = (language) =>
-    <Button 
-      size="small"
-      variant={this.state.calendarType===CALENDAR_TYPE.SOCIAL?"contained":"outlined"} 
-      onClick={() => {this.setState({events:[]}); this.loadEventsMultiple([CALENDAR_TYPE.SOCIAL, CALENDAR_TYPE.SOCIAL, CALENDAR_TYPE.SOCIAL, CALENDAR_TYPE.SOCIAL, CALENDAR_TYPE.SOCIAL, CALENDAR_TYPE.SOCIAL])}}>
-        {TEXTS.MALMO[language]} 
-    </Button>
-
 
   findParameter(s, val) {
     const idx = s.indexOf(val)  
@@ -269,37 +246,56 @@ class _Calendars extends Component {
     })    
   }    
 
-  loadEvents(calendarType) {
+  loadRegcountList() {
+    fetchList('', '', URL_REGISTRATION_COUNT, list => this.setState({regcountList:list}))
+  }  
+
+
+  loadEvents(calendarType, handleReply) {
       const cal = CALENDAR[calendarType]
       moment.locale(CULTURE(this.props.language))
       const timeMin = moment().startOf('day')
-      const timeMax = moment().endOf('month').add(3,'months').add(7, 'days')
+      const timeMax = moment().endOf('month').add(4,'years').add(7, 'days')
+      let events = []
       try {
-          fetchList('', '', URL_REGISTRATION_COUNT, regCountList => {
-              getEvents(
-                cal.calendarId,
-                cal.apiKey,
-                (events) => {this.setState({events:events.map(it =>this.mapEvent(it, regCountList)), calendarType})},
-                timeMin.format('YYYY-MM-DD') + 'T00:00:00Z', 
-                timeMax.format('YYYY-MM-DD') + 'T23:59:00Z',
-                this.props.language
-              )
-            }
-          )
+            getEvents(
+              cal.calendarId,
+              cal.apiKey,
+              events => handleReply(events),
+              timeMin.format('YYYY-MM-DD') + 'T00:00:00Z', 
+              timeMax.format('YYYY-MM-DD') + 'T23:59:00Z',
+              this.props.language
+            )
       } catch(e) {                                
-          this.setState({events:[]})
-          let errMessage = 'ERROR:' + e.message 
-          // console.log(errMessage);
+          let errMessage = '[loadEvents] ERROR.failed to get Events' 
+          alert(errMessage)
       }    
   }    
 
-  loadEventsMultiple(calendarTypes) {
-    calendarTypes.forEach(calendarType => this.loadEvents(calendarType))
+
+
+  loadEventsMultiple(calendarTypes, handleReply) {
+    let eventsByType = {}
+    let eventsCum = []
+    
+    calendarTypes.forEach(calendarType=>this.loadEvents(calendarType, events=>{eventsByType={...eventsByType , [calendarType]:events}}))
+    sleep(500).then(response=>{
+      //alert(JSON.stringify(eventsByType))
+      calendarTypes.forEach(calendarType=>{
+        const events = eventsByType[calendarType]
+        eventsCum = [...eventsCum, ...events]
+      })
+      handleReply(eventsCum)
+    })
   }
+
 
   // invoked immediately after a component is mounted
   componentDidMount () {
-      this.loadEvents(CALENDAR_TYPE.SOCIAL)
+      const regcountList = this.loadRegcountList()
+      this.loadEvents(CALENDAR_TYPE.SOCIAL, events=>this.setState({eventsSocial:events, regcountList}))
+      this.loadEvents(CALENDAR_TYPE.CLASSES, events=>this.setState({eventsClasses:events}))
+      sleep(500).then(response=>this.setState({events:[...this.state.eventsSocial, ...this.state.eventsClasses]}))
   }
 
   getTime(e) {
@@ -322,24 +318,38 @@ class _Calendars extends Component {
     const {language, breakpoints, currentBreakpoint} = this.props
     moment.locale(CULTURE(language), {week:{dow : 1}});
     const localizer=momentLocalizer(moment)
-    const events = this.state.events.sort((a,b)=>moment(a.start) - moment(b.start)).map(it=>({...it, start:moment(it.start).toDate(), end:moment(it.end).toDate()}))
-
+    const events = this.state.events?
+      this.state.events.sort((a,b)=>moment(a.start) - moment(b.start)).map(it=>({...it, start:moment(it.start).toDate(), end:moment(it.end).toDate()})):[]
+    const calendarType = this.state.calendarType
     return (
         <div style={styles.root}>
           <div style={styles.bar}>
-            <Button
-              size={this.state.calendarType===CALENDAR_TYPE.SOCIAL?'medium':'small'} 
-              variant="outlined"
-              onClick={() => {this.setState({events:[], calendarType:CALENDAR_TYPE.SOCIAL}); this.loadEvents(CALENDAR_TYPE.SOCIAL)}}>
-                {TEXTS.DANCE[language]} 
-             </Button>
+            {!!this.state.eventsSocial && !!this.state.eventsClasses?
+              <Button 
+                size={this.state.calendarType===CALENDAR_TYPE.ALL?'medium':'small'} 
+                variant={this.state.calendarType===CALENDAR_TYPE.ALL?'outlined':'contained'} 
+                onClick={() => this.setState({events:[...this.state.eventsSocial, ...this.state.eventsClasses], calendarType:CALENDAR_TYPE.ALL})}>
+                  {TEXTS.MALMO[language]} 
+              </Button>
+            :null}
             &nbsp;&nbsp; 
-            <Button 
-              size={this.state.calendarType===CALENDAR_TYPE.CLASSES?'medium':'small'} 
-              variant="outlined"
-              onClick={() => {this.setState({events:[], calendarType:CALENDAR_TYPE.CLASSES}); this.loadEvents(CALENDAR_TYPE.CLASSES)}}>
-                {TEXTS.CLASSES[language]} 
-            </Button>
+            {this.state.eventsSocial?
+              <Button
+                size={this.state.calendarType===CALENDAR_TYPE.SOCIAL?'medium':'small'} 
+                variant={this.state.calendarType===CALENDAR_TYPE.SOCIAL?'outlined':'contained'} 
+                onClick={() => this.setState({events:this.state.eventsSocial, calendarType:CALENDAR_TYPE.SOCIAL})}>
+                  {TEXTS.DANCE[language]} 
+              </Button>
+            :null}    
+            &nbsp;&nbsp; 
+            {this.state.eventsClasses?
+              <Button 
+                size={this.state.calendarType===CALENDAR_TYPE.CLASSES?'medium':'small'} 
+                variant={this.state.calendarType===CALENDAR_TYPE.CLASSES?'outlined':'contained'} 
+                onClick={() => this.setState({events:this.state.eventsClasses, calendarType:CALENDAR_TYPE.CLASSES})}>
+                  {TEXTS.CLASSES[language]} 
+              </Button>
+            :null}    
           </div>
           {breakpoints[currentBreakpoint] <= breakpoints.mobile?
               <CalendarSmall 

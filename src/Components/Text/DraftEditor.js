@@ -74,15 +74,10 @@ export const removeAllDraftVariables = value  => {
 }    
 
 
-
+// Draft EditorChoe
 export default props => {
-  const editor = useRef(null);
   const {editorState, onEditorStateChange, style} = props
 
-  
-  const focusEditor = () => {
-      editor.current.focus();
-  }
 
   return (
       <div style={style}>

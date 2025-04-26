@@ -61,7 +61,7 @@ const styles = {
     }
 };
 
-const descButton = (course, language, handleClick) =>
+const infoButton = (course, language, handleClick) =>
     <td colSpan={1} style={{textAlign:'center'}}>
         {handleClick!==undefined?
             <Button size='small' variant='outlined' style={styles.button} onClick={()=>handleClick(course.textId)}>{TEXTS.infoButton[language]}</Button>
@@ -72,14 +72,14 @@ const descButton = (course, language, handleClick) =>
 const _renderHeaderSmall = (course, handleClick, language) => 
 <thead>
     <tr style={styles.tr}>
-        <th colSpan={6} style={styles.th}>
+        <th colSpan={5} style={styles.th}>
             {course['name' + language]}&nbsp;
             <small style={styles.tiny}>{['GK', 'FK', 'HK', 'TE'].includes(course.courseType)?'':'Unknown course type ' + course.courseType}</small>
         </th>
-        {descButton(course, language, handleClick) }
+        {infoButton(course, language, handleClick) }
     </tr>    
     <tr style={styles.trSubtext}>
-        <th colSpan={3} style={styles.th}>
+        <th colSpan={2} style={styles.th}>
             {TEXTS.price[language]}&nbsp;{course.price}&nbsp;{'SEK'} 
         </th>
         <th colSpan={3} style={styles.th}>
@@ -92,14 +92,14 @@ const _renderHeaderSmall = (course, handleClick, language) =>
 const _renderHeaderLarge = (course, handleClick, language) => 
 <thead>
     <tr style={styles.tr}>
-        <th colSpan={6} style={styles.th}>
+        <th colSpan={5} style={styles.th}>
             {course['name' + language]} &nbsp;
-            <small style={styles.tiny}>{['GK', 'FK', 'HK', 'TK'].includes(course.courseType)?'':'Unknown course type ' + course.courseType}</small>
+            <small style={styles.tiny}>{['GK', 'FK', 'HK', 'TE'].includes(course.courseType)?'':'Unknown course type ' + course.courseType}</small>
         </th>
-        {descButton(course, language, handleClick) }
+        {infoButton(course, language, handleClick) }
     </tr>    
     <tr style={styles.trSubtext}>
-        <th colSpan={3} style={styles.th}>
+        <th colSpan={2} style={styles.th}>
             {TEXTS.price[language]}&nbsp;{course.price?course.price:''}&nbsp;{'SEK'} 
         </th>
         <th colSpan={3} style={styles.th}>

@@ -20,9 +20,8 @@ const styles={
 }
 
 const TEXT_MISSING = {
-    ['SV']:"Text saknas",
-    ['ES']:"Falta texto",
-    ['EN']:"Text missing",
+    SV:"Text saknas",
+    EN:"Text missing",
 }
 
 const func = ({language}) => (

@@ -1,6 +1,6 @@
 import {store} from 'index.js'
 import {setStatusMessage, setSleepTime} from 'redux/actions/actionsStatusMessage' 
-import {wait} from 'Settings/Utils'
+import {wait} from 'services/functions'
 
 export const STATUS_OK='OK';
 export const STATUS_WARNING='WARNING';

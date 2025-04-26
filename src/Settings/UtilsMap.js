@@ -17,7 +17,7 @@ import moment from 'moment-with-locales-es6';
 import {serverFetchData} from 'functions/serverFetch'
 import config from 'Settings/config';
 import {replaceRow} from 'functions/tableUtils'
-import {acceptKeys} from 'Settings/Utils'
+import {acceptKeys} from 'services/functions'
 
 
 const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;

@@ -164,8 +164,8 @@ export default class ScheduleCreate extends Component {
     setTemplateName(e) {
         const templateName = e.target.value
         const obj = this.props.list?this.props.list.length > 0?this.props.list.find(it=>it.templateName === templateName):undefined:undefined
-        const year = obj?obj.year?obj.year:'':''
-        const eventType = obj?obj.eventType?obj.eventType:'':''
+        const year = obj?obj.year?obj.year:undefined:undefined
+        const eventType = obj?obj.eventType?obj.eventType:undefined:undefined
         this.setState({templateName, year, eventType})
     }    
 
@@ -197,7 +197,6 @@ export default class ScheduleCreate extends Component {
     handleSaveTemplate(templateName, handleReply) {
         if ((this.state.year === undefined || this.state.eventType === undefined) && !this.props.dontSelectEventTypeAndYear) {
             alert('WARNING: Please choose eventType and year')
-            return false
         } else {
             // Take the current entries and save in a new list and shift the template name to the new one
             let addObj
@@ -248,7 +247,7 @@ export default class ScheduleCreate extends Component {
     handleDeleteTemplate(templateName) {
         //eslint-disable-next-line
         if (!confirm("Are you sure you want to delete template completely " + templateName + " (y/n) ?")) {
-            this.setState({action:UNSET_ACTION, templateName:undefined, eventType:'', year:''})
+            this.setState({action:UNSET_ACTION, templateName:undefined, eventType:undefined, year:undefined})
             return
         } 
         const crud = { 
@@ -272,7 +271,7 @@ export default class ScheduleCreate extends Component {
         //eslint-disable-next-line
         if (!confirm("Are you sure you want to delete template " + templateName + " ?")) {
             // console.log('The production template ' + templateName + ' was not deleted', crud)
-            this.setState({action:UNSET_ACTION, templateName:undefined, eventType:'', year:''})
+            this.setState({action:UNSET_ACTION, templateName:undefined, eventType:undefined, year:undefined})
             return
         } 
         const crud = { 
@@ -388,7 +387,7 @@ export default class ScheduleCreate extends Component {
                 return
             }
         } 
-        this.setState({templateName, eventType:'', year:'', action:NEW_ACTION});
+        this.setState({templateName, eventType:undefined, year:undefined, action:NEW_ACTION});
         // console.log('New templateName ', templateName)   
     }    
 
@@ -405,9 +404,9 @@ export default class ScheduleCreate extends Component {
                     style={styles.select}
                     name={'eventType'} 
                     value={this.state.eventType}
-                    onChange={e=>this.setState({eventType:e.target.value})}
+                    onChange={e=>this.setState({[e.target.name]:e.target.value})}
                 > 
-                    <option value={''} hidden>{'Choose event'}</option>
+                    <option value={undefined} hidden>{'Choose event'}</option>
                     {this.state.eventTypeDDownList.map(it =>
                         <option 
                             value={it.key} 
@@ -421,9 +420,9 @@ export default class ScheduleCreate extends Component {
                     style={styles.select}
                     name={'year'} 
                     value={this.state.year}
-                    onChange={e => this.setState({year: e.target.value})}
+                    onChange={e => this.setState({[e.target.name]: e.target.value})}
                 > 
-                    <option value={''} hidden>{'Choose year'}</option>
+                    <option value={undefined} hidden>{'Choose year'}</option>
                     {years.map(it =>
                         <option 
                             value={it} 
@@ -570,7 +569,7 @@ export default class ScheduleCreate extends Component {
                     <div style={{color:tkColors.Purple.Light}}>
                         {dontSelectEventTypeAndYear?null:this.setEventTypeAndYear()}
                     </div>
-                    {this.state.eventType !== undefined?
+                    {(this.state.eventType !== undefined && this.state.year !=undefined)?
                         this.state.action !== UNSET_ACTION?this._List(columns):null
                         :null
                     }

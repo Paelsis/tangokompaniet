@@ -4,7 +4,7 @@ import fetchList from 'functions/fetchList';
 import {postUpdTable, postUpdTableAll} from 'functions/postUpdTable'
 import postData from 'functions/postData'
 import config from 'Settings/config';
-import {extendedColumns} from 'Settings/Utils'
+import {extendedColumns} from 'services/functions'
 
 
 var idNumber = 0;

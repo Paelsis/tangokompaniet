@@ -5,7 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const TEXTS={
   NOT_LOADED:{
     SV:'Sidan kunde ej laddas !',
-    ES:'Page could not be loaded',
     EN:'Page could not be loaded',
   }
 }

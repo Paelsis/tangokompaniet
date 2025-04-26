@@ -267,12 +267,10 @@ const TEXTS = {
   NEWS:{
     SV:'Nyheter',
     EN:'News',
-    ES:'Noticias',
   },
   CLOSE:{
     SV:'Stäng',
     EN:'Close',
-    ES:'Cerca',
   },
 }
 

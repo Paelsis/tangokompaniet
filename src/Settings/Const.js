@@ -126,6 +126,7 @@ export const BOOKING_STATUS = {
 export const CALENDAR_TYPE = {
     SOCIAL:'SOCIAL',
     CLASSES:'CLASSES',
+    ALL:'ALL',
 }
 
 export const DANCE_SITE = {
@@ -219,11 +220,11 @@ export const DISCOUNT_TYPE = {
 }
 
 export const COURSE_TYPE = {
-    GK:{SV:'Grundkurser', EN:'Basic courses', ES:'Cursos básicos', type:'GR', sequence:1},
-    FK:{SV:'Fortsättningskurser', EN:'Continuation courses', ES:'Cursos de continuación', type:'FK', sequence:2},
-    TE:{SV:'Temakurser', EN:'Speciality courses', ES:'Cursos especiales', type:'TE', sequence:8},
-    HK:{SV:'Helgkurser', EN:'Weekend courses', ES:'Cursos de fin de semana', type:'HK', sequence:9},
-    XX:{SV:'Okänd kurstyp', EN:'Unknown course type', ES:'Tipo des curso desconocideo', type:'XX', sequence:10},
+    GK:{type:'GR', SV:'Grundkurser', EN:'Basic courses', ES:'Cursos básicos', sequence:1},
+    FK:{type:'FK', SV:'Fortsättningskurser', EN:'Continuation courses', ES:'Cursos de continuación', sequence:2},
+    HK:{type:'HK', SV:'Helgkurser', EN:'Weekend courses', ES:'Cursos de fin de semana', sequence:9},
+    TE:{type:'TE', SV:'Temakurser', EN:'Speciality courses', ES:'Cursos especiales', sequence:8},
+    XX:{type:'XX', SV:'Okänd kurstyp', EN:'Unknown course type', ES:'Tipo des curso desconocideo', sequence:10},
 }
 
 export const payPalImage=require('images/PayPal.png');

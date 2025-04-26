@@ -15,9 +15,8 @@ const menuItemsA = [
       link:"/contact", 
       environment:['development', 'test', 'production'],
       title:{
-        ['SV']:'Kontakt',
-        ['ES']:'Contacto', 
-        ['EN']:'Contact',
+        SV:'Kontakt',
+        EN:'Contact',
       },
       production:true
     },  
@@ -25,18 +24,16 @@ const menuItemsA = [
       link:"/help",
       environment:['development', 'test', 'production'],
       title:{
-        ['SV']:'Hjälp',
-        ['ES']:'Ayudar', 
-        ['EN']:'Help'
+        SV:'Hjälp',
+        EN:'Help'
       },
     },  
     {
       link:"/about",
       environment:['development', 'test', 'production'],
       title:{
-        ['SV']:'Om denna hemsida',
-        ['ES']:'Ayudar', 
-        ['EN']:'About'
+        SV:'Om denna hemsida',
+        EN:'About'
       },
     },  
     /*
@@ -44,9 +41,8 @@ const menuItemsA = [
       link:"/image/images",
       environment:['development', 'test'],
       title:{
-        ['SV']:'Bilder',
-        ['ES']:'Fotos', 
-        ['EN']:'Images'
+        SV:'Bilder',
+        EN:'Images'
       },
     } 
     */ 
@@ -58,48 +54,48 @@ const menuItemsA = [
       environment:['development', 'test', 'production'],
       disabled:!loggedInFlag, 
       title:{
-        ['SV']:'Logout',
-        ['EN']:'Logout'
+        SV:'Logout',
+        EN:'Logout'
       },
       helpText:{
-        ['SV']:'Endast för Tangokompaniets personal',
-        ['EN']:'Only for staff at Tangokompaniet',
+        SV:'Endast för Tangokompaniets personal',
+        EN:'Only for staff at Tangokompaniet',
       },
       },
       {link:"/firebaseSignin", 
       disabled:loggedInFlag || !firebaseEnabled, 
       environment:['development', 'test', 'production'],
         title:{
-          ['SV']:'Logga på Admin',
-          ['EN']:'Signin'  
+          SV:'Logga på Admin',
+          EN:'Signin'  
         },
         helpText:{
-          ['SV']:'Logga på admin via Goggle',
-          ['EN']:'Signon via Google',
+          SV:'Logga på admin via Goggle',
+          EN:'Signon via Google',
         },
       },
       {link:"/admin", 
       disabled:!loggedInFlag && firebaseEnabled, 
         environment:['development', 'test', 'production'],
         title:{
-          ['SV']:'Admin',
-          ['EN']:'Admin'
+          SV:'Admin',
+          EN:'Admin'
         },
         helpText:{
-          ['SV']:'Endast för administrtatörer',
-          ['EN']:'Only avaaiable for adminstrators',
+          SV:'Endast för administrtatörer',
+          EN:'Only avaaiable for adminstrators',
       },
       },
       {func:()=>window.location.assign('https://admin.tangokompaniet.com'), 
         disabled:!loggedInFlag && firebaseEnabled, 
           environment:['development', 'test', 'production'],
           title:{
-            ['SV']:'New Admin',
-            ['EN']:'New Admin'
+            SV:'New Admin',
+            EN:'New Admin'
           },
           helpText:{
-            ['SV']:'Endast för administrtatörer',
-            ['EN']:'Only avaiable for adminstrators',
+            SV:'Endast för administrtatörer',
+            EN:'Only avaiable for adminstrators',
           },
         },
   

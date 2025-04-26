@@ -87,7 +87,6 @@ const styles = {
 const TEXTS = {
   'LABEL_SAVE':{
       'SV':'Spara ändringar',
-      'ES':'Guardar cambios' ,
       'EN':'Save changes'
   },   
 }

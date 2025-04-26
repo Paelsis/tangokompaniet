@@ -14,7 +14,13 @@ export const CALENDAR_SIZE = {
   LARGE:'LARGE'
 }
 export const EVENT_STYLES_TK = {
-  'selected':{
+  SELECTED:{
+    style:{
+        color:tkColors.background,
+        backgroundColor:red[500],
+      } 
+  },
+  CLASSES:{
     style:{
         color:tkColors.background,
         backgroundColor:red[500],
@@ -110,7 +116,7 @@ export const EVENT_STYLES_TK = {
       opacity:0.8
     } 
   },
-  'extra':{
+  'EXTRA':{
     title:'Extra',
     style:{
       color:'yellow',
@@ -118,20 +124,20 @@ export const EVENT_STYLES_TK = {
       opacity:0.8
     } 
   },
-  'racing':{
+  'RACING':{
     style:{
       color:tkColors.background,
       backgroundColor:tkColors.Purple.Light,
       opacity:0.7,
     }, 
   },
-  'brunch':{
+  'BRUNCH':{
     style:{
       color:tkColors.background,
       backgroundColor:deepOrange[700],
     },  
   },
-  'teatime':{
+  'TEATIME':{
     style:{
       color:tkColors.background,
       backgroundColor:teal[600],
@@ -169,80 +175,50 @@ export const EVENT_STYLES_TK = {
   }),
 }  
 
-const EVENT_STATUS_STYLES=(isLightColor, eventFinished)=>({
-  CC:{    
-    paddingLeft:2, paddingRight:2,
+const styles = (isLightColor, eventFinished) => ({
+  SELECTED:{    
+    //border:'2px dotted ' + tkColors.background,
     color:tkColors.background,
-    background:isLightColor?'linear-gradient(45deg, #324147 0%, #D1188B 100%)':'linear-gradient(45deg, #324147 0%, #D1188B 100%)',
-    opacity:eventFinished?0.5:1.0,
+    background:isLightColor?tkColors.Beige.Light:tkColors.Beige.Dark,
+    opacity:eventFinished?0.5:1.0
   },
-  OL:{    
-    paddingLeft:2, paddingRight:2,
+  ALL:{    
+    //border:'2px dotted ' + tkColors.background,
     color:tkColors.background,
-    background:isLightColor?"linear-gradient(90deg,#5D8170 70%, #203354 90%)":"linear-gradient(90deg,#365A49 80%, #203354 90%)",
-    opacity:eventFinished?0.5:1.0,
+    background:isLightColor?tkColors.Purple.Light:tkColors.Purple.Dark,
+    opacity:eventFinished?0.5:1.0
   },
-  CL:{    
-    paddingLeft:2, paddingRight:2,
+  SOCIAL:{    
+    //border:'2px dotted ' + tkColors.background,
     color:tkColors.background,
-    background:isLightColor?"linear-gradient(90deg,#5D8170 50%, #203354 70%)":"linear-gradient(90deg,#365A49 50%, #203354 60%)",
-    opacity:eventFinished?0.5:1.0,
+    background:isLightColor?tkColors.Olive.Light:tkColors.Olive.Dark,
+    opacity:eventFinished?0.5:1.0
   },
-  OF:{    
-    paddingLeft:2, paddingRight:2,
+  CLASSES:{    
+    //border:'2px dotted ' + tkColors.background,
     color:tkColors.background,
-    background:isLightColor?"linear-gradient(90deg, #800000 10%, #5D8170 30%)":"linear-gradient(90deg, #800000 10%, #365A49 20%)",
-    opacity:eventFinished?0.5:1.0,
+    background:isLightColor?tkColors.Blue.Light:tkColors.Blue.Dark,
+    opacity:eventFinished?0.5:1.0
   },
-  CF:{    
-    paddingLeft:2, paddingRight:2,
+  DEFAULT:{
+    border:'2px dotted ' + tkColors.background,
     color:tkColors.background,
-    background:isLightColor?"linear-gradient(90deg, #800000 30%, #5D8170 50%)":"linear-gradient(90deg, #800000 40%, #365A49 50%)",
-    opacity:eventFinished?0.5:1.0,
-  },
-  AV:{    
-    paddingLeft:2, paddingRight:2,
-    //textAlign:'center',
-    margin:'auto',
-    color:tkColors.background,
-    background:isLightColor?
-      "linear-gradient(to bottom right, #5D8170,  #365A49)":"linear-gradient(to bottom right, #365A49, #173525)",
-    //background:isLightColor?'#5D8170':'#365A49',
-    opacity:eventFinished?0.5:1.0,
-  },
+    background:isLightColor?tkColors.Purple.Light:tkColors.Purple.Dark,
+    opacity:eventFinished?0.5:1.0
+  }
 })
 
-const EVENT_STYLE_CLASSES = (isLightColor, eventFinished) =>({    
-  //border:'2px dotted ' + tkColors.background,
-  color:tkColors.background,
-  background:isLightColor?tkColors.Purple.Light:tkColors.Purple.Dark,
-  opacity:eventFinished?0.5:1.0
-})
+
 
 export function eventStyle(event, isSelected, calendarType) {
   let newStyle=undefined
   const eventFinished = moment(event.end) < moment()
 
-  if (calendarType === CALENDAR_TYPE.SOCIAL) {
-      return(EVENT_STATUS_STYLES(event.isLightColor, eventFinished)[event.avaStatus]);
-  } else if (isSelected==1) {
-      return(EVENT_STYLES_TK['selected'].style);
-  } else {  
-    Object.keys(EVENT_STYLES_TK).map(key => {
-      if (event.title?(event.title.toLowerCase().indexOf(key.toLowerCase()) > -1):false) {
-        newStyle=EVENT_STYLES_TK[key].style
-      } 
-    })  
-
-    if (newStyle === null) {
-      Object.keys(EVENT_STYLES_TK).map(key => {
-        if (event.description?(event.description.indexOf(key.toLowerCase()) > -1):false) {
-          newStyle=EVENT_STYLES_TK[key].style
-        }  
-      })  
-    }
-    return(EVENT_STYLE_CLASSES(event.isLightColor, eventFinished));
-  }
+  if (isSelected==1) {
+    return styles(event.isLightColor, eventFinished).SELECTED;
+  } else {
+    return styles(event.isLightColor, eventFinished)[calendarType];
+  } 
 }
 
 

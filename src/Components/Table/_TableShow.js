@@ -10,7 +10,8 @@ import SearchIcon from '@material-ui/icons/Search'
 import CancelIcon from '@material-ui/icons/Cancel'
 import ReactRte from 'react-rte';
 import tkColors from 'Settings/tkColors'
-
+import RadioInput from '../RadioInput'
+import CheckboxInput from '../CheckboxInput'
 const TEXTAREA_FIELDS=['textBody']
 
 const styles = {
@@ -53,31 +54,13 @@ const Rte = ({value, handleSave}) => {
     )
 }
 
-const RadioInput = ({name, value, radioValues, handleChange}) => {
-    const arr = radioValues.split(',')
-    return(
-        arr.map(it =>
-            <label>
-                <input 
-                    key={(it.value?it.value:it)}
-                    type='radio'
-                    value={it.value?it.value:it} 
-                    name={name} 
-                    checked={value?(value === (it.value?it.value:it)):undefined}
-                    onChange={handleChange}
-                />
-                &nbsp;<span>{it.value?it.value:it}</span>&nbsp;
-            </label>
-        )
-    )
-}
 
 
 
 const RenderRow = ({ky, value, columns, handleChange}) => {
 
     let col = columns.find(col => ky === col.Field)
-    const {Comment, MaxLength, Type2, Min, Max, RadioValues} = col
+    const {Comment, MaxLength, Type, Type2, Min, Max, RadioValues} = col
     return(
         <tr style={{fontSize:18}}>
         {ky === 'id'?
@@ -90,6 +73,8 @@ const RenderRow = ({ky, value, columns, handleChange}) => {
                 <td>
                     {Type2 === 'radio'?
                         <RadioInput name={ky} value={value} radioValues={RadioValues} handleChange={handleChange} />
+                    :Type2 === 'checkbox'?
+                        <CheckboxInput label={ky} name={ky} value={value} handleChange={handleChange} /> 
                     :Type2 === 'textarea'?
                         <textarea 
                             style={styles.add} 
@@ -112,16 +97,12 @@ const RenderRow = ({ky, value, columns, handleChange}) => {
                         />
                     }    
                 </td>
-                <td style={{fontSize:12}}>{MaxLength?'Max length=' + MaxLength:''}</td>
+                <td style={{fontSize:12}}>&nbsp;{MaxLength?'Max length=' + MaxLength:''}</td>
             </>
         }
         </tr>
     )
 }
-
-
-
-
 
 const RenderEdit = ({record, columns, handleChange, handleSave, handleCancel}) => {
     const entries = record?Object.entries(record):[]
@@ -220,7 +201,7 @@ const RenderTable = ({list, filterList, handleEdit, handleDelete, search, setSea
         </tbody>    
     </table>
 
-
+// _TableShow
 export default ({table, list, setList, columns, style}) => {
     const [record, setRecord] = useState(undefined)
     const [recordRte, setRecordRte] = useState(undefined)
@@ -302,7 +283,7 @@ export default ({table, list, setList, columns, style}) => {
     }
 
     const handleChange = e => {
-        setRecord({...record, [e.target.name]:e.target.value})
+        setRecord({...record, [e.target.name]:e.target.type==='checkbox'?e.target.checked?1:0:e.target.value})
     }
 
     const handleChangeRte = (key, val) => {
@@ -375,4 +356,3 @@ export default ({table, list, setList, columns, style}) => {
 
 
 /* {JSON.stringify(columnsToObject(columns))} */
-

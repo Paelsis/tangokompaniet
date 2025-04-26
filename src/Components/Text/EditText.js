@@ -69,7 +69,6 @@ const getRecordKeys = (props) => {
 const TEXTS={
     NO_TRANSLATION:{
         SV:'Ingen text på svenska',
-        ES:'Sin traduccíon al esopañol',
         EN:'No translation to English',
     },
 }

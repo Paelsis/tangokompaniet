@@ -16,30 +16,25 @@ const imageUrl=process.env.REACT_APP_API_BASE_URL + TEACHER_IMAGE_DIR
 
 
 const TEXTS = {
-    'TITLE':{
-        'SV':'Festlokal',
-        'ES':'El curso está completo. Estas en la lista de espera.' ,
-        'EN':'Course is full. You are put on waitlist'
+    TITLE:{
+        SV:'Festlokal',
+        EN:'Course is full. You are put on waitlist'
     },   
-    'SUBTITLE': {
-        'SV':'Denna lokal är för uthyrning',
-        'ES':'Este local se alquila para fiestas y otros arreglos.',
-        'EN':'This room is for rent for parties and other events' 
+    SUBTITLE: {
+        SV:'Denna lokal är för uthyrning',
+        EN:'This room is for rent for parties and other events' 
     },    
-    'CONTACT': {
-        'SV':'Kontakt',
-        'ES':'Contacto',
-        'EN':'Contact' 
+    CONTACT: {
+        SV:'Kontakt',
+        EN:'Contact' 
     },    
-    'PHONE': {
-        'SV':'mobil',
-        'ES':'mobilo',
-        'EN':'mobile' 
+    PHONE: {
+        SV:'mobil',
+        EN:'mobile' 
     },    
-    'RESPONSIBLE': {
-        'SV':'Ansvarig för uthyrning',
-        'ES':'Responsable del alquiler',
-        'EN':'Responsible for rental' 
+    RESPONSIBLE: {
+        SV:'Ansvarig för uthyrning',
+        EN:'Responsible for rental' 
     },    
     'LOCATION':'Fredriksbergsgatan 7, Malmö',
 }

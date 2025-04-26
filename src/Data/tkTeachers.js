@@ -29,9 +29,6 @@ const tkTeachers = [
                 She is also a very active DJ, both regionally, nationally and internationally, \
                 and also hosts seminars on tango music and DJing.', 
         },      
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:1, 
@@ -58,9 +55,6 @@ const tkTeachers = [
                  in over 20 countries Daniel decided to put more focus on making the Öresundtango \
                  grow in many aspects. For Daniel feeling, connection and creativity are the key words.', 
         },      
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:2, 
@@ -91,9 +85,6 @@ const tkTeachers = [
                 Cecilia is inspired by her interest in fitness and Chinese Tai Chi, \
                 and advocates bodily control and playfulness in the dance.', 
         },  
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:3,
@@ -119,9 +110,6 @@ const tkTeachers = [
             yoga and pilates. Camila is also performing as a singer and teaches musicality for salsa dancers \
             with live musicians.', 
         },  
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:4, 
@@ -147,9 +135,6 @@ const tkTeachers = [
             She develops her training method for tango dancers with her knowledge of Pilates and Contact \
             Improvisation (contemporary / modern dance).', 
         }, 
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:5, 
@@ -179,9 +164,6 @@ const tkTeachers = [
                 disciplines such as yoga and Gyrotonic, and he teaches tango as an embodied experience \
                 of warm-hearted expression'    
         },  
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:6, 
@@ -210,9 +192,6 @@ const tkTeachers = [
             exhibiting both physical strength and soft dynamics. With his good educational ability, \
             he inspires his students to dare to experiment and experiment with their dance.' 
         },  
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:7, 
@@ -238,9 +217,6 @@ const tkTeachers = [
                 massage therapist, and yoga practitioner. She began her Tango journey in Boulder, Colorado and the path lead \
                 quickly to Buenos Aires, and then onward Sweden where she has been teaching with Tangokompaniet since 2012'
         },  
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:8, 
@@ -264,9 +240,6 @@ const tkTeachers = [
         'EN': {
             text: 'No translation to English', 
         },  
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
     {
         id:9, 
@@ -283,17 +256,14 @@ const tkTeachers = [
         givePrivateLesson:true,
         img:require('images/teachers/ellinor.jpg'),
         'SV': {
-            text:'För Ellinor är tango att improvisera i en ordlös kommunikation och hennes dans beskrivs \
-                som både klassisk och dynamisk. Hon arbetar ständigt med att utveckla sin tango djupare. \
-                Ellinor har undervisat i Tangokompaniet sedan 2007. Genom pedagogiskt lärande vill hon ge sina elever \
-                den nödvändiga säkerhet och frihet som behövs för att dansa med känsla, god teknik och kroppsmedvetenhet.'
-            },      
-            'EN': {
-                text: 'No translation to English', 
-            },  
-            'ES': {
-                text: 'Sin traduccíon al esopañol', 
-            },
+        text:'För Ellinor är tango att improvisera i en ordlös kommunikation och hennes dans beskrivs \
+            som både klassisk och dynamisk. Hon arbetar ständigt med att utveckla sin tango djupare. \
+            Ellinor har undervisat i Tangokompaniet sedan 2007. Genom pedagogiskt lärande vill hon ge sina elever \
+            den nödvändiga säkerhet och frihet som behövs för att dansa med känsla, god teknik och kroppsmedvetenhet.'
+        },      
+        'EN': {
+            text: 'No translation to English', 
+        },  
     },
     {
         id:10,
@@ -317,9 +287,6 @@ const tkTeachers = [
         'EN': {
             text: 'No translation to English', 
         },  
-        'ES': {
-            text: 'Sin traduccíon al esopañol', 
-        },
     },
 
 ];

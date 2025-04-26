@@ -1,4 +1,4 @@
-import {BOOKING_STATUS, AVA_STATUS} from './Const'
+import {BOOKING_STATUS, AVA_STATUS} from '../Settings/Const'
 
 // Static utility functions
 export const acceptKeys = (obj, keys) => {
@@ -61,7 +61,7 @@ export const extendedColumns = columns => {
         if (Type === 'text') {
             Type2 = 'textarea'
         } else if (Type.includes('tinyint')) {
-            Type2 = 'number'
+            Type2 = 'checkbox' // number
             Min = 0
             Max = 1
         } else if (Type.includes('int')) {

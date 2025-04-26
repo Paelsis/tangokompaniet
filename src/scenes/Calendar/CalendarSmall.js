@@ -70,7 +70,7 @@ let styles = {
         height:50, 
     },
     table: {
-        width:'98vw',
+        width:'96vw',
         marginRight:'auto',
         marginLeft:'auto',
         borderSpacing:1,
@@ -152,19 +152,19 @@ class Calendar extends Component {
         const mend = moment(event.end).add(event.start.length <= 10?-1:0, 'days') 
         let weekday = mstart.format('dddd')
         let weekdayEnd = mend.format('dddd')
+        const dateRange = event.dateRange;
         weekday = weekday.toUpperCase().charAt(0) + weekday.slice(1,3)
         weekdayEnd = weekdayEnd.toUpperCase().charAt(0) + weekdayEnd.slice(1,3)
         const dt =event.sameDate?null:(weekday + ' ' + mstart.format('D/M'))  
         const style = eventStyle(event, false, calendarType)
         const styleDate = {...style, ...styles.tdDate(event.avaStatus)}
-        
         const useRegistrationButton = event.useRegistrationButton
         return(
                 moment() <= mend?
                     <tr key={'Row' + event.productId} style={styles.tr(event.isToday)}> 
                     {event.moreThan11Hours?
                         <td colSpan={3} style={{...style, textAlign:'center', fontWeight:800, fontSize:18, color:'gold'}} onClick={()=>this.props.handleEvent(event)}>  
-                            {event.title}<br/>{event.dateTimeRange}
+                            {event.title}<br/>{dateRange}
                         </td>
                     :
                         <>
@@ -214,7 +214,7 @@ class Calendar extends Component {
         )
     }    
 
-    renderAllEvents = (events) => (events.map(event =>this.renderEvent(event)))
+    renderAllEvents = events => events?events.map(event =>this.renderEvent(event)):null
 
     render() {
         const {events} = this.props

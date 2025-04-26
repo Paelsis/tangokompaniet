@@ -17,6 +17,25 @@ const API_KEY = 'AIzaSyBMhuxVODuB4qYKmIoSguPYuQuTfct-QIs'
 const CALENDAR_ID_TK = 'tangokompaniet@gmail.com'
 const API_KEY_TK = 'AIzaSyB0EBiE8xd5ItS59IahMyficWWAanHhMzU' // Per 2
 
+const TEXTS = {
+  ENDED:{
+      SV:'Slutade',
+      EM:'Ended',
+  },
+  WHOLE_DAY:{
+      SV:'hela dagen', 
+      EN:'all day',
+  },
+  NO_LOCATION:{
+    SV:'ingen plats angiven', 
+    EN:'location missing',
+  },
+  NO_CITY:{
+    SV:'ingen plats angiven', 
+    EN:'location missing',
+  }
+}
+
 const findNumberInText = (s, val) => {
   const idx = s.indexOf(val)  
   // console.log('findParameter', val, 'idx',  idx)
@@ -89,12 +108,27 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
 
           const mstart=moment(start)
           const mend=moment(end).add(start.length <= 10?-1:0, 'days')
-          const timeStart = mstart.format('LT')
-          const timeEnd = mend.format('LT')
-          const dateShift = mend.dayOfYear() - mstart.dayOfYear()  
-          const fullDay = start.length <= 10 || (timeStart==="00:00" && timeEnd ==="00:00") && dateShift <= 1 || (timeStart==="00:00" && timeEnd ==="23:59")
-          const durationHours = moment.duration(mend.diff(mstart)).asHours()
+          const mnow=moment()
+          const dateShift =  moment(end).dayOfYear() - moment(start).dayOfYear() 
+          const yearShift = mstart.format('YY') !== mnow.format('YY') 
+          const timeStart = (start.length <= 10)?'00:00':mstart.format('LT')
+          const timeEnd = (end.length <=10)?'23:59':mend.format('LT')
+          const fullDay = (start.length <= 10) || (timeStart==="00:00" && (timeEnd === "00:00" || timeEnd === '23:59'))
           const moreThan11Hours=(mstart.calendar('l') !== mend.calendar('l')) && (mend.diff(mstart, 'hours') > 11) 
+          const durationHours = moment.duration(mend.diff(mstart)).asHours()
+          const startDate=mstart.format('YYYY-MM-DD')
+          const hasEventEnded = (mnow >= mend)
+          const timeRange = hasEventEnded?(TEXTS.ENDED[language] + ' ' + mend.format('LT'))
+            :fullDay?TEXTS.WHOLE_DAY[language]
+            :(mstart.format('LT') + '-' + mend.format('LT'))
+                    
+          const formatDateRange = moreThan11Hours?(yearShift?'ddd ll':'ddd D MMM'):(yearShift?'ddd D/M/YY':'ddd D/M')
+          const dateRange=(mstart.format(formatDateRange) 
+            + ((dateShift && durationHours > 11)?(' - ' +  mend.format(formatDateRange)):''))  
+          const dateRangeTime=mstart.format('llll') + ' - ' 
+            + ((dateShift && durationHours > 11)?mend.format('llll'):timeEnd)  
+ 
+  
           const description = (it.description?it.description:'')
           const maxPar = findNumberInText(description, 'MAX_PAR')
           const maxInd = findNumberInText(description, 'MAX_IND')
@@ -106,7 +140,6 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
           const isWeekend = mstart.isoWeekday() >=6;
           const calendar = mstart.calendar()
           const dateTimeRange = mstart.format('ddd D MMM H:mm') + ' - ' +  mend.format('ddd D MMM H:mm')
-          const timeRange= fullDay?'Full day':(mstart.format('LT') + '-' + mend.format('LT'))
           const calendarEndTime = mend.format('LT')
           const timeRangeWithDay = dateShift?(mstart.format('dddd LT') + '-' + mend.format('dddd LT')):(mstart.format('dddd LT') + '-' + mend.format('LT'))
           const title = it.summary?it.summary:'No Title'
@@ -135,6 +168,7 @@ export function getEvents (calendarId, apiKey, callback, timeMin, timeMax, langu
             weekNumber,
             timeRange,
             timeRangeWithDay,
+            dateRange,
             durationHours,
             calendar,
             calendarEndTime, 

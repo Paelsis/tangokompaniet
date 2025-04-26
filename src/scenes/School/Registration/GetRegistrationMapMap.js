@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import GetMapMap from './GetMapMap'
-import {acceptKeys} from 'Settings/Utils'
+import {acceptKeys} from 'services/functions'
 
 let styles = {
     root:{

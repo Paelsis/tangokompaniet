@@ -5,50 +5,41 @@ import {PRODUCT_TYPE} from 'Settings/Const'
 import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 
 const TEXTS = {
-    'COURSE_FULL':{
-        'SV':'Kursen är full. Du är placerad på väntlista',
-        'ES':'El curso está completo. Estas en la lista de espera.' ,
-        'EN':'Course is full. You are put on waitlist'
+    COURSE_FULL:{
+        SV:'Kursen är full. Du är placerad på väntlista',
+        EN:'Course is full. You are put on waitlist'
     },   
-    'COURSE_GENDER_IMBALANCE': {
-        'SV':'Kursen har har för tillfället obalans mellan följare och förare. Du är placerad på väntlista för partner.',
-        'ES':'Este curso tiene actualmente un desequilibrio entre el seguidor y el conductor. Estás en la lista de espera para compañeros de baile',
-        'EN':'This course currently suffer of gender imbalance. You are put on waitlist for partner' 
+    COURSE_GENDER_IMBALANCE: {
+        SV:'Kursen har har för tillfället obalans mellan följare och förare. Du är placerad på väntlista för partner.',
+        EN:'This course currently suffer of gender imbalance. You are put on waitlist for partner' 
     },    
-    'MARATHON_FULL':{
-        'SV':'Detta maraton är fullbokat. Du är satt på väntelista',
-        'ES':'Este maratón está completo. Estas en la lista de espera.',
-        'EN':'This marathon is fully booked. You are put on waitlist'
+    MARATHON_FULL:{
+        SV:'Detta maraton är fullbokat. Du är satt på väntelista',
+        EN:'This marathon is fully booked. You are put on waitlist'
     },   
-    'MARATHON_GENDER_IMBALANCE': {
-        'SV':'Detta maraton har för tillfället har obalans mellan följare och förare. Du är placerad på väntlista för partner.',
-        'ES':'Este maratón tiene actualmente un desequilibrio entre el seguidor y el conductor. Estás en la lista de espera para compañeros de baile',
-        'EN':'This marathon currently suffer of gender imbalance between followers and leaders. You are put on waitlist for partner.' 
+    MARATHON_GENDER_IMBALANCE: {
+        SV:'Detta maraton har för tillfället har obalans mellan följare och förare. Du är placerad på väntlista för partner.',
+        EN:'This marathon currently suffer of gender imbalance between followers and leaders. You are put on waitlist for partner.' 
     },    
-    'WORKSHOP_FULL':{
-        'SV':'Denna workshop är fullbokad. Du är placerad på väntlista',
-        'ES':'Este taller está completo. Estas en la lista de espera.',
-        'EN':'This workshop is fully booked. You are put on waitlist'
+    WORKSHOP_FULL:{
+        SV:'Denna workshop är fullbokad. Du är placerad på väntlista',
+        EN:'This workshop is fully booked. You are put on waitlist'
     },   
-    'WORKSHOP_GENDER_IMBALANCE': {
-        'SV':'Denna workshop har har obalans mellan följare och förare. Du är placerad på väntlista för partner.',
-        'ES':'Este taller actualmente tiene un desequilibrio entre el seguidor y el conductor.Estás en la lista de espera para compañeros de baile',
-        'EN':'This workshop currently suffer of gender imbalance. You are put on waitlist for partner' 
+    WORKSHOP_GENDER_IMBALANCE: {
+        SV:'Denna workshop har har obalans mellan följare och förare. Du är placerad på väntlista för partner.',
+        EN:'This workshop currently suffer of gender imbalance. You are put on waitlist for partner' 
     }, 
-    'START_DATE':{
-        'SV':'Startdatum',
-        'ES':'Comienza el',
-        'EN':'Starts at date'
+    START_DATE:{
+        SV:'Startdatum',
+        EN:'Starts at date'
     },   
-    'LEADER':{
-        'SV':'förare',
-        'ES':'conductor',
-        'EN':'leader'
+    LEADER:{
+        SV:'förare',
+        EN:'leader'
     },
-    'FOLLOWER':{
-        'SV':'följare',
-        'ES':'seguidor',
-        'EN':'follower'
+    FOLLOWER:{
+        SV:'följare',
+        EN:'follower'
     }
 }
 

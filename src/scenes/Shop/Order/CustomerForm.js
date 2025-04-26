@@ -46,139 +46,111 @@ const styles = {
 const TEXTS = {
   PAYMENT:{
     SWISH: {SV:'Betalning med SWISH',
-              ES:'Pagar mediant transferencia SWISH',
               EN:'Payment with SWISH',
     },    
     BG: {SV:'Betalning med bankgiro',
-               ES:'Pagar mediant transferencia bankgiro',
                EN:'Payment with bankgiro',
     },
     BAMBORA: {SV:'Credit Card',
-        ES:'Tajeta de crédito',
         EN:'Credit Card'
     },
     OTHER:{SV:'Annat betalningssätt',
-        ES:'Otro metodo de pago',
         EN:'Other payment method'
     },
   },          
   PAYMENT_FAILURE:{
     SWISH: {SV:'Betalning med SWISH',
-      ES:'Payment with SWISH',
       EN:'Payment with SWISH',
     },    
   },          
   SHIPPING_INFO:{SV:'Leveransadres måste endast fyllas i om du har saker som skall skickas med post',
-    ES:'La dirección de entrega solo se debe completar si tiene artículos para enviar por correo',
     EN:'Fill in shipping address only if you have ordered this that shall be delivered with post'
   },
   EMAIL:{
     SV:'e-mail för orderbekräftelse:',
-    ES:'e-mail para la confirmación del pedido',
     EN:'e-mail for order confirmation',
   },
   PHONE:{
     SV:'Ditt personliga mobilnummer',
-    ES:'Tu numero de móvil personal',
     EN:'Your personal mobile number',
   },  
   SHIP_ME:{SV:'Leveransadress (Endast för skor som skall skickas)',
-           ES:'Dirección de entrega',
            EN:'Shipping address (Only required if shoes shall be sent)',
   },         
   DELIVER_ONLY:{
       SV:'Leveransadress (Endast för skor som skall skickas)',
-      ES:'Dirección de entrega',
       EN:'Shipping address (Only required if shoes shall be sent)'
     },
   FIRST_NAME:{
       SV:'Förnamn',
-      ES:'Primer nomber',
       EN:'First name'
   },
   LAST_NAME:{
       SV:'Efternamn',
-      ES:'Apellido',
       EN:'Last name (mandatory)',
   },
   ADDRESS:{
       SV:'Adress',
-      ES:'Dirección de la calle',
       EN:'Address',
   },
   CITY:{
       SV:'Stad',
-      ES:'Ciudad',
       EN:'City',
   },
   COUNTRY:{
       SV:'Land',
-      ES:'Pais',
       EN:'Country',
   },
   ZIP:{
       SV:'Postnummer',
-      ES:'Codigo postal',
       EN:'Zip code'
   },
   PAY_BG:{
     SV:'Betala via bank BG 5532-8223',
-    ES:'Pagar por banco',
     EN:'Pay via bank',
   },
   PAY_SWISH:{
     SV:'Betala med SWISH',
-    ES:'Pagar por SWISH',
     EN:'Pay with SWISH',
   },
   PAY_OTHER:{
     SV:'Betala på annat sätt',
-    ES:'Pagar differente',
     EN:'Pay with other method',
   },
   PAY_SWISH_FAILURE:{
     SV:'Mobil nummer felaktigt',
-    ES:'Número de móvil incorrecto',
     EN:'Mobile number wrong',
   },
   PAY_BAMBORA:{
     SV:'Betala',
-    ES:'Pagar',
     EN:'Pay',
   },
   EMPTY:{
     SV:'Kundvagnen tom',
-    ES:'El carro de compas vacio',
     EN:'Shoppingcart empty',
   },
   MESSAGE:{
     SV:'Meddelande till Tangokompaniet',
-    ES:'Mensaje para Tangokompaniet',
     EN:'Message to Tangokompaniet',
   },   
   CLEAR:{
     SV:'Rensa formulär',
-    ES:'Forma Clara',
     EN:'Clear form',
   },   
   CAMPAIGN_CODE:{
     SV:'KAMPANJKOD',
-    ES:'Código campaña',
     EN:'Campaign code',
   },   
   INVALID_SWISH:{
     SV:'Använd ditt eget mobilnummer kopplat till din bank',
-    ES:'Debe ingresar su número de móvil personal vinculado a su propia cuenta',
     EN:'Your shall enter your own mobile number connected to your personal bank account',
   },  
   INVALID_PHONE:{
     SV:'Ogiltigt mobilnummer',
-    ES:'Número de móvil no válido',
     EN:'Invalid mobile number',
   },  
   INVALID_EMAIL:{
     SV:'Ogilig email',
-    ES:'Correo electrónico malo',
     EN:'Invalid email',
   },  
 }

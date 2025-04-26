@@ -63,13 +63,13 @@ const _Item = (props) => {
 }
 
 const TEXTS = {
-  ['PAY']:{['SV']:'Totalt belopp att betala',
-          ['ES']:'Total a pagar',
-          ['EN']:'Total amount to pay'
+  PAY:{
+    SV:'Totalt belopp att betala',
+    EN:'Total amount to pay'
   },    
-  ['DISCOUNT']:{['SV']:'Erhållen rabatt',
-          ['ES']:'Descurento recibido',
-          ['EN']:'Recieved discount',
+  DISCOUNT:{
+    SV:'Erhållen rabatt',
+    EN:'Recieved discount',
   },    
 }
 

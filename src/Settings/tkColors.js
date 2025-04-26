@@ -40,6 +40,10 @@ export const tkColors = {
         Light: '#445626',
         Dark: '#222B13',
     },
+    Blue:{
+        Light:'#320ED2',
+        Dark:'#160660',
+    },    
     Easter:{ // Easter (orange)
         Light: "#D08E1F",
         Dark: "#C17E2F",

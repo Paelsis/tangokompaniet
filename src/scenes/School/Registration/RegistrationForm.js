@@ -19,33 +19,33 @@ const LINK_TO_COURSE='/scheduleCourse'
 const LINK_TO_HOME='/home'
 
 const TEXTS = {
-  LEADER:{['SV']:'Förare',
-          ['ES']:'Conductor',
-          ['EN']:'Leader'
+  LEADER:{SV:'Förare',
+          ES:'Conductor',
+          EN:'Leader'
   },    
-  FOLLOWER:{['SV']:'Följare',
-          ['ES']:'Sequidor',
-          ['EN']:'Follower',
+  FOLLOWER:{SV:'Följare',
+          ES:'Sequidor',
+          EN:'Follower',
   },
-  BOTH:{['SV']:'Båda',
-          ['ES']:'Ambos',
-          ['EN']:'Both',
+  BOTH:{SV:'Båda',
+          ES:'Ambos',
+          EN:'Both',
   },
-  SITE_QUERY:{['SV']:'Gå kursen online på Zoom, eller i danslokal',
-          ['ES']:'Bailar en el salón y Zoom online ',
-          ['EN']:'Take the course on site or on Zoom online',
+  SITE_QUERY:{SV:'Gå kursen online på Zoom, eller i danslokal',
+          ES:'Bailar en el salón y Zoom online ',
+          EN:'Take the course on site or on Zoom online',
   },
-  ONLINE:{['SV']:'Via Zoom möte på dator',
-          ['ES']:'Online with Zoom',
-          ['EN']:'Online with Zoom'
+  ONLINE:{SV:'Via Zoom möte på dator',
+          ES:'Online with Zoom',
+          EN:'Online with Zoom'
   },    
-  ONLINE_SUBTEXT:{['SV']:'OBS: Denna option skall bara väljas om du tänket ta kursen online via Zoom',
-          ['ES']:'Note: This option must only be selected if you want to take the course online via Zoom',
-          ['EN']:'Note: This option must only be selected if you want to take the course online via Zoom'
+  ONLINE_SUBTEXT:{SV:'OBS: Denna option skall bara väljas om du tänket ta kursen online via Zoom',
+          ES:'Note: This option must only be selected if you want to take the course online via Zoom',
+          EN:'Note: This option must only be selected if you want to take the course online via Zoom'
   },    
-  SITE:{['SV']:'På plats i danslokal',
-          ['ES']:'En el salón',
-          ['EN']:'In the dance hall',
+  SITE:{SV:'På plats i danslokal',
+          ES:'En el salón',
+          EN:'In the dance hall',
   },
   FIRST_NAME:{SV:'Förnamn',
           ES:'Permer nombre',
@@ -405,11 +405,6 @@ const renderGenderRadioButtons = ({input, language, meta: { touched, error }}) =
         value={0}
         label={TEXTS['FOLLOWER'][language]}
         labelStyle={style(0)}
-      />
-      <RadioButton
-        value={2}
-        label={TEXTS['BOTH'][language]}
-        labelStyle={style(2)}
       />
   </RadioButtonGroup>
   {touched && error &&<span style={styles.error}>{error}</span>}

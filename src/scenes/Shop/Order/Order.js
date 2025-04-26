@@ -11,7 +11,7 @@ import postData from 'functions/postData'
 import postPaymentRequest from 'functions/postPaymentRequest'
 import config from 'Settings/config';
 import { resetItemList } from 'redux/actions/actionsShop'
-import { isMobileDevice } from 'Settings/Utils'
+import { isMobileDevice } from 'services/functions'
 import {LANGUAGE_SV, LANGUAGE_ES} from 'redux/actions/actionsLanguage'
 
 const apiBaseUrl=process.env.REACT_APP_API_BASE_URL;
@@ -47,11 +47,6 @@ const TEXTS = {
             + PAYMENT_TK.BG + '.' 
             + ' Vid inbetalning fyll i order nummer och namn i fältet meddelande.' 
             + ' Tack för att du handlar hos Tangkompaniet',
-          ES:'Tangkompaniet le envió un correo electrónico con los detalles de pago que contienen la siguiente información.'
-          + ' Giro bancario:' 
-          + PAYMENT_TK.BG + '.'
-          + ' Al pagar, ingrese el número de orden y el nombre en el campo del mensaje.'
-          + ' Gracias por comprar en Tangkompaniet',
           EN:'Tangkompaniet has now sent an order confirmation to you via email.'
           + ' PGgiro number:' 
           + PAYMENT_TK.BG + '.' 
@@ -63,11 +58,6 @@ const TEXTS = {
           + PAYMENT_TK.SWISH + '.'  
           + ' Vid inbetalning fyll i både order nummer och ditt fulla namn i meddelandefältet.' 
           + ' Tack för att du handlar hos Tangkompaniet',
-            ES:'Tangocompany le ha enviado una confirmación de pedido con los siguientes detalles de pago.'
-            + ' SWISH número:'
-            + PAYMENT_TK.SWISH + '.'  
-            + 'Al pagar, ingrese tanto el número de pedido como su nombre completo en el campo del mensaje.'
-            + 'Gracias por comprar en Tangkompaniet ',
             EN:'Tangokompaniet has sent you a mail with order confirmation with payment instructions for SWISH.' 
             + 'SWISH number:' 
             + PAYMENT_TK.SWISH + '.'
@@ -80,11 +70,6 @@ const TEXTS = {
           + ' Vid inbetalning fyll i order nummer och namn i fältet meddelande.' 
           + ' Om du har rabattkod eller är hjälpare på TK, prata med Daniel så att du får rätt belopp innan du betalar in.' 
           + ' Tack för att du handlar hos Tangkompaniet',
-        ES:'Tangkompaniet le envió un correo electrónico con los detalles de pago que contienen la siguiente información.'
-          + ' Giro bancario:' 
-          + PAYMENT_TK.BG + '.'
-          + ' Al pagar, ingrese el número de orden y el nombre en el campo del mensaje.'
-          + ' Gracias por comprar en Tangkompaniet',
         EN:'Tangkompaniet has now sent an order confirmation to you via email.'
           + ' PGgiro number:' 
           + PAYMENT_TK.BG + '.' 
@@ -96,61 +81,48 @@ const TEXTS = {
     PAYMENT_ERROR:{
       BG: {
           SV:'Fel uppstod med kortbetalning med BANKGIRO. Kontakta Tangokompaniet.',
-          ES:'Error en el pago con tarjeta a través de BANKGIRO. Póngase en contacto con la Tangokompaniet.',
           EN:'Something went wrong when processing the order with BANKGIRO. Plase contact TK'
       },
       SWISH: {
           SV:'SWISH vidarekoppling fungerar inte som den skall. Betala räkningen manuellt till SWISH nummer ' + PAYMENT_TK.SWISH,
-          ES:'El reenvío SWISH no funciona correctamente. Pague la factura manualmente con el número SWISH '+ PAYMENT_TK.SWISH,
           EN:'Automatic SWISH forwarding is not working properly. Please pay bill manually till SWISH number ' + PAYMENT_TK.SWISH
       },
       BAMBORA: {
           SV:'Fel uppstod med kortbetalning hos BAMBORA. Kontakta Tangokompaniet.',
-          ES:'Error en el pago con tarjeta a través de BAMBORA. Póngase en contacto con la Tangokompaniet.',
           EN:'Something went wrong when processing the order. Plase contact TK'
       },
       UNKOWN: {
         SV:'Fel vid processing av ordern. Kontakta Tangokompaniet.',
-        ES:'Error al procesar el pedido. Póngase en contacto con la Tangokompaniet.',
         EN:'Something went wrong when processing the order. Plase contact TK'
       },
       UNCONTROLLED:{
         SV:'Ett tekniskt problem har uppsått. Kontakta Tangokompaniet via mail eller telefon.',
-        ES:'Se ha logrado un problema técnico. Póngase en contacto con su empresa por correo electrónico o por teléfono.',
         EN:'A technical error has occurred. Please contact TK'
       },
     },
     OPEN:{
       SWISH:{SV:'Vänligen öppna din SWISH app och utför betalning.'
                   + ' Tack för att du handlar hos Tangkompaniet ',
-            ES:'Abra su aplicación SWISH y pague.'
-            + 'Gracias por comprar en Tangkompaniet ',
             EN:'Please open your SWISH application and execute payment.' 
             + ' Thank you for shopping at Tangkompaniet '
       }      
     },
     TOTAL_TO_PAY:   {SV:'Belopp att betala',
-                    ES:'Total a pagar',
                     EN:'Total to pay'
     },
     ORDER_ID:      {SV:'Order nummer',
-                    ES:'Número de pedido',
                     EN:'Order number'
     },
     GO_TO_HOME:    {SV:'Gå till förstasidan',
-                    ES:'Ir a la portada',
                     EN:'Go to first page'
     },
     EMPTY:          {SV:'Kundvagnen är tom',
-                    ES:'El carro de compas vacio',
                     EN:'Shoppingcart is empty'
     },
     WAITING_ON_ORDER:{SV:'Väntar på ordern från servern',
-                    ES:'Waiting for order to return from server',
                     EN:'Waiting for order to return from server'
     },
     TALK_TO:{SV:'Om du är berättigad till rabatt så bekräfta beloppet med kursansvarig (eller Daniel) innan du betalar.',
-      ES:'Si es elegible para un descuento, confirme el monto con el coordinador del curso (o Daniel) antes de pagar',
       EN:'If you have a discount to withdraw please confirm the amout with course responsible'
     }
 }                  
